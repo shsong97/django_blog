@@ -1,0 +1,35 @@
+{% load staticfiles %}
+<!doctype html>
+<html>
+<head>
+<link href="{% static 'bootstrap/css/bootstrap.css' %}" rel="stylesheet">
+<link href="{% static 'bootstrap/css/bootstrap-responsive.css' %}" rel="stylesheet">
+<title>투표</title>
+<style>
+
+.header_title { background-color: #eeeeff}
+
+</style>
+</head>
+<body>
+<h4>투표 목록</h4>
+{% if latest_poll_list %}
+    <table class="table table-bordered">
+        <tr class="header_title">
+        <th>목록</th>
+        <th>투표기간</th>
+        <th>등록일</th>
+        </tr>
+    {% for poll in latest_poll_list %}
+        <tr>
+        <td><a href="{% url 'polls:detail' poll.id %}">{{ poll.title }}</a></td>
+        <td>{{ poll.start_date|date:"Y년 F j일" }} ~ {{ poll.end_date|date:"Y년 F j일" }}</td>
+        <td>{{ poll.pub_date|date:"Y년 F j일" }}</td>
+        </tr>
+    {% endfor %}
+    </table>
+{% else %}
+    <p>투표가 없습니다.</p>
+{% endif %}
+</body>
+</html>
