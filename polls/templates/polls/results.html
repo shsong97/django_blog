@@ -17,13 +17,13 @@
 <table class="table table-bordered">
 {% for poll in polllist.poll_set.all %}
 <tr><td class="header_title">
-<label>{{ poll.question }}</label>
+<label>{{ poll.question }} (총 {{ poll.total_count }} 표)</label>
 </td></tr>
 <tr><td>
 {% for choice in poll.choice_set.all %}
-    <label>{{ choice.choice_text }} : {{ choice.votes }} 표</label><br />
-<div class="progress progress-striped active progress-success">
-	<div class="bar" style="width: {{ choice.votes }}%;"></div>    
+  <label>{{ choice.choice_text }} : {{ choice.votes }} 표</label><br />
+  <div class="progress progress-striped active progress-success">
+  <div class="bar" style="width: {{ choice.votes }}%;"></div>    
 </div>
 {% endfor %}
 </td></tr>

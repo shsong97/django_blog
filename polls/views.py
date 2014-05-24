@@ -36,15 +36,11 @@ class ResultsView(generic.DetailView):
     model = PollList
     template_name = 'polls/results.html'
 
-    # def get_context_data(self, **kwargs):
-    #     context = super(ResultsView, self).get_context_data(**kwargs)
-    #     total_count=""
-    #     context['total_count'] = total_count
-    #     return context
-
 def vote(request, poll_id):
+    # poll sub item list
     plist = get_list_or_404(Poll, poll_list=poll_id)
-    polls=get_object_or_404(PollList,pk=poll_id)
+    # poll list
+    polls = get_object_or_404(PollList,pk=poll_id)
     try:
         p_id=""
         for p in plist:
@@ -54,13 +50,7 @@ def vote(request, poll_id):
             selected_choice.save()
             
             p.total_count += 1
-            p.save()
-    # except (KeyError, Poll.DoesNotExist):
-    #     # Redisplay the poll voting form.
-    #     return render(request, 'polls/detail.html', {
-    #         'polllist': polls,
-    #         'error_message': "선택하지 않은 항목이 있습니다.",
-    #     })            
+            p.save()       
     except (KeyError, Choice.DoesNotExist):
         # Redisplay the poll voting form.
         return render(request, 'polls/detail.html', {
