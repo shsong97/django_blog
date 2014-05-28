@@ -10,6 +10,9 @@ https://docs.djangoproject.com/en/1.6/ref/settings/
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
+from os import environ
+from urlparse import urlparse
+
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 TEMPLATE_DIRS = [os.path.join(BASE_DIR, 'templates')]
 
@@ -56,7 +59,7 @@ WSGI_APPLICATION = 'mysite.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/1.6/ref/settings/#databases
-
+url=urlparse(environ['DATABASE_URL'])
 DATABASES = {
 ##    'default': {
 ##        'ENGINE': 'django.db.backends.sqlite3',
@@ -64,11 +67,14 @@ DATABASES = {
 ##    }
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'blog',
-        'USER': 'postgres',
-        'PASSWORD':'lgcns',
-##        'HOST':'',
-##        'PORT':'5432',
+        'NAME': url.path[1:],
+        'USER': url.username,
+        'PASSWORD': url.password,
+        'HOST': url.hostname,
+        'PORT':'5432',
+##        'USER': 'postgres',
+##        'PASSWORD':'lgcns',
+
     }
     #'default': {
     #    'NAME': 'SITE',
