@@ -40,7 +40,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'polls',
-    #'blog',
+    'blog',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -59,31 +59,42 @@ WSGI_APPLICATION = 'mysite.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/1.6/ref/settings/#databases
-url=urlparse(environ['DATABASE_URL'])
-DATABASES = {
-##    'default': {
-##        'ENGINE': 'django.db.backends.sqlite3',
-##        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-##    }
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': url.path[1:],
-        'USER': url.username,
-        'PASSWORD': url.password,
-        'HOST': url.hostname,
-        'PORT':'5432',
-##        'USER': 'postgres',
-##        'PASSWORD':'lgcns',
 
+# if - heroku, else other
+if environ.has_key('DATABASE_URL'):
+    url=urlparse(environ['DATABASE_URL'])
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql_psycopg2',
+            'NAME': url.path[1:],
+            'USER': url.username,
+            'PASSWORD': url.password,
+            'HOST': url.hostname,
+            'PORT': url.port,
+        }  
     }
-    #'default': {
-    #    'NAME': 'SITE',
-    #    'ENGINE': 'sqlserver_ado',
-    #    'HOST': '127.0.0.1',
-    #    'USER': 'manager',
-    #    'PASSWORD': 'manager1234',
-    #}    
-}
+else:
+    DATABASES = {
+    ##    'default': {
+    ##        'ENGINE': 'django.db.backends.sqlite3',
+    ##        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    ##    }
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql_psycopg2',
+            'NAME': 'blog',
+            'USER': 'postgres',
+            'PASSWORD':'lgcns',
+    
+        }
+                 
+        #'default': {
+        #    'NAME': 'SITE',
+        #    'ENGINE': 'sqlserver_ado',
+        #    'HOST': '127.0.0.1',
+        #    'USER': 'manager',
+        #    'PASSWORD': 'manager1234',
+        #}    
+    }
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.6/topics/i18n/

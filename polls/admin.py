@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 
 from django.contrib import admin
-from django.db import models
 from polls.models import Choice,Poll,PollList
 # Register your models here.
 
@@ -36,4 +35,4 @@ class PollListAdmin(admin.ModelAdmin):
     excluded=('pub_date')
 admin.site.register(Poll,PollAdmin)
 admin.site.register(PollList,PollListAdmin)
-##admin.site.register(Choice)
+

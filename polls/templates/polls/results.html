@@ -1,5 +1,5 @@
-{% load staticfiles %}
 <!doctype html>
+{% load staticfiles %}
 <html>
 <head>
 <link href="{% static 'bootstrap/css/bootstrap.css' %}" rel="stylesheet">
@@ -17,19 +17,20 @@
 <table class="table table-bordered">
 {% for poll in polllist.poll_set.all %}
 <tr><td class="header_title">
-<label>{{ poll.question }} (총 {{ poll.total_count }} 표)</label>
+<label>{{ poll.question }} (Total:{{ poll.total_count }})</label>
 </td></tr>
 <tr><td>
 {% for choice in poll.choice_set.all %}
-  <label>{{ choice.choice_text }} : {{ choice.votes }} 표</label><br />
+  <label>{{ choice.choice_text }} : {{ choice.votes }} </label><br />
   <div class="progress progress-striped active progress-success">
-  <div class="bar" style="width: {{ choice.votes }}%;"></div>    
+  <div class="bar" style="width: {{ choice.votes }}%;"> </div>
 </div>
 {% endfor %}
 </td></tr>
 {% endfor %}
 </table>
 
-<a class="btn" href="{% url 'polls:detail' polllist.id %}">재투표</a> <a class="btn" href="/polls">목록</a>
+<a class="btn" href="{% url 'polls:detail' polllist.id %}">Vote</a> 
+<a class="btn" href="/polls">List</a>
 </body>
 </html>

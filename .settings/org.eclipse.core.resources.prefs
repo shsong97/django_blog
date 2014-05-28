@@ -1,6 +1,13 @@
 eclipse.preferences.version=1
+encoding//blog/models.py=utf-8
+encoding//blog/templates/blog/detail.html=UTF-8
+encoding//blog/templates/blog/index.html=UTF-8
+encoding//blog/templates/blog/results.html=UTF-8
+encoding//blog/views.py=utf-8
 encoding//mysite/views.py=UTF-8
 encoding//polls/admin.py=utf-8
 encoding//polls/models.py=utf-8
+encoding//polls/templates/polls/index.html=UTF-8
+encoding//polls/templates/polls/results.html=UTF-8
 encoding//polls/tests.py=UTF-8
 encoding//polls/views.py=utf-8

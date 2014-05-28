@@ -1,5 +1,5 @@
-{% load staticfiles %}
 <!doctype html>
+{% load staticfiles %}
 <html>
 <head>
 <link href="{% static 'bootstrap/css/bootstrap.css' %}" rel="stylesheet">
@@ -31,9 +31,9 @@
 	</td></tr> 
 {% endfor %}
 </table>
-<button class="btn" type="submit">투표</button>
-<a class="btn" href="/polls/">목록</a>
-  <a class="btn" href="/polls/{{ polllist.id }}/results">결과보기</a>
+<button class="btn" type="submit">Vote</button>
+<a class="btn" href="/polls/{{ polllist.id }}/results">Result</a>
+<a class="btn" href="/polls/">List</a>
 </form>
 </body>
 </html>
