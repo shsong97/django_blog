@@ -47,3 +47,8 @@ def blog_add(request):
     blogs = Blog(title=request.POST['title'],contents=request.POST['contents'])
     blogs.save()
     return HttpResponseRedirect('/blog/')
+
+def blog_delete(request, blog_id):
+    blogs = get_object_or_404(Blog,id=blog_id)
+    blogs.delete()
+    return HttpResponseRedirect('/blog/')

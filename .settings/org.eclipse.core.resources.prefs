@@ -1,4 +1,5 @@
 eclipse.preferences.version=1
+encoding//apache/static/bootstrap/css/bootstrap.css=UTF-8
 encoding//blog/models.py=utf-8
 encoding//blog/templates/blog/detail.html=UTF-8
 encoding//blog/templates/blog/index.html=UTF-8
@@ -11,3 +12,4 @@ encoding//polls/templates/polls/index.html=UTF-8
 encoding//polls/templates/polls/results.html=UTF-8
 encoding//polls/tests.py=UTF-8
 encoding//polls/views.py=utf-8
+encoding//static/bootstrap/css/bootstrap.css=UTF-8
