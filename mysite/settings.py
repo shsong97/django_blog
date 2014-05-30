@@ -75,10 +75,6 @@ if environ.has_key('DATABASE_URL'):
     }
 else:
     DATABASES = {
-    ##    'default': {
-    ##        'ENGINE': 'django.db.backends.sqlite3',
-    ##        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    ##    }
         'default': {
             'ENGINE': 'django.db.backends.postgresql_psycopg2',
             'NAME': 'blog',
@@ -86,14 +82,17 @@ else:
             'PASSWORD':'lgcns',
     
         }
-                 
-        #'default': {
-        #    'NAME': 'SITE',
-        #    'ENGINE': 'sqlserver_ado',
-        #    'HOST': '127.0.0.1',
-        #    'USER': 'manager',
-        #    'PASSWORD': 'manager1234',
-        #}    
+#         'default': {
+#             'ENGINE': 'django.db.backends.sqlite3',
+#             'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+#         }   
+#         'default': {
+#             'NAME': 'SITE',
+#             'ENGINE': 'sqlserver_ado',
+#             'HOST': '127.0.0.1',
+#             'USER': 'manager',
+#             'PASSWORD': 'manager1234',
+#         }    
     }
 
 # Internationalization

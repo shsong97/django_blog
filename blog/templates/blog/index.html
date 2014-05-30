@@ -11,18 +11,19 @@
 {% if latest_blog_list %}
     <table class="table">
     	<tr>
-    		<th>title</th>
+    		<th style="text-align: left">title</th>
     		<th>publish</th>
     	</tr>
     {% for blog in latest_blog_list %}
 	<tr>
-		<td><a href="{% url 'blog:detail' blog.id %}">{{ blog.title }}</a></td>
-		<td>{{ blog.pub_date }}</td>
+		<td style="width:80%"><a href="{% url 'blog:detail' blog.id %}">{{ blog.title }}</a></td>
+		<td style="width:20%; text-align: center;">{{ blog.pub_date|date:"Y/m/j" }}</td>
 	</tr>
     {% endfor %}
     </table>
 {% else %}
     <p>No contents</p>
 {% endif %}
+<a href="/blog/add" class="btn">Add</a>
 </body>
 </html>

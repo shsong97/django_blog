@@ -11,7 +11,7 @@
 
 {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
 
-<form action="{% url 'blog:update' blog.id %}" method="post" class="form-inline">
+<form action="{% url 'blog:update_submit' blog.id %}" method="post" class="form-inline">
 {% csrf_token %}
 	<table class="table">
 		<tr>
@@ -20,7 +20,7 @@
 		</tr>
 		<tr>
 			<td>Contents</td>
-			<td><textarea name="contents" rows="10" cols="100">{{ blog.contents }}</textarea></td>
+			<td><textarea name="contents" rows="10" cols="100" style="width:95%">{{ blog.contents }}</textarea></td>
 		</tr>
 	</table>
 <button class="btn" type="submit">Send</button>

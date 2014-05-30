@@ -20,7 +20,7 @@ class Blog(models.Model):
     was_published_recently.admin_order_field = '등록일'
     was_published_recently.boolean = True
     was_published_recently.short_description = '최근등록일?'
-    
+
 
 class Tag(models.Model):
     tag_title = models.CharField('Tag',max_length=100)

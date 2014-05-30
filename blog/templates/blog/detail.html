@@ -17,21 +17,9 @@
 {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
 
 {% csrf_token %}
-	<table class="table">
-		<tr>
-			<td class="header_title">Title</td>
-			<td>{{ blog.title }}</td>
-		</tr>
-		<tr>
-			<td class="header_title">Contents</td>
-			<td>{{ blog.contents }}</td>
-		</tr>
-		<tr>
-			<td>Tag</td>
-			<td> </td>
-		</tr>
-	</table>
-<a class="btn" href="results/">Edit</a>
+<div>{{ blog.contents }}</div>
+<div>Tag : </div>
+<a class="btn" href="update/">Edit</a>
 <a class="btn" href="/blog/">List</a>
 </body>
 </html>
