@@ -11,8 +11,11 @@
 .header_title { background-color: #eeeeff}
 
 </style>
+{% include "header.html" %}
 </head>
 <body>
+{% include "menu.html" %}    
+
 <h4>Poll List</h4>
 {% if latest_poll_list %}
     <table class="table table-bordered">

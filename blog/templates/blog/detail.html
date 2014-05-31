@@ -6,14 +6,16 @@
 <link href="{% static 'bootstrap/css/bootstrap.css' %}" rel="stylesheet">
 <link href="{% static 'bootstrap/css/bootstrap-responsive.css' %}" rel="stylesheet">
 <title>Blog article</title>
+{% include "header.html" %}
 </head>
 <body>
+{% include "menu.html" %}    
 <h4>{{ blog.title }}</h4>
 
 {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
 
 {% csrf_token %}
-<div>{{ blog.contents }}</div>
+  <div><pre>{{ blog.contents }}</pre></div>
 <a class="btn" href="update/">Edit</a>
 <a class="btn" href="/blog/">List</a>
 </body>

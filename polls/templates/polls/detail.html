@@ -11,8 +11,10 @@
 .header_title { background-color: #eeeeff}
 
 </style>
+{% include "header.html" %}
 </head>
 <body>
+{% include "menu.html" %}    
 <h4>{{ polllist.title }}</h4>
 
 {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
