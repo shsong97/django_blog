@@ -2,9 +2,10 @@
 {% load staticfiles %}
 <html>
 <head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link href="{% static 'bootstrap/css/bootstrap.css' %}" rel="stylesheet">
 <link href="{% static 'bootstrap/css/bootstrap-responsive.css' %}" rel="stylesheet">
-<title>{{ blog.title }}</title>
+<title>Update Blog</title>
 </head>
 <body>
 <h4>{{ blog.title }}</h4>
@@ -23,7 +24,7 @@
 			<td><textarea name="contents" rows="10" cols="100" style="width:95%">{{ blog.contents }}</textarea></td>
 		</tr>
 	</table>
-<button class="btn" type="submit">Send</button>
+<button class="btn" type="submit">Update</button>
 <a class="btn" href="/blog/{{ blog.id }}/delete">Delete</a>
 <a class="btn" href="/blog/">List</a>
 </form>

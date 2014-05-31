@@ -1,15 +1,75 @@
 <!DOCTYPE html>
-<html>
-	<head>
-		<meta charset="utf-8">
-		<meta http-equiv="Content-Type" content="text/html; charset=euc-kr" />
-		<title>Django Site Home</title>
-	</head>
-<body>
-	<ul>
-		<li><a href='/blog'>Blog</a>
-		<li><a href='/polls'>Poll</a>
-				
-	</ul>
-</body>
-</html> 
+{% load staticfiles %}
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Django my profile</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="django project blog, news, profile">
+    <meta name="author" content="Song, Seung-hun">
+
+    <link href="{% static 'bootstrap/css/bootstrap.css' %}" rel="stylesheet">
+    <style type="text/css">
+      body {
+        padding-top: 60px;
+        padding-bottom: 40px;
+      }
+    </style>
+    <link href="{% static 'bootstrap/css/bootstrap-responsive.css' %}" rel="stylesheet">
+    
+  </head>
+
+  <body>
+
+    <div class="navbar navbar-inverse navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container">
+          <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="brand" href="#">My Profile</a>
+          <div class="nav-collapse collapse">
+            <ul class="nav">
+              <li><a href="/blog">Blog</a></li>
+              <li><a href="/polls">Polls</a></li>
+              <li><a href="/contact">Contact</a></li>
+            </ul>
+          </div><!--/.nav-collapse -->
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+
+      <!-- Main hero unit for a primary marketing message or call to action -->
+      <div class="hero-unit">
+        <h1>Django Project</h1>
+        <p> description </p>
+      </div>
+
+      <!-- Example row of columns -->
+      <div class="row">
+        <div class="span4">
+          <h2>Blog</h2>
+          <p><iframe src="/blog/short" frameborder=0 style="border-width:0px; border-color:white; border-style:solid;"></iframe></p>
+          <p><a class="btn" href="/blog">View Blog &raquo;</a></p>
+        </div>
+        <div class="span4">
+          <h2>Polls</h2>
+          <p><iframe src="/polls/short" frameborder=0 style="border-width:0px; border-color:white; border-style:solid;"></iframe></p>
+          <p><a class="btn" href="/polls">View Polls &raquo;</a></p>
+       </div>
+        <div class="span4">
+          <h2>Others</h2>
+          <p><iframe src="/blog/short" frameborder=0 style="border-width:0px; border-color:white; border-style:solid;"></iframe></p>
+          <p><a class="btn" href="/blog">View Blog &raquo;</a></p>
+        </div>
+      </div>
+
+    </div> <!-- /container -->
+    <script src="{% static 'bootstrap/js/jQuery.js' %}"></script>
+    <script src="{% static 'bootstrap/js/bootstrap.js' %}"></script>
+  </body>
+</html>

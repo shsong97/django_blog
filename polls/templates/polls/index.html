@@ -2,6 +2,7 @@
 {% load staticfiles %}
 <html>
 <head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link href="{% static 'bootstrap/css/bootstrap.css' %}" rel="stylesheet">
 <link href="{% static 'bootstrap/css/bootstrap-responsive.css' %}" rel="stylesheet">
 <title>Poll</title>
@@ -18,18 +19,17 @@
         <tr class="header_title">
         <th>Poll ID</th>
         <th>투표기간</th>
-        <th>등록일</th>
         </tr>
     {% for poll in latest_poll_list %}
         <tr>
         <td><a href="{% url 'polls:detail' poll.id %}">{{ poll.title }}</a></td>
-        <td>{{ poll.start_date|date:"Y/m/j" }} ~ {{ poll.end_date|date:"Y/m/j" }}</td>
-        <td>{{ poll.pub_date|date:"Y/m/j" }}</td>
+        <td>{{ poll.start_date|date:"m/j" }} ~ {{ poll.end_date|date:"m/j" }}</td>
         </tr>
     {% endfor %}
     </table>
 {% else %}
     <p>No list</p>
 {% endif %}
+<a href="/" class="btn">Home</a>
 </body>
 </html>

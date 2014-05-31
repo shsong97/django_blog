@@ -4,6 +4,7 @@ from blog import views
 
 urlpatterns = patterns('',
     url(r'^$', views.IndexView.as_view(), name='index'),
+    url(r'^short/$', views.ShortIndexView.as_view(), name='short'),
     url(r'^add/$', views.BlogCreate.as_view(), name='blog_add'), 
     url(r'^add/submit/$', views.blog_add, name='add_submit'),
     url(r'^(?P<pk>\d+)/$', views.DetailView.as_view(), name='detail'),

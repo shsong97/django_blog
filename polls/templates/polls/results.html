@@ -2,6 +2,7 @@
 {% load staticfiles %}
 <html>
 <head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link href="{% static 'bootstrap/css/bootstrap.css' %}" rel="stylesheet">
 <link href="{% static 'bootstrap/css/bootstrap-responsive.css' %}" rel="stylesheet">
 <title>{{ polllist.title }}</title>
@@ -21,10 +22,7 @@
 </td></tr>
 <tr><td>
 {% for choice in poll.choice_set.all %}
-  <label>{{ choice.choice_text }} : {{ choice.votes }} </label><br />
-  <div class="progress progress-striped active progress-success">
-  <div class="bar" style="width: {{ choice.votes }}%;"> </div>
-</div>
+  <label>{{ choice.choice_text }} : {{ choice.votes }} </label>
 {% endfor %}
 </td></tr>
 {% endfor %}

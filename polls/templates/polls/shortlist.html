@@ -5,16 +5,19 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link href="{% static 'bootstrap/css/bootstrap.css' %}" rel="stylesheet">
 <link href="{% static 'bootstrap/css/bootstrap-responsive.css' %}" rel="stylesheet">
-<title>Blog article</title>
+<title>Poll</title>
 </head>
 <body>
-<h4>{{ blog.title }}</h4>
-
-{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
-
-{% csrf_token %}
-<div>{{ blog.contents }}</div>
-<a class="btn" href="update/">Edit</a>
-<a class="btn" href="/blog/">List</a>
+{% if latest_poll_list %}
+    <table>
+    {% for poll in latest_poll_list %}
+        <tr>
+        <td><a href="{% url 'polls:detail' poll.id %}" target="_blank">{{ poll.title }}</a></td>
+        </tr>
+    {% endfor %}
+    </table>
+{% else %}
+    <p>No list</p>
+{% endif %}
 </body>
 </html>

@@ -8,24 +8,16 @@
 <title>Blog List</title>
 </head>
 <body>
-<h4>Blog list</h4>
 {% if latest_blog_list %}
-    <table class="table">
-    	<tr>
-    		<th style="text-align: left">Title</th>
-    		<th>Pub date</th>
-    	</tr>
+    <table>
     {% for blog in latest_blog_list %}
 	<tr>
-		<td><a href="{% url 'blog:detail' blog.id %}">{{ blog.title }}</a></td>
-		<td style="text-align : right;">{{ blog.pub_date|date:"Y/m/j" }}</td>
+		<td><a href="{% url 'blog:detail' blog.id %}" target="_blank">{{ blog.title }}</a></td>
 	</tr>
     {% endfor %}
     </table>
 {% else %}
     <p>No contents</p>
 {% endif %}
-  <a href="/" class="btn">Home</a>
-  <a href="/blog/add" class="btn">Add</a>
 </body>
 </html>

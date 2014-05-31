@@ -21,6 +21,18 @@ class IndexView(generic.ListView):
             end_date__gte=timezone.now()
         ).order_by('-pub_date')[:5]
 
+class ShortIndexView(generic.ListView):
+    template_name = 'polls/shortlist.html'
+    context_object_name = 'latest_poll_list'
+
+    def get_queryset(self):
+        """Return the last five published polls."""
+        return PollList.objects.filter(
+            pub_date__lte=timezone.now(),
+            start_date__lte=timezone.now(),
+            end_date__gte=timezone.now()
+        ).order_by('-pub_date')[:3]
+
 class DetailView(generic.DetailView):
     model = PollList
     template_name = 'polls/detail.html'
