@@ -2,7 +2,8 @@ from django.http import HttpResponse
 from django.contrib.auth import authenticate,login,logout
 from timeline.models import *
 from django.db.models import Q
-#from django.core.paginator import Paginator
+from django.core.paginator import Paginator
+from django.shortcuts import render_to_response
 import base64
 import json
 
