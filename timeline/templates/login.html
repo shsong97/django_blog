@@ -41,7 +41,7 @@
                         PW : <input type="password" id="password" class="width50" />
                         <div class="inside">
                             <a class="btn btn-primary" id="loginBtn">Login</a>
-                            <a class="btn btn-primary between" id="registrBtn">Register</a>
+                            <a class="btn btn-primary between" id="registerBtn">Register</a>
                         </div>
                     </div>
                 </div>
@@ -56,6 +56,11 @@
         <script src="/static/base64.js"></script>
         <script>
             $(document).ready(function(){
+                $("#registerBtn").click(function() {
+                                        location.href="/timeline/join.html";
+                                        });
+                $("#loginBtn").click(doLogin);
+                $("#adminBtn").click(goAdmin);
 
             });
         </script>

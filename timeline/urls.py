@@ -17,6 +17,6 @@ urlpatterns = patterns('',
     url(r'^api/profile/(?P<username>\w+)/$',views.profile_view),
     url(r'^api/profile/$',views.profile_view),
     url(r'^api/login/$',views.login_view),
-    url(r'^home/(?P<page>\w+).html/$',views.serve_html),
+    url(r'^(?P<page>\w+).html/$',views.serve_html),
 
 )

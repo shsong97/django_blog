@@ -4,6 +4,7 @@ from timeline.models import *
 from django.db.models import Q
 from django.core.paginator import Paginator
 from django.shortcuts import render_to_response
+from django.template import RequestContext
 import base64
 import json
 
@@ -11,7 +12,7 @@ import json
 def serialize(objs):
     serialized=[]
     for obj in objs:
-        objs.append(obj.serialize())
+        serialized.append(obj.serialize())
     return serialized
 
 def toJSON(objs, status=200):
@@ -54,9 +55,9 @@ def timeline_view(request):
         page_num=int(request.GET.get('page',1))
         pages=Paginator(messages,tweet_per_page)
         resp = {
-            'total_page':pages.num_pages,
-            'total_count':pages.count,
-            'messages':serialize(pages.page(page_num).object_list)
+            'total_page': pages.num_pages,
+            'total_count': pages.count,
+            'messages': serialize(pages.page(page_num).object_list)
         }
         return toJSON(resp)
     except:
@@ -88,6 +89,7 @@ def user_view(request,method):
             password=request.POST.get('oldpassword')
             newpassword=request.POST.get('newpassword')
             user=User.objects.get(username__exact=username)
+            
             if user.check_password(password) is False:
                 return toJSON({'status':'wrong password'},400)
             else:
@@ -205,12 +207,12 @@ def profile_view(request,username=None):
     if request.method=='GET':
         try:
             userprofile=User.objects.get(username=username).userprofile
-            return toJSON(userprofile.serialize)
+            return toJSON(userprofile.serialize())
         except:
             return toJSON({'status':'not found'},400)
         
     elif request.method=='POST':
-        profile=request.user.profile
+        profile=request.user.userprofile
         profile.nickname=request.POST.get('nickname',profile.nickname)
         profile.comment=request.POST.get('comment',profile.comment)
         profile.country=request.POST.get('country',profile.country)
@@ -229,4 +231,5 @@ def login_view(request):
     return toJSON({'status':'ok','user':request.user.userprofile.serialize()})
 
 def serve_html(request,page):
-    return render_to_response(page+'.html')
+    load=page+".html"
+    return render_to_response(load,{},context_instance=RequestContext(request))

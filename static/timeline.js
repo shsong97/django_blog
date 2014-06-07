@@ -1,4 +1,4 @@
-var baseUrl='http://127.0.0.1:8000/timeline';
+var baseUrl='/timeline/';
 var username;
 var password;
 var loginstring;
@@ -17,7 +17,7 @@ var doJoin=function() {
         },
         success:function() {
             alert("OK");
-            location.href="login.html";
+            location.href=baseUrl+"login.html";
         },
         error:function(msg) {
             alert("Error!");
@@ -26,7 +26,7 @@ var doJoin=function() {
 }
 
 var goAdmin=function() {
-    location.href=baseUrl+"admin/";
+    location.href="/admin/";
 }
 
 var doLogin=function() {
@@ -43,7 +43,7 @@ var doLogin=function() {
         success:function(data) {
             alert("Login success");
             setLoginString();
-            window.location="timeline.html";
+            window.location=baseUrl+"timeline.html";
         },
         error:function(){
             alert("Fail to get data!");
@@ -52,6 +52,357 @@ var doLogin=function() {
     });
 }
 
+var doWriteTimeline=function() {
+    var msg=$("#writearea").val();
+    $.ajax({
+        type:"POST",
+        url:baseUrl+"api/timeline/create/",
+        data:{ message : msg },
+        beforeSend:function(req) {
+            req.setRequestHeader('Authorization',loginstring);
+        },
+        success:function(){
+            alert("OK");
+            doReload();
+        },
+        error:function(){
+            alert("Fail to write data!");
+        },
+    });
+}
+
+var doGetTimeline=function() {
+    $.ajax({
+        type:'GET',
+        url:baseUrl+'api/timeline/',
+        beforeSend:function(req) {
+            req.setRequestHeader('Authorization',loginstring);
+        },
+        success:function(data){
+            for(var i in data.messages) {
+                doAppend(data.messages[i]);
+            }
+            $("#total").html(data.total_count);
+            $("#mine").html($('[name=deleteMsg]').length-1);
+            $("#username").html(username);
+            $("#writearea").val("");
+        },
+        error:function(){
+            alert("Fail to get data!");
+        },
+    });
+}
+
+var doAppend=function(data) {
+    node=$("#msgTemplate").clone();
+    $(".name",node).append(data.username);
+    $(".content",node).append(data.message);
+    $(".date",node).append(data.created);
+    $(".like",node).append(data.liked+" ");
+    $("#like",node).attr("value",data.id);
+    $("#dislike",node).attr("value",data.id);
+    if(username==data.username)
+        $("[name=deleteMsg]",node).attr("value",data.id);
+    else
+        $("[name=deleteMsg]",node).remove();
+    
+    node.show();
+    $("#timelinearea").append(node);
+}
+
+var doReload=function(){
+    doClear();
+    doGetTimeline();
+}
+
+var doClear=function() {
+    $("#timelinearea").html("");
+}
+
+var doDeleteTimeline=function() {
+    var id=$(this).val()+"/delete/";
+    $.ajax({
+        type:'post',
+        url:baseUrl+'api/timeline/'+id,
+        beforeSend:function(req) {
+            req.setRequestHeader('Authorization',loginstring);
+        },
+        success:function(data){
+            doReload();
+        },
+        error:function(msg) {
+            alert("Fail to delete data!");
+        },
+    });
+}
+
+var doSearchTimeline=function() {
+    $.ajax({
+        type:'get',
+        url:baseUrl+'api/timeline/find/',
+        data:{query:$("#search").val()},
+        beforeSend:function(req) {
+            req.setRequestHeader('Authorization',loginstring);
+        },
+        success:function(data){
+            doClear();
+            for(var i in data) {
+                doAppend(data[i]);
+            }
+            $("#total").html(data.length);
+            $("#mime").html($('[name=deleteMsg]').length-1);
+            $("#search").val("");
+        },
+        error:function(msg) {
+            alert("Fail to get data!");
+        },
+    });
+}
+
+var doLogout=function() {
+    resetLoginString();
+    window.location=baseUrl+"login.html";
+}
+
+var doLike=function() {
+    var id=$(this).val();
+    $.ajax({
+        type:'post',
+        url:baseUrl+'api/timeline/'+id+'/like/',
+        beforeSend:function(req) {
+            req.setRequestHeader('Authorization',loginstring);
+        },
+        success:function(data){
+            doReload();
+        },
+        error:function(msg) {
+            alert("Fail to set data!");
+        },
+    });
+}
+
+var doGetUserInfo=function() {
+    var username=$("div",this).html();
+    $.ajax({
+        type:'get',
+        url:baseUrl+'api/profile/'+username,
+        beforeSend:function(req) {
+            req.setRequestHeader('Authorization',loginstring);
+        },
+        success:function(data){
+            $("#modalid").html(data.username);
+            $("#modalnickname").html(data.nickname);
+            $("#modalcountry").html(data.country);
+            $("#modalcomment").html(data.comment);
+            $("#modalurl").html(data.url);
+            $("#myModal").modal("show");
+        },
+        error:function(msg) {
+            alert("Fail to get data!");
+        },
+    });
+}
+
+var doGetProfile=function() {
+    $.ajax({
+        type:'get',
+        url:baseUrl+'api/profile/',
+        beforeSend:function(req) {
+            req.setRequestHeader('Authorization',loginstring);
+        },
+        success:function(data){
+            fillProfile(data);
+        },
+        error:function(msg){
+            alert("Fail to get data!");
+        },
+    });
+}
+
+var fillProfile=function(data) {
+    $("#bigid").html(data.username);
+    $("#bignickname").html("a.k.a "+data.nickname);
+    $("#bigcomment").html(data.comment);
+
+    $("#comment").val(data.comment);
+    $("#nickname").val(data.nickname);
+    $("#country").val(data.country);
+    
+    $("#web").val(data.url);
+    $("#labelnick").html("Nickname : "+data.nickname);
+    $("#labelcountry").html("Country : "+data.country);
+    $("#labelurl").html("URL : "+data.url);
+}
+
+var doSetProfile=function() {
+    var nickname=$("#nickname").val();
+    var comment=$("#comment").val();
+    var country=$("#country").val();
+    var url=$("#web").val();
+
+    $.ajax({
+        type:'post',
+        url:baseUrl+'api/profile/',
+        data:{nickname:nickname,comment:comment,country:country,url:url},
+        beforeSend:function(req) {
+            req.setRequestHeader('Authorization',loginstring);
+        },
+        success:function(data){
+            alert("OK");
+            location.reload();
+        },
+        error:function(msg){
+            alert("Error!");
+        },
+    })
+}
+
+var doCancel=function() {
+    location.reload();
+}
+
+// for account
+var doCheckPassword=function() {
+    $.ajax({
+        type:'post',
+        url:baseUrl+'api/user/checkpassword/',
+        data:{ password:$("#oldpassword").val() },
+        beforeSend:function(req) {
+            req.setRequestHeader('Authorization',loginstring);
+        },
+        success:function(data) {
+            alert(data.status);
+        },
+        error:function(msg) {
+            alert("Fail to get data!");
+        },
+    });
+}
+
+var doSetPassword=function() {
+    $.ajax({
+        type:'post',
+        url:baseUrl+'api/user/setpassword/',
+        data:{password:$("#newpassword").val()},
+        beforeSend:function(req) {
+            req.setRequestHeader('Authorization',loginstring);
+        },
+        success:function(data) {
+            alert("OK");
+            loginstring="Basic "+Base64.encode(username+":"+$("#newpassword").val());
+            setLoginString();
+            $("#oldpassword").val($("#newpassword").val());
+            $("#newpassword").val("");
+        },
+        error:function(msg) {
+            alert(msg.responseText);
+        },
+   });
+}
+
+var doGetName=function() {
+    $.ajax({
+        type:'get',
+        url:baseUrl+'api/user/name/',
+        beforeSend:function(req) {
+            req.setRequestHeader('Authorization',loginstring);
+        },
+        success:function(data) {
+            $("#getname").val(data.name);
+        },
+        error:function(msg) {
+            alert("Fail to get data!");
+        },
+    });
+}
+
+var doSetName=function() {
+    $.ajax({
+        type:'post',
+        url:baseUrl+'api/user/name/',
+        data:{name:$("#getname").val()},
+        beforeSend:function(req) {
+            req.setRequestHeader('Authorization',loginstring);
+        },
+        success:function(data) {
+            alert("OK");
+        },
+        error:function(msg) {
+            alert("Fail to set data!");
+        },
+    });
+}
+
+var doGetUserList=function() {
+    $.ajax({
+        type:'post',
+        url:baseUrl+'api/user/list/',
+        beforeSend:function(req) {
+            req.setRequestHeader('Authorization', loginstring);
+        },
+        success:function(data) {
+            myIgnoreList=new Array();
+            $("#listarea").html("");
+            for(var i in data) {
+                if(username==data[i].username) {
+                    myIgnoreList=data[i].ignores;
+                }                   
+            }
+            for(var j in data) {
+                if(username!=data[j].username)
+                    doAppendIgnored(data[j],myIgnoreList);
+            }
+        },
+        error:function(msg) {
+            alert("Fail to get data!");
+        },
+    });
+}
+
+var doAppendIgnored=function(data,ignoreList) {
+    var isIgnored=$.inArray(data.user,ignoreList);
+    node=$("#ignoreTemplate").clone();
+    $("#name",node).html(data.username);
+    $(".ignoreBtn",node).attr("value",data.user);
+    
+    if(isIgnored==-1) {
+        $("#ignored",node).html("");
+        $("#icon",node).removeClass().addClass("icon-plus");        
+    }
+    else {
+        $("#ignored",node).html(":Ignored");
+        $("#icon",node).removeClass().addClass("icon-minus");
+    }
+    node.show();
+    $("#listarea").append(node);
+}
+
+var doIgnore=function() {
+    var id=parseInt($(this).val());
+    var isIgnored=$.inArray(id,myIgnoreList);
+
+    if(isIgnored==-1)
+        myIgnoreList.push(id);
+    else 
+        myIgnoreList.pop(id);  
+    
+    $.ajax({
+        type:'post',
+        url:baseUrl+'api/profile/',
+        data:{ignore:"["+myIgnoreList.toString()+"]"},
+        beforeSend:function(req) {
+            req.setRequestHeader('Authorization',loginstring);
+        },
+        success:function(data) {
+            doGetUserList();
+        },
+        error:function(msg) {
+            alert("Fail to set data!");
+        },
+    });
+}
+
+// cookie function
 function setCookie(name, value, day) {
     var expire=new Date();
     expire.setDate(expire.getDate()+day);
