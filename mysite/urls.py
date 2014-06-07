@@ -9,6 +9,7 @@ urlpatterns = patterns('',
     url(r'^blog/', include('blog.urls',namespace="blog")),
     url(r'^polls/', include('polls.urls',namespace="polls")),
     url(r'^timeline/', include('timeline.urls',namespace="timeline")),
+    url(r'^bookmarks/', include('bookmarks.urls',namespace="bookmarks")),
     url(r'^contact/', 'mysite.views.contact', name='contact'),
 )
 

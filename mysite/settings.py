@@ -42,8 +42,10 @@ INSTALLED_APPS = (
     'polls',
     'blog',
     'timeline',
+    'bookmarks',
 )
 
+#timeline service error csrf...
 MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
