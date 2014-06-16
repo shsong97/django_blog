@@ -3,17 +3,16 @@
     <head>
         <title>장고북마크|{% block title %} {% endblock %}</title>
         <link rel="stylesheet" href="/static/bookmarks/style.css" type="text/css" />
+        {% include "header.html" %}
+        {% block external %}{% endblock %}
     </head>
     <body>
+        {% include "menu.html" %}
         <div id="nav">
-            <a href="/bookmarks/">Home</a>
+            <a href="/bookmarks/popular/">인기있는북마크</a>|
             {% if user.is_authenticated %}
-            <a href="save/">북마크추가</a>|
-            {{ user.username }} 님 안녕하세요.
-            (<a href="logout/">로그아웃</a>)
-            {% else %}
-            <a href="login/">로그인</a>
-            <a href="register/">가입</a>
+            <a href="/bookmarks/save/">북마크추가</a>|
+            <a href="/bookmarks/search/">검색</a>
             {% endif %}
         </div>
         <h1>{% block head %}{% endblock %}</h1>

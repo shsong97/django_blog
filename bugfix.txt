@@ -1,0 +1,7 @@
+current bug list
+timeline / 
+account 에서 friend list - 로 삭제할때 클릭한 값이 지워지지 않고 pop으로 처리함. js에서 list 빼는 방법을 찾아야 한다.
+
+blog /
+조회시 pre 태그로 되어 있고 html이 조회되게 변경하고 싶음
+로그인 기능구현

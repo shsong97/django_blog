@@ -1,9 +1,6 @@
 /* join page */
 body {
     background-color:#c0deed;
-    padding-top:60px;
-    padding-bottom:40px;
-    font-family:calibri;
 }
 
 .row-fluid div[class*="span"] {
@@ -40,7 +37,6 @@ body {
 
 .bg {
     padding:15px;
-    background:url('http://cfile8.uf.tistory.com/image/1426B1355023C92334FFB7');
 }
 
 .loginbox {
@@ -61,10 +57,6 @@ body {
 }
 
 /* timeline page */
-.container .brand {
-    color:white;
-    font-size:22px;
-}
 
 .timeline {
     padding-top:5px;

@@ -41,7 +41,7 @@ def need_auth(functor):
         logout(request)
         response=HttpResponse()
         response.status_code=401
-        response['WWW-Authenticate']='Basic realm="Timeline Service"'
+#         response['WWW-Authenticate']='Basic '
         return response
     return try_auth
     

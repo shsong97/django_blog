@@ -3,6 +3,7 @@
 from django.db import models
 import datetime
 from django.utils import timezone
+from django.contrib.auth.models import User
 
 # Create your models here.
 
@@ -10,6 +11,7 @@ class Blog(models.Model):
     title = models.CharField('제목',max_length=200)
     contents = models.TextField()
     pub_date = models.DateTimeField('등록일',default=timezone.now())
+    user=models.ForeignKey(User)
     
     def __unicode__(self):
         return self.title

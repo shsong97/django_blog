@@ -1,4 +1,7 @@
 {% extends "base.html" %}
+{% block external %}
+<script type="text/javascript" src="/static/bookmarks/bookmark_edit.js"></script>
+{% endblock %}
 {% block title %}{{ username }}{% endblock %}
 {% block head %}{{ username }}님의 북마크입니다.{% endblock %}
 {% block content %}

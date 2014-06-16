@@ -18,5 +18,4 @@ urlpatterns = patterns('',
     url(r'^api/profile/$',views.profile_view),
     url(r'^api/login/$',views.login_view),
     url(r'^(?P<page>\w+).html/$',views.serve_html),
-
 )

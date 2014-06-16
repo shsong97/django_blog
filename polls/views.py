@@ -54,6 +54,12 @@ def vote(request, poll_id):
     polls = get_object_or_404(PollList,pk=poll_id)
     try:
         p_id=""
+        # choice value validation
+        for p in plist:
+            p_id=str(p.id)
+            selected_choice = p.choice_set.get(pk=request.POST[p_id])
+        
+        # if no error
         for p in plist:
             p_id=str(p.id)
             selected_choice = p.choice_set.get(pk=request.POST[p_id])

@@ -6,6 +6,7 @@ import os.path
 urlpatterns = patterns('',
     # bookmark search
     url(r'^$', views.main_page),
+    url(r'^popular/$',views.popular_page),                   
     url(r'^user/(\w+)/$', views.user_page),
     # session
     url(r'^login/$', 'django.contrib.auth.views.login'),
@@ -14,6 +15,12 @@ urlpatterns = patterns('',
     url(r'register/success/$',views.register_success),
     # bookmark
     url(r'save/$',views.bookmark_save_page),
+    url(r'vote/$',views.bookmark_vote_page),
     url(r'tag/([^\s]+)/$',views.tag_page),
-    url(r'tag/$',views.tag_cloud_page),                       
+    url(r'tag/$',views.tag_cloud_page),    
+    url(r'taglist/$',views.tag_list),
+    url(r'search/$',views.search_page),
+    url(r'bookmark/(\d+)/$',views.bookmark_page)
+    # comments
+    url(r'^comments/',include('django.contrib.comments.urls')),
 ) 

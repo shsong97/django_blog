@@ -7,7 +7,11 @@ from django.http import HttpResponseRedirect
 from blog.models import Blog
 from django.core.urlresolvers import reverse
 from django.views.generic.edit import CreateView
+from django.contrib.auth.decorators import login_required
+
 # Create your views here.
+
+login_url='/bookmarks/login'
 
 class IndexView(generic.ListView):
     template_name = 'blog/index.html'
@@ -46,7 +50,7 @@ class BlogCreate(CreateView):
     model = Blog
     template_name = 'blog/add.html'
 
-    
+@login_required(login_url=login_url)
 def blog_update(request, blog_id):
     blogs = get_object_or_404(Blog,id=blog_id)
     blogs.title=request.POST['title']
@@ -54,11 +58,13 @@ def blog_update(request, blog_id):
     blogs.save()
     return HttpResponseRedirect(reverse('blog:detail', args=(blog_id,)))
 
+@login_required(login_url=login_url)
 def blog_add(request):
-    blogs = Blog(title=request.POST['title'],contents=request.POST['contents'])
+    blogs = Blog(title=request.POST['title'],contents=request.POST['contents'],user=request.user)
     blogs.save()
     return HttpResponseRedirect('/blog/')
 
+@login_required(login_url=login_url)
 def blog_delete(request, blog_id):
     blogs = get_object_or_404(Blog,id=blog_id)
     blogs.delete()

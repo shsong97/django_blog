@@ -46,7 +46,7 @@ var doLogin=function() {
             window.location=baseUrl+"timeline.html";
         },
         error:function(){
-            alert("Fail to get data!");
+            alert("Login failed. retry!!!");
         },
         
     });

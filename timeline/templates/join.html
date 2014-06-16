@@ -2,30 +2,14 @@
 <html lang="ko">
     <head>
         <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Timeline Example</title>
         <link href="/static/bootstrap/css/bootstrap.css" rel="stylesheet">
         <link href="/static/timeline.css" rel="stylesheet">
         <link href="/static/bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
     </head>
     <body>
-        <div class="navbar navbar-inverse navbar-fixed-top">
-            <div class="navbar-inner">
-                <div class="container">
-                    <a class="btn btn-navbar" data-toggle="collapse" data-target="#navMenu">
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </a>
-                    <a class="brand" href="login.html">TimeLine Service</a>
-                    <div class="nav-collapse" id="navMenu">
-                        <div class="btn-group pull-right">
-                            <a class="btn" id="adminBtn">
-                                <i class="icon-pencil"></i>ADMIN</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div><!--End of NavBar-->
+        {% include "menu.html" %} 
         <div class="container"><!-- Start of Container -->
             <div class="row-fluid"><!-- Start of Row -->
                 <div class="span12">
