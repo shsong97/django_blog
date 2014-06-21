@@ -12,12 +12,19 @@ from django.contrib.auth import logout
 # password_change_done, password_reset, password_reset_done
 # redirect_to_login
 
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, permission_required
 from django.shortcuts import get_object_or_404
-from bookmarks.models import Tag, Link, Bookmark, SharedBookmark
+from bookmarks.models import Tag, Link, Bookmark, SharedBookmark, Friendship, Invitation
 from bookmarks.forms import *
 from django.core.exceptions import ObjectDoesNotExist
 from datetime import datetime, timedelta
+
+from django.db.models import Q
+from django.core.paginator import Paginator
+
+from django.utils.translation import gettext as _
+
+ITEMS_PER_PAGE=10
 
 # redirect login page
 login_url='/bookmarks/login'
@@ -32,14 +39,38 @@ def register_success(request):
 
 
 def user_page(request,username):
-    user=get_object_or_404(User,username=username)    
-    bookmarks=user.bookmark_set.order_by('-id')
+    user=get_object_or_404(User,username=username)
+    query_set=user.bookmark_set.order_by('id')
+    paginator=Paginator(query_set,ITEMS_PER_PAGE)
+    is_friend=Friendship.objects.filter(
+        from_friend=request.user,
+        to_friend=user
+    )
+    
+    try:
+        page=int(request.GET['page'])
+    except:
+        page=1
+    try:
+        bookmarks=paginator.page(page)
+    except:
+        raise Http404
+        
+    #bookmarks=user.bookmark_set.order_by('-id')
 
     variables=RequestContext(request,{
             'username':username,
-            'bookmarks':bookmarks,
+            'bookmarks':bookmarks.object_list,
             'show_tags':True,
             'show_edit':username == request.user.username,
+            'show_paginator':paginator.num_pages>1,
+            'has_prev':bookmarks.has_previous(),
+            'has_next':bookmarks.has_next(),
+            'page':page,
+            'pages':paginator.num_pages,
+            'next_page':page+1, #bookmarks.next_page_number(),
+            'prev_page':page-1, #bookmarks.previous_page_number(),
+            'is_friend':is_friend
         })
     return render_to_response('user_page.html',variables)
 
@@ -56,6 +87,16 @@ def register_page(request):
                 password=form.cleaned_data['password1'],
                 email=form.cleaned_data['email']
             )
+            if 'invitation' in request.session:
+                invitation=Invitation.objects.get(id=request.session['invitation'])
+                friendship=Friendship(from_friend=user,to_friend=invitation.sender)
+                friendship.save()
+                
+                friendship=Friendship(from_friend=inviation.sender,to_friend=user)
+                friendship.save()
+                invitation.delete()
+                del request.session['invitation']
+                
             return HttpResponseRedirect('/bookmarks/register/success/')
     else:
         form=RegistrationForm()
@@ -84,16 +125,19 @@ def _bookmark_save(request,form):
     if form.cleaned_data['share']:
         shared_bookmark, created = SharedBookmark.objects.get_or_create(bookmark=bookmark)
     
-    if created:
-        shared_bookmark.users_voted.add(request.user)
-        shared_bookmark.save()
+        if created:
+            shared_bookmark.users_voted.add(request.user)
+            shared_bookmark.save()
         
     bookmark.save()
     return bookmark
 
 
 # deco def : login_required : /accounts/login/
-@login_required(login_url=login_url)
+#@login_required(login_url=login_url)
+
+# user permission
+@permission_required('bookmarks.add_bookmark',login_url=login_url)
 def bookmark_save_page(request):
     ajax=request.GET.has_key('ajax')
     if request.method=='POST':
@@ -189,8 +233,12 @@ def search_page(request):
         show_results=True
         query=request.GET['query'].strip()
         if query:
+            keywords = query.split()
+            q=Q()
+            for keyword in keywords:
+                q = q & Q(title__icontains=keyword)
             form=SearchForm({'query':query})
-            bookmarks=Bookmark.objects.filter(title__icontains=query)[:10]
+            bookmarks=Bookmark.objects.filter(q)[:10]
             
     variables=RequestContext(request,
                             {'form':form,
@@ -233,9 +281,73 @@ def popular_page(request):
         })
     return render_to_response('popular_page.html',variables)
 
-# def bookmark_page(request,bookmark_id):
-#     shared_bookmark=get_object_or_404(SharedBookmark,id=bookmark_id)
-#     variables=RequestContext(request,{
-#             'shared_bookmark':shared_bookmark
-#         })
-#     return render_to_response('bookmark_page.html',variables)
+def bookmark_page(request,bookmark_id):
+    shared_bookmark=get_object_or_404(SharedBookmark,id=bookmark_id)
+    variables=RequestContext(request,{
+            'shared_bookmark':shared_bookmark
+        })
+    return render_to_response('bookmark_page.html',variables)
+
+def friends_page(request, username):
+    user=get_object_or_404(User, username=username)
+    friends=[friendship.to_friend for friendship in user.friend_set.all()]
+    friend_bookmarks=Bookmark.objects.filter(user__in=friends).order_by('-id')
+    variables=RequestContext(request,{
+            'username':username,
+            'friends':friends,
+            'bookmarks':friend_bookmarks[:10],
+            'show_tags':True,
+            'show_user':True
+        })
+    return render_to_response('friends_page.html',variables)
+
+@login_required
+def friend_add(request):
+    if request.GET.has_key('username'):
+        friend=get_object_or_404(User,username=request.GET['username'])
+        friendship=Friendship(from_friend=request_user,to_friend=friend)
+        try:
+            friendship.save()
+            request.user.message_set.create(
+                message=u'%s를 친구로 추가했습니다.' % friend.username
+            )
+        except:
+            request.user.message_set.create(
+                message=u'%s는 이미 친구입니다.' % friend.username
+            )
+        return HttpResponseRedirect('/bookmarks/friends/%s' % request.user.username )
+    else:
+        raise Http404
+        
+@login_required
+def friend_invite(request):
+    if request.method=='POST':
+        form=FriendInviteForm(request.POST)
+        if form.is_valid():
+            invitation=Invitation(
+                name=form.cleaned_data['name'],
+                email=form.cleaned_data['email'],
+                code=User.objects.make_random_password(20),
+                sender=request.user
+            )
+            invitation.save()
+            try:
+                invitation.send()
+                request.user.message_set.create(
+                    message=_('An invitation was send to %s.') % invitation.email
+                )
+            except:
+                request.user.message_set.create(
+                    message=_('There was an error while sending the invitation.')
+                )
+            return HttpResponseRedirect('/bookmarks/friend/invite/')
+    else:
+        form=FriendInviteForm()
+            
+    variables=RequestContext(request,{'form':form})
+    return render_to_response('friend_invite.html',variables)
+
+def friend_accept(request, code):
+    invitation=get_object_or_404(Invitation,code__exact=code)
+    request.session['invitation']=invitation.id
+    return HttpResponseRedirect('/bookmarks/register/')

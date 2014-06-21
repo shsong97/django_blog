@@ -1,3 +1,4 @@
+# -*- encoding:UTF-8 -*-
 """
 Django settings for mysite project.
 
@@ -51,11 +52,12 @@ INSTALLED_APPS = (
 MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
-#     'django.middleware.csrf.CsrfViewMiddleware',
+    'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'mysite.cors.XsSharingMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
 )
 
 ROOT_URLCONF = 'mysite.urls'
@@ -113,6 +115,7 @@ USE_L10N = True
 
 USE_TZ = True
 
+SITE_ID = 1
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.6/howto/static-files/
@@ -120,8 +123,7 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.dirname(os.path.realpath(__file__))
 STATICFILES_DIRS = (
-                    os.path.join(BASE_DIR, 'static'),
-#     'D:/django_blog/static',
+    os.path.join(BASE_DIR, 'static'),
 )
 
 # List of finder classes that know how to find static files in
@@ -129,4 +131,14 @@ STATICFILES_DIRS = (
 STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+)
+
+SITE_HOST=''
+DEFAULT_FROM_EMAIL='장고북마크<shsong97@gmail.com>'
+EMAIL_HOST='mail.yourisp.com'
+EMAIL_PORT=''
+EMAIL_HOST_USER='username+mail.yourisp.com'
+EMAIL_HOST_PASSWORD=''
+ADMINS = (
+    ('your name','youremail@gmail.com')
 )

@@ -1,9 +1,24 @@
 {% extends "base.html" %}
 {% block external %}
 <script type="text/javascript" src="/static/bookmarks/bookmark_edit.js"></script>
+<link rel="alternate" type="application/rss+xml" title="장고 북마크|{{ user.username }}가 등록한 북마크" href="/feeds/user/{{ user.username }}" />
 {% endblock %}
 {% block title %}{{ username }}{% endblock %}
 {% block head %}{{ username }}님의 북마크입니다.{% endblock %}
 {% block content %}
-    {% include "bookmark_list.html" %}
+{% ifequal user.username username %}
+<a href="/bookmarks/friends/{{ username }}/">{{ username }}님의 친구들</a>
+{% else %}
+    {% if is_friend %}
+    <a href="/bookmarks/friends/{{ user.username }}/">
+        {{ username }}은 {{ user.username }}의 친구입니다.</a>
+    {% else %}
+    <a href="/bookmarks/add/?username={{ username }}">
+        {{ username }}를 친구로 추가하세요.</a>
+    {% endif %}
+    - <a href="/bookmarks/friends/{{ username }}/">
+    {{ username }}의 친구들</a>
+{% endifequal %}
+
+{% include "bookmark_list.html" %}
 {% endblock %}

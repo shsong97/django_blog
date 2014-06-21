@@ -3,6 +3,7 @@ from django import forms
 import re
 from django.contrib.auth.models import User
 from django.core.exceptions import ObjectDoesNotExist
+from django.utils.translation import gettext_lazy as _
 
 class RegistrationForm(forms.Form):
     username=forms.CharField(label='사용자이름',max_length=30)
@@ -46,4 +47,8 @@ class SearchForm(forms.Form):
         label='검색어를 입력하세요.',
         widget=forms.TextInput(attrs={'size':32}))
 
+class FriendInviteForm(forms.Form):
+    name=forms.CharField(label=_("Friend's name"))
+    email=forms.EmailField(label=_("Friend's email"))
+    
     
