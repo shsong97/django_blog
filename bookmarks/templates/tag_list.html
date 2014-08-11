@@ -5,22 +5,18 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link href="{% static 'bootstrap/css/bootstrap.css' %}" rel="stylesheet">
 <link href="{% static 'bootstrap/css/bootstrap-responsive.css' %}" rel="stylesheet">
-<title>Blog List</title>
+<link rel="stylesheet" href="/static/bookmarks/style.css" type="text/css" />
+<title>Tag</title>
     <style>
-        body { margin:0; padding-left:0;}
+        body { margin:0; }
     </style>
 </head>
 <body>
-{% if latest_blog_list %}
-    <table>
-    {% for blog in latest_blog_list %}
-	<tr>
-		<td><a href="{% url 'blog:detail' blog.id %}" target="_blank">{{ blog.title }}</a></td>
-	</tr>
+<div id="tag-cloud">
+    {% for tag in tags %}
+    <a href="/bookmarks/tag/{{ tag.name|urlencode }}/" class="tag-cloud-{{ tag.weight }}" target="_blank">
+        {{ tag.name|escape }}</a>
     {% endfor %}
-    </table>
-{% else %}
-    <p>No contents</p>
-{% endif %}
+</div>
 </body>
 </html>

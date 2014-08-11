@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="ko">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Timeline Example</title>
+        <link href="/static/bootstrap/css/bootstrap.css" rel="stylesheet">
+        <link href="/static/timeline.css" rel="stylesheet">
+        <link href="/static/bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
+    </head>
+    <body>
+        {% include "menu.html" %} 
+        <div class="container"><!-- Start of Container -->
+            <div class="row-fluid"><!-- Start of Row -->
+                <div class="span12">
+                    <div class="inside"><br>
+                        <div class="lightblue">
+                            <h1>Create Account</h1>
+                        </div>
+                        <div>
+                            <h3>Join our Service!</h3>
+                        </div><br>
+                    </div>
+                </div>
+            </div><!-- End of Row -->
+            <div class="row-fluid"><!-- Start of Row -->
+                <div class="span6">
+                    <div class="inside center">
+                        <h2>ID</h2>
+                        <input type="text" placeholder="Input your ID" id="username" />
+                    </div>
+                </div>
+                <div class="span6">
+                    <div class="inside center">
+                        <h2>PASSWORD</h2>
+                        <input type="text" placeholder="Input your Password" id="password" />
+                    </div>
+                </div>
+            </div> <!-- End of Row -->
+            <div class="row-fluid"> <!-- Start of Row -->
+                <div class="span12">
+                    <div class="inside center">
+                        <h2>NAME</h2>
+                        <input type="text" placeholder="Input your Name" id="name" />
+                    </div>
+                </div>
+            </div> <!-- end of row  -->
+            <div class="row-fluid"> <!-- start of row -->
+                <div class="span12">
+                    <div class="inside center">
+                        <a class="btn btn-large btn-info" id="joinBtn">Join Now</a>
+                    </div>
+                </div>
+            </div> <!--end of row-->
+        </div> <!-- end of container --> 
+
+        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js">
+        </script>
+        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.18/jquery-ui.min.js">
+        </script>
+        <script src="/static/bootstrap/js/bootstrap.js"></script>
+        <script src="/static/timeline.js"></script>
+        <script>
+            $(document).ready(function(){
+                $("#joinBtn").click(function(){
+                    var name=$("#name").val();
+                    var username=$("#username").val();
+                    var password=$("#password").val();
+                    
+                    if(name != "" && username != "" && password != "")
+                        doJoin();
+                    else
+                        alert("fill all forms");
+                });
+                $("#adminBtn").click(goAdmin);
+            });
+        </script>
+    </body>
+</html>
+        

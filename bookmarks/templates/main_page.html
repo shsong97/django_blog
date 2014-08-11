@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block title %}장고 북마크에 오신것을 환영합니다.{% endblock %}
+{% block head %}장고 북마크에 오신것을 환영합니다.{% endblock %}
+{% block external %}
+<link rel="alternate" type="application/rss+xml" title="장고 북마크 | 최신 북마크" href="/feeds/recent/">
+{% endblock %}
+{% block content %}
+        {% if user.username %}
+        <p>{{ user.username }}님 안녕하세요.
+        여기에 북마크를 저장하고 공유할 수 있습니다.</p>
+        {% else %}
+        <p>안녕하세요! 북마크를 저장하고 공유하기 전에 먼저
+            <a href="login/">login</a> 페이지에서 로그인하세요</p>
+        {% endif %}
+<h2>사용자들이 공유한 북마크</h2>
+{% include 'shared_bookmark_list.html' %}
+{% endblock %}

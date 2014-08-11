@@ -11,10 +11,31 @@
             <ul class="nav">
               <li><a href="/blog">Blog</a></li>
               <li><a href="/polls">Polls</a></li>
-              <li><a href="/contact">Contact</a></li>  
-              
+              <li><a href="/timeline/login.html">Timeline</a></li>
+                
+                
+              <li><a href="/bookmarks">Bookmark</a></li>
+              <li><a href="/contact">Contact</a></li>          
             </ul>
+
           </div><!--/.nav-collapse -->
+
+          <div class="nav-collapse" id="navMenu">
+              
+            {% if user.is_authenticated %}
+              <div class="btn-group pull-right">
+                    <a class="btn btn-inverse">{{ user.username }}님</a>
+                    <a class="btn btn-inverse" href="/bookmarks/logout/">로그아웃</a>
+                    <a class="btn btn-danger" id="adminBtn" href="/admin/"><i class="icon-pencil"></i>Admin</a>
+              </div>
+            {% else %}
+              <div class="btn-group">
+                <a class="btn btn-inverse" href="/timeline/login.html/">로그인</a>
+                <a class="btn btn-danger" href="/bookmarks/register/">가입</a>
+              </div>
+            {% endif %}      
+             
+          </div>
         </div>
       </div>
     </div>

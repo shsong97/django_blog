@@ -17,10 +17,10 @@ class UserProfile(models.Model):
             'user':self.user_id,
             'username':self.user.username,
             'nickname':self.nickname,
-            'commnent':self.comment,
+            'comment':self.comment,
             'country':self.country,
             'url':self.url,
-            'ignores':[],
+            'ignores':self.get_ignorelist(),
         }
         return data
 
@@ -44,6 +44,10 @@ class Message(models.Model):
     user=models.ForeignKey(User)
     message=models.CharField(max_length=128)
     created=models.DateTimeField(auto_now_add=True)
+
+    def __unicode__(self):
+        return "%s" % (self.message,)
+    
     def serialize(self):
         data={
             'id':self.id,
@@ -58,4 +62,7 @@ class Message(models.Model):
 class Like(models.Model):
     user=models.ForeignKey(User)
     message=models.ForeignKey(Message)
+    
+    def __unicode__(self):
+        return "%s,%s" % (self.user,self.message.message,)
     
