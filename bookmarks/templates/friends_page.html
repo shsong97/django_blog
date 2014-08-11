@@ -1,8 +1,8 @@
 {% extends "base.html" %}
-{% block title %}{{ username }} 의 친구들{% endblock %}
-{% block head %}{{ username }} 의 친구들{% endblock %}
+{% block title %}{{ username }}'s friends{% endblock %}
+{% block head %}{{ username }}'s friends{% endblock %}
 {% block content %}
-<h2>친구들</h2>
+<h2>Friends</h2>
 {% if friends %}
 <ul class="friends">
     {% for friend in friends %}
@@ -11,9 +11,9 @@
     {% endfor %}
 </ul>
 {% else %}
-<p>아직 친구가 없군요.</p>
+<p>No friend.</p>
 {% endif %}
-<h2>친구들의 최신 북마크</h2>
-<a href="/bookmarks/friend/invite/">친구들 초대하세요</a>
+<h2>Friends recent bookmarks</h2>
+<a href="/bookmarks/friend/invite/">Invite friends</a>
 {% include 'bookmark_list.html' %}
 {% endblock %}

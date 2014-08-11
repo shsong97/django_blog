@@ -5,11 +5,11 @@
         <a href="{{ bookmark.link.url|escape }}" class="title">
             {{ bookmark.title|escape }}</a>
         {% if show_edit %}
-        <a href="/bookmarks/save/?url={{ bookmark.link.url|urlencode }}" class="edit">[수정]</a>
+        <a href="/bookmarks/save/?url={{ bookmark.link.url|urlencode }}" class="edit">[Edit]</a>
         {% endif %}
         <br />
         {% if show_tags %}
-        태그:
+        Tag:
             {% if bookmark.tag_set.all %}
             <ul class="tags">
                 {% for tag in bookmark.tag_set.all %}
@@ -17,14 +17,14 @@
                 {% endfor %}
             </ul>
             {% else %}
-            태그가 없습니다.
+            No tag.
             {% endif %}
         <br />
         {% endif %}
         <br />
         
         {% if show_user %}
-        추가한 사용자:
+        User added:
         <a href="/bookmarks/user/{{ bookmark.user.username }}/" class="username">
             {{ bookmark.user.username }}</a>
         {% endif %}
@@ -34,14 +34,14 @@
     {% if show_paginator %}
     <div class="paginator">
         {% if has_prev %}
-        <a href="?page={{ prev_page }}">&laquo; 다음 페이지</a>
+        <a href="?page={{ prev_page }}">&laquo; Next</a>
         {% endif %}
         {% if has_next %}
-        <a href="?page={{ next_page }}">이전 페이지&raquo;</a>
+        <a href="?page={{ next_page }}">Prev &raquo;</a>
         {% endif %}
-        (페이지 {{ page }} of {{ pages }})
+        (Page {{ page }} of {{ pages }})
     </div>
     {% endif %}
 {% else %}
-<p> 북마크가 없습니다.</p>
+<p> No bookmark.</p>
 {% endif %}

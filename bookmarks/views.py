@@ -121,7 +121,7 @@ def _bookmark_save(request,form):
         tag, dummy = Tag.objects.get_or_create(name=tag_name)
         bookmark.tag_set.add(tag)
     
-    # 첫페이지에서 공유하도록 설정합니다.
+    # share first page
     if form.cleaned_data['share']:
         shared_bookmark, created = SharedBookmark.objects.get_or_create(bookmark=bookmark)
     
@@ -201,7 +201,7 @@ def tag_cloud(request,htmlpage):
     MAX_WEIGHT=5
     tags=Tag.objects.order_by('name')
     
-    min_count=max_count=tags[0].bookmarks.count()
+    min_count=max_count=0
     for tag in tags:
         tag.count=tag.bookmarks.count()
         if tag.count<min_count:
@@ -264,7 +264,7 @@ def bookmark_vote_page(request):
                 shared_bookmark.users_voted.add(request.user)
                 shared_bookmark.save()
         except ObjectDoesNotExist:
-            raise Http404('북마크를 찾을수 없습니다.')
+            raise Http404('No bookmark.')
                 
     if request.META.has_key('HTTP_REFERER'):
         return HttpResponseRedirect(request.META['HTTP_REFERER'])
@@ -309,11 +309,11 @@ def friend_add(request):
         try:
             friendship.save()
             request.user.message_set.create(
-                message=u'%s를 친구로 추가했습니다.' % friend.username
+                message=u'%s is added' % friend.username
             )
         except:
             request.user.message_set.create(
-                message=u'%s는 이미 친구입니다.' % friend.username
+                message=u'%s is already friend.' % friend.username
             )
         return HttpResponseRedirect('/bookmarks/friends/%s' % request.user.username )
     else:
