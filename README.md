@@ -50,7 +50,6 @@ Directory : C:\Program Files\Apache Software Foundation\Apache2.2\modules<br />
 4) Edit "httpd.conf" file<br />
 Directory : C:\Program Files\Apache Software Foundation\Apache2.2\conf\httpd.conf <br />
 Add below:<br />
-
 <pre>
 LoadModule wsgi_module modules/mod_wsgi.so
 WSGIScriptAlias / d:/django_blog/apache/django.wsgi
@@ -67,7 +66,6 @@ Order deny,allow
 Allow from all
 &lt;/Directory>
 </pre>
-
 5) Edit "django.wsgi" file
 <pre>
 import os
