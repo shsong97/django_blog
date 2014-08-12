@@ -4,9 +4,10 @@ django_blog
 blog, poll, bookmark for django-python
 
 
-============
 
-Set up PostgreSQL
+
+# Set up PostgreSQL
+============
 
 Installation
 
@@ -24,23 +25,17 @@ URL : http://www.postgresql.org/download/
 3) Edit setting.py of your project
 
 DATABASES = {
-##    'default': {
-##        'ENGINE': 'django.db.backends.sqlite3',
-##        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-##    }
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'blog',
         'USER': 'postgres',
         'PASSWORD':'1234',
-##        'HOST':'',
-##        'PORT':'5432',
-
 }
 
+# Set up for Apache Server
 ============
 
-Set up for Apache Server
+
 
 Installation
 
@@ -74,9 +69,7 @@ C:\Program Files\Apache Software Foundation\Apache2.2\conf\httpd.conf
 
 Add below:
 
-## django install path
-
-#WSGI Setting for Django
+# WSGI Setting for Django
 
 LoadModule wsgi_module modules/mod_wsgi.so
 
