@@ -53,18 +53,15 @@ Add below:<br />
 <pre>
 LoadModule wsgi_module modules/mod_wsgi.so
 WSGIScriptAlias / d:/django_blog/apache/django.wsgi
-
-Directory "d:/django_blog/apache"
+&lt;Directory "d:/django_blog/apache">
 Order deny,allow
 Allow from all
-/Directory
-
+&lt;/Directory>
 Alias /static d:/django_blog/apache/static
-
-Directory "d:/django_blog/apache/static"
+&lt;Directory "d:/django_blog/apache/static">
 Order deny,allow
 Allow from all
-/Directory
+&lt;/Directory>
 </pre>
 
 5) Edit "django.wsgi" file
