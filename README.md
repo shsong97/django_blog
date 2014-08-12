@@ -6,7 +6,7 @@ blog, poll, bookmark for django-python
 
 
 
-# Set up PostgreSQL
+Set up PostgreSQL
 ============
 
 Installation
@@ -23,7 +23,7 @@ URL : http://www.stickpeople.com/projects/python/win-psycopg/
 URL : http://www.postgresql.org/download/
 
 3) Edit setting.py of your project
-
+<pre>
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
@@ -31,8 +31,8 @@ DATABASES = {
         'USER': 'postgres',
         'PASSWORD':'1234',
 }
-
-# Set up for Apache Server
+</pre>
+Set up for Apache Server
 ============
 
 
@@ -69,41 +69,27 @@ C:\Program Files\Apache Software Foundation\Apache2.2\conf\httpd.conf
 
 Add below:
 
-# WSGI Setting for Django
-
-LoadModule wsgi_module modules/mod_wsgi.so
-
+LoadModule wsgi_module modules/mod_wsgi.so<br />
 WSGIScriptAlias / d:/django_blog/apache/django.wsgi
 
-<Directory "d:/django_blog/apache">
-
-Order deny,allow
-
-Allow from all
-
-</Directory>
+<Directory "d:/django_blog/apache"><br />
+Order deny,allow<br />
+Allow from all<br />
+</Directory><br />
 
 Alias /static d:/django_blog/apache/static
 
-<Directory "d:/django_blog/apache/static">
-
-Order deny,allow
-
-Allow from all
-
+<Directory "d:/django_blog/apache/static"><br />
+Order deny,allow<br />
+Allow from all<br />
 </Directory>
 
 
 5) Edit "django.wsgi" file
 
-import os
-
-import sys
-
-sys.path.append('d:/django_blog')
-
-os.environ['DJANGO_SETTINGS_MODULE']='mysite.settings'
-
-import django.core.handlers.wsgi
-
-application=django.core.handlers.wsgi.WSGIHandler()
+import os<br />
+import sys<br />
+sys.path.append('d:/django_blog')<br />
+os.environ['DJANGO_SETTINGS_MODULE']='mysite.settings'<br />
+import django.core.handlers.wsgi<br />
+application=django.core.handlers.wsgi.WSGIHandler()<br />
