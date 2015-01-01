@@ -134,11 +134,14 @@ STATICFILES_FINDERS = (
 )
 
 SITE_HOST=''
-DEFAULT_FROM_EMAIL='장고북마크<shsong97@gmail.com>'
-EMAIL_HOST='mail.yourisp.com'
-EMAIL_PORT=''
-EMAIL_HOST_USER='username+mail.yourisp.com'
-EMAIL_HOST_PASSWORD=''
+DEFAULT_FROM_EMAIL='django-blog<shsong97@gmail.com>'
+EMAIL_HOST_USER = 'uscript-178588.apne1.nitrousbox.com:4000'
+EMAIL_HOST='smtp.gmail.com'
+EMAIL_PORT=587
+EMAIL_HOST_USER='shsong97@gmail.com'
+EMAIL_HOST_PASSWORD='tmdgns1997'
+EMAIL_USE_TLS = True
+DEFAULT_FROM_EMAIL = 'shsong97@gmail.com'
 ADMINS = (
-    ('your name','youremail@gmail.com')
+    ('Song, Seung-hun','shsong97@gmail.com')
 )

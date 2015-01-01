@@ -2,7 +2,8 @@ from django.conf.urls import patterns, url
 from blog import views
 
 
-urlpatterns = patterns('',
+urlpatterns = patterns(
+    '',
     url(r'^$', views.IndexView.as_view(), name='index'),
     url(r'^short/$', views.ShortIndexView.as_view(), name='short'),
     url(r'^add/$', views.BlogCreate.as_view(), name='blog_add'), 
@@ -11,4 +12,5 @@ urlpatterns = patterns('',
     url(r'^(?P<pk>\d+)/update/$', views.BlogUpdateView.as_view(), name='update'),
     url(r'^(?P<blog_id>\d+)/update/submit/$', views.blog_update, name='update_submit'),
     url(r'^(?P<blog_id>\d+)/delete/$', views.blog_delete, name='delete'),
+    url(r'^(?P<blog_id>\d+)/like/$', views.blog_like, name='blog_like'),
 ) 

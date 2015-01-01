@@ -15,7 +15,7 @@
     <table>
     {% for blog in latest_blog_list %}
 	<tr>
-		<td><a href="{% url 'blog:detail' blog.id %}" target="_blank">{{ blog.title }}</a></td>
+		<td><a href="{% url 'blog:detail' blog.id %}" target="_blank">{{ blog.blog_title }}</a></td>
 	</tr>
     {% endfor %}
     </table>

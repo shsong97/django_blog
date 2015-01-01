@@ -7,7 +7,7 @@
 </head>
 <body>
 {% include "menu.html" %}    
-<h4>{{ blog.title }}</h4>
+<h4>{{ blog.blog_title }}</h4>
 
 {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
 
@@ -16,7 +16,7 @@
 	<table class="table">
 		<tr>
 			<td>Title</td>
-			<td><input type="text" name="title" value="{{ blog.title }}" /></td>
+			<td><input type="text" name="blog_title" value="{{ blog.blog_title }}" /></td>
 		</tr>
 		<tr>
 			<td>Contents</td>

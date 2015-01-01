@@ -18,7 +18,7 @@
     	</tr>
     {% for blog in latest_blog_list %}
 	<tr>
-		<td><a href="{% url 'blog:detail' blog.id %}">{{ blog.title }}</a></td>
+		<td><a href="{% url 'blog:detail' blog.id %}">{{ blog.blog_title }}</a></td>
 		<td style="text-align : right;">{{ blog.pub_date|date:"Y/m/j" }}</td>
 	</tr>
     {% endfor %}

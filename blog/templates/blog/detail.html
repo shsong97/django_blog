@@ -7,12 +7,20 @@
 </head>
 <body>
 {% include "menu.html" %}    
-<h4>{{ blog.title }}</h4>
-
+<h4>{{ blog.blog_title }} </h4>
+<p class="">
+    <span class="badge">
+    작성자 : {{ blog.user.username }} {% if blog.user.first_name %} ( {{ blog.user.first_name}}, {{blog.user.last_name }}) {% endif %}
+    </span><br />
+    <span class="badge">
+    작성일 : {{ blog.pub_date }}
+    </span>
+</p>
 {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
 
 {% csrf_token %}
   <div><pre>{{ blog.contents }}</pre></div>
+Like : {{ blog.like_count }}<br />
 <a class="btn" href="update/">Edit</a>
 <a class="btn" href="/blog/">List</a>
 </body>

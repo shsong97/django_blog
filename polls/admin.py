@@ -36,3 +36,4 @@ class PollListAdmin(admin.ModelAdmin):
 admin.site.register(Poll,PollAdmin)
 admin.site.register(PollList,PollListAdmin)
 
+

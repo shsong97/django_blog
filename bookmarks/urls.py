@@ -10,11 +10,7 @@ urlpatterns = patterns(
     url(r'^$', views.main_page),
     url(r'^popular/$',views.popular_page),                   
     url(r'^user/(\w+)/$', views.user_page),
-    # session
-    url(r'^login/$', 'django.contrib.auth.views.login'),
-    url(r'^logout/$',views.logout_page),
-    url(r'^register/$',views.register_page),       
-    url(r'register/success/$',views.register_success),
+
     # bookmark
     url(r'save/$',views.bookmark_save_page),
     url(r'vote/$',views.bookmark_vote_page),

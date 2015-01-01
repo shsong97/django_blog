@@ -3,7 +3,7 @@
 from django.views import generic
 from django.utils import timezone
 from django.shortcuts import get_object_or_404
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
 from blog.models import Blog
 from django.core.urlresolvers import reverse
 from django.views.generic.edit import CreateView
@@ -11,10 +11,10 @@ from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 
-login_url='/bookmarks/login'
+login_url='/login'
 
 class IndexView(generic.ListView):
-    template_name = 'blog/index.html'
+    template_name = 'blog/blog_list.html'
     context_object_name = 'latest_blog_list'
     taglist=[]
     
@@ -53,19 +53,27 @@ class BlogCreate(CreateView):
 @login_required(login_url=login_url)
 def blog_update(request, blog_id):
     blogs = get_object_or_404(Blog,id=blog_id)
-    blogs.title=request.POST['title']
+    blogs.blog_title=request.POST['blog_title']
     blogs.contents=request.POST['contents']
     blogs.save()
-    return HttpResponseRedirect(reverse('blog:detail', args=(blog_id,)))
+    return HttpResponseRedirect(reverse('blog:index'))
 
 @login_required(login_url=login_url)
 def blog_add(request):
-    blogs = Blog(title=request.POST['title'],contents=request.POST['contents'],user=request.user)
+    blogs = Blog(blog_title=request.POST['blog_title'],contents=request.POST['contents'],user=request.user,pub_date=timezone.now())
     blogs.save()
     return HttpResponseRedirect('/blog/')
 
 @login_required(login_url=login_url)
 def blog_delete(request, blog_id):
     blogs = get_object_or_404(Blog,id=blog_id)
-    blogs.delete()
+    if request.user == blogs.user:
+        blogs.delete()
     return HttpResponseRedirect('/blog/')
+
+@login_required(login_url=login_url)
+def blog_like(request, blog_id):
+    blogs = get_object_or_404(Blog,id=blog_id)
+    blogs.like_count = blogs.like_count+1
+    blogs.save()
+    return HttpResponseRedirect(reverse('blog:index'))

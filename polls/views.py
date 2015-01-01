@@ -72,7 +72,20 @@ def vote(request, poll_id):
         # Redisplay the poll voting form.
         return render(request, 'polls/detail.html', {
             'polllist': polls,
-            'error_message': "선택하지 않은 항목이 있습니다.",
+            'error_message': "exists not selected items",
         })
     else:
         return HttpResponseRedirect(reverse('polls:results', args=(poll_id,)))
+
+def recent_poll(request):
+    poll = PollList.objects.filter(
+            pub_date__lte=timezone.now(),
+            start_date__lte=timezone.now(),
+            end_date__gte=timezone.now()
+        ).order_by('-pub_date')[0]
+    plist = get_list_or_404(Poll, poll_list=poll.id)
+    return render(request,'polls/sub_poll.html',{
+            'poll',poll,
+            'poll_items',plist,
+        })
+

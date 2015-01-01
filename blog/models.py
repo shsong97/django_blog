@@ -8,20 +8,21 @@ from django.contrib.auth.models import User
 # Create your models here.
 
 class Blog(models.Model):
-    title = models.CharField('제목',max_length=200)
+    blog_title = models.CharField('Title',max_length=200)
     contents = models.TextField()
-    pub_date = models.DateTimeField('등록일',default=timezone.now())
+    pub_date = models.DateTimeField('Pub Date',default=timezone.now())
     user=models.ForeignKey(User)
+    like_count = models.IntegerField('Like',default =0)
     
     def __unicode__(self):
-        return self.title
+        return self.blog_title
     def was_published_recently(self):
         now = timezone.now()
         return now - datetime.timedelta(days=1) <= self.pub_date <  now
 
-    was_published_recently.admin_order_field = '등록일'
+    was_published_recently.admin_order_field = 'Pub Date'
     was_published_recently.boolean = True
-    was_published_recently.short_description = '최근등록일?'
+    was_published_recently.short_description = 'recently published?'
 
 
 class Tag(models.Model):
@@ -30,3 +31,7 @@ class Tag(models.Model):
     
     def __unicode__(self):
         return self.tag_title
+
+class BlogLike(models.Model):
+    blog = models.ManyToManyField(Blog)
+    like_count = models.IntegerField('Like',default =0)

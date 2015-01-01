@@ -6,7 +6,7 @@ from django.template.loader import get_template
 from django.contrib.auth.models import User
 from django.shortcuts import render_to_response
 from django.http import HttpResponseRedirect
-from django.contrib.auth import logout 
+
 # look method
 # logout_then_login, password_change, 
 # password_change_done, password_reset, password_reset_done
@@ -25,17 +25,13 @@ from django.core.paginator import Paginator
 from django.utils.translation import gettext as _
 
 ITEMS_PER_PAGE=10
+login_url='/login'
 
-# redirect login page
-login_url='/bookmarks/login'
 
 def main_page(request):
     shared_bookmarks=SharedBookmark.objects.order_by('-date')[:10]
     variables=RequestContext(request,{'shared_bookmarks':shared_bookmarks})
     return render_to_response('main_page.html',variables)
-
-def register_success(request):
-    return render_to_response('registration/register_success.html',RequestContext(request))
 
 
 def user_page(request,username):
@@ -73,36 +69,6 @@ def user_page(request,username):
             'is_friend':is_friend
         })
     return render_to_response('user_page.html',variables)
-
-def logout_page(request):
-    logout(request)
-    return HttpResponseRedirect('/')
-
-def register_page(request):
-    if request.method=='POST':
-        form=RegistrationForm(request.POST)
-        if form.is_valid():
-            user=User.objects.create_user(
-                username=form.cleaned_data['username'],
-                password=form.cleaned_data['password1'],
-                email=form.cleaned_data['email']
-            )
-            if 'invitation' in request.session:
-                invitation=Invitation.objects.get(id=request.session['invitation'])
-                friendship=Friendship(from_friend=user,to_friend=invitation.sender)
-                friendship.save()
-                
-                friendship=Friendship(from_friend=inviation.sender,to_friend=user)
-                friendship.save()
-                invitation.delete()
-                del request.session['invitation']
-                
-            return HttpResponseRedirect('/bookmarks/register/success/')
-    else:
-        form=RegistrationForm()
-            
-    variables=RequestContext(request,{'form':form})
-    return render_to_response('registration/register.html',variables)
 
 def _bookmark_save(request,form):
     link, dummy = Link.objects.get_or_create(url=form.cleaned_data['url'])
@@ -350,4 +316,4 @@ def friend_invite(request):
 def friend_accept(request, code):
     invitation=get_object_or_404(Invitation,code__exact=code)
     request.session['invitation']=invitation.id
-    return HttpResponseRedirect('/bookmarks/register/')
+    return HttpResponseRedirect('/register/')
