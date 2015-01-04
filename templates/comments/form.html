@@ -1,5 +1,6 @@
 {% load comments i18n %}
 <h4> 댓글 작성 화면 </h4>
+
 <form action="{% comment_form_target %}" method="post">
 {% csrf_token %}
     {% for field in form %}
@@ -14,8 +15,10 @@
     </p>
     {% endif %}
     {% endfor %}
+
     <p class="submit">
         <input type="submit" name="post" class="submit-post" value="{% trans 'Post' %}" />
         <input type="submit" name="preview" class="submit-preview" value="{% trans 'Preview' %}"/>
     </p>
+
 </form>

@@ -11,7 +11,7 @@ from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 
-login_url='/login'
+login_url='/user/login'
 
 class IndexView(generic.ListView):
     template_name = 'blog/blog_list.html'

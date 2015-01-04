@@ -4,16 +4,23 @@ import re
 from django.contrib.auth.models import User
 from django.core.exceptions import ObjectDoesNotExist
 from django.utils.translation import gettext_lazy as _
+from django.forms import ModelForm
 
+class ViewUserProfile(ModelForm):
+    class Meta:
+        model=User
+        #fields = '__all__'
+        fields = ['first_name','last_name','email',]
+        
 class RegistrationForm(forms.Form):
-    username=forms.CharField(label='사용자이름',max_length=30)
-    email=forms.EmailField(label='이메일')
+    username=forms.CharField(label='Username',max_length=30)
+    email=forms.EmailField(label='Email')
     password1=forms.CharField(
-        label='비밀번호',
+        label='Password',
         widget=forms.PasswordInput()    
     )
     password2=forms.CharField(
-        label='비밀번호(확인용)',
+        label='Password(confirm)',
         widget=forms.PasswordInput()
     )
     # clean_<field> : valid field
@@ -23,17 +30,24 @@ class RegistrationForm(forms.Form):
             password2=self.cleaned_data['password2']
             if password1==password2:
                 return password2
-        raise forms.ValidateionError('비밀번호가 일치하지 않습니다.')
+        raise forms.ValidationError('password does not match')
 
     def clean_username(self):
         username=self.cleaned_data['username']
         if not re.search(r'\w+$',username):
-            raise forms.ValidationError('사용자 이름은 알파벳,숫자,밑줄(_)만 가능합니다.')
+            raise forms.ValidationError('user name allows charactor, number, underscore')
         
         try:
             User.objects.get(username=username)
         except ObjectDoesNotExist:
             return username
-        raise forms.ValidationError('이미 사용 중인 사용자 이름입니다.')
+        raise forms.ValidationError('already exists username')
 
+    def clean_email(self):
+        email=self.cleaned_data['email']        
+        try:
+            User.objects.get(email=email)
+        except ObjectDoesNotExist:
+            return email
+        raise forms.ValidationError('already exists email')
     

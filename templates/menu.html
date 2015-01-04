@@ -45,16 +45,16 @@
                             </a>
                             <ul class="dropdown-menu" role="menu">
                                 {% if user.is_authenticated %}
-                                <li role="presentation"><a href="/profile/{{ user.username }}" role="menuitem">{{ user.username }}<br />View Profile</a></li>
-                                <li role="presentation"><a href="/changepassword/" role="menuitem">Change password</a></li>
-                                <li role="presentation"><a href="/resetpassword/" role="menuitem">Reset password</a></li>
-                                <li role="presentation"><a role="menuitem" href="/logout/">Logout</a></li>
+                                <li role="presentation"><a href="/user/profile/" role="menuitem">{{ user.username }}<br />View Profile</a></li>
+                                <li role="presentation"><a href="/user/changepassword/" role="menuitem">Change password</a></li>
+                                <li role="presentation"><a href="/user/resetpassword/" role="menuitem">Reset password</a></li>
+                                <li role="presentation"><a role="menuitem" href="/user/logout/">Logout</a></li>
                                 
                                 <li role="presentation" class="divider"></li>
                                 <li role="presentation"><a role="menuitem">Settings</a></li>
                                 {% else %}
-                                <li role="presentation"><a role="menuitem" href="/login/">Login</a></li>
-                                <li role="presentation"><a role="menuitem" href="/accounts/password/reset/">Password Init</a></li>
+                                <li role="presentation"><a role="menuitem" href="/user/login/">Login</a></li>
+                                <li role="presentation"><a role="menuitem" href="/user/resetpassword/">Password Init</a></li>
                                 
                                 {% endif %}   
                             </ul>

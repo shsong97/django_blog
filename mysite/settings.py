@@ -42,6 +42,7 @@ INSTALLED_APPS = (
     'django.contrib.sites', # sites app added(bookmarks)
     'django.contrib.comments', # comments app added(bookmarks)
     'django.contrib.staticfiles',
+    'user_manager',
     'polls',
     'blog',
     'timeline',
@@ -135,11 +136,10 @@ STATICFILES_FINDERS = (
 
 SITE_HOST=''
 DEFAULT_FROM_EMAIL='django-blog<shsong97@gmail.com>'
-EMAIL_HOST_USER = 'uscript-178588.apne1.nitrousbox.com:4000'
 EMAIL_HOST='smtp.gmail.com'
 EMAIL_PORT=587
 EMAIL_HOST_USER='shsong97@gmail.com'
-EMAIL_HOST_PASSWORD='tmdgns1997'
+EMAIL_HOST_PASSWORD='xxxx'
 EMAIL_USE_TLS = True
 DEFAULT_FROM_EMAIL = 'shsong97@gmail.com'
 ADMINS = (

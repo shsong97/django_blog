@@ -53,6 +53,7 @@
             {% endif %}
             <div class="page-body">
                 <form method="post" action=".">
+                    {{ form.name_of_field.errors }} 
                     {% csrf_token %}
                     <!-- go to success page after login -->
                     {% if next %}
@@ -72,9 +73,9 @@
                         <div class="control-group">
                             <div class="controls">
                                 <button type="submit" class="btn btn-success">Login</button>
-                                <a href="/register" class="btn btn-danger">Register</a>
+                                <a href="/user/register" class="btn btn-danger">Register</a>
                                 <div class="right">
-                                    <a href="/accounts/password/reset/">forgot your password?</a>
+                                    <a href="/user/resetpassword">forgot your password?</a>
                                 </div>
                             </div>
                         </div>
