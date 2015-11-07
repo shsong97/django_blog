@@ -40,14 +40,15 @@ INSTALLED_APPS = (
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
-    'django.contrib.sites', # sites app added(bookmarks)
+    # 'django.contrib.sites', # sites app added(bookmarks)
     'django.contrib.staticfiles',
     'user_manager',
     'polls',
     'blog',
-    # 'bookmarks',
+    'bookmarks',
     'django_markdown',
 )
+
 
 #timeline service error csrf...
 MIDDLEWARE_CLASSES = (
@@ -78,8 +79,8 @@ DATABASES = {
 }
 
 # Parse database configuration from $DATABASE_URL
-import dj_database_url
-DATABASES['default'] =  dj_database_url.config()
+# import dj_database_url
+# DATABASES['default'] =  dj_database_url.config()
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.6/topics/i18n/
@@ -94,13 +95,13 @@ USE_L10N = True
 
 USE_TZ = True
 
-SITE_ID = 1
+# SITE_ID = 1
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.6/howto/static-files/
 
 STATIC_URL = '/static/'
-STATIC_ROOT = 'staticfiles' #os.path.dirname(os.path.realpath(__file__))
+STATIC_ROOT = 'staticfiles'
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'static'),
 )
@@ -114,14 +115,14 @@ STATICFILES_FINDERS = (
 
 STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
 
-SITE_HOST=''
-DEFAULT_FROM_EMAIL='django-blog<shsong97@gmail.com>'
-EMAIL_HOST='smtp.gmail.com'
-EMAIL_PORT=587
-EMAIL_HOST_USER='shsong97@gmail.com'
-EMAIL_HOST_PASSWORD='xxxx'
-EMAIL_USE_TLS = True
-DEFAULT_FROM_EMAIL = 'shsong97@gmail.com'
-ADMINS = (
-    ('Song, Seung-hun','shsong97@gmail.com')
-)
+# SITE_HOST=''
+# DEFAULT_FROM_EMAIL='django-blog<shsong97@gmail.com>'
+# EMAIL_HOST='smtp.gmail.com'
+# EMAIL_PORT=587
+# EMAIL_HOST_USER='shsong97@gmail.com'
+# EMAIL_HOST_PASSWORD='xxxx'
+# EMAIL_USE_TLS = True
+# DEFAULT_FROM_EMAIL = 'shsong97@gmail.com'
+# ADMINS = (
+#     ('Song, Seung-hun','shsong97@gmail.com')
+# )

@@ -18,7 +18,7 @@ urlpatterns = patterns(
     url(r'^admin/', include(admin.site.urls)),
     url(r'^blog/', include('blog.urls',namespace="blog")),
     url(r'^polls/', include('polls.urls',namespace="polls")),
-    # url(r'^bookmarks/', include('bookmarks.urls',namespace="bookmarks")),
+    url(r'^bookmarks/', include('bookmarks.urls',namespace="bookmarks")),
     url(r'^user/', include('user_manager.urls',namespace="user_manager")),
     url(r'^contact/', 'user_manager.views.contact', name='contact'),
 
