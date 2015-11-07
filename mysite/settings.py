@@ -68,40 +68,7 @@ WSGI_APPLICATION = 'mysite.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/1.6/ref/settings/#databases
-
-# if - heroku, else other
-# if environ.has_key('DATABASE_URL'):
-#     url=urlparse(environ['DATABASE_URL'])
-#     DATABASES = {
-#         'default': {
-#             'ENGINE': 'django.db.backends.postgresql_psycopg2',
-#             'NAME': url.path[1:],
-#             'USER': url.username,
-#             'PASSWORD': url.password,
-#             'HOST': url.hostname,
-#             'PORT': url.port,
-#         }  
-#     }
-# else:
-#     DATABASES = {
-# #         'default': {
-# #             'ENGINE': 'django.db.backends.postgresql_psycopg2',
-# #             'NAME': 'blog',
-# #             'USER': 'postgres',
-# #             'PASSWORD':'lgcns',    
-# #         }
-#         'default': {
-#             'ENGINE': 'django.db.backends.sqlite3',
-#             'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-#         }   
-# #         'default': {
-# #             'NAME': 'SITE',
-# #             'ENGINE': 'sqlserver_ado',
-# #             'HOST': '127.0.0.1',
-# #             'USER': 'manager',
-# #             'PASSWORD': 'manager1234',
-# #         }    
-#     }
+ 
 
 DATABASES = {
     'default': {
@@ -111,8 +78,8 @@ DATABASES = {
 }
 
 # Parse database configuration from $DATABASE_URL
-# import dj_database_url
-# DATABASES['default'] =  dj_database_url.config()
+import dj_database_url
+DATABASES['default'] =  dj_database_url.config()
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.6/topics/i18n/
