@@ -18,17 +18,15 @@ urlpatterns = patterns(
     url(r'^admin/', include(admin.site.urls)),
     url(r'^blog/', include('blog.urls',namespace="blog")),
     url(r'^polls/', include('polls.urls',namespace="polls")),
-    url(r'^timeline/', include('timeline.urls',namespace="timeline")),
     url(r'^bookmarks/', include('bookmarks.urls',namespace="bookmarks")),
     url(r'^user/', include('user_manager.urls',namespace="user_manager")),
     url(r'^contact/', 'user_manager.views.contact', name='contact'),
-    # comments
-    url(r'^comments/',include('django.contrib.comments.urls')),
-    #url(r'^feeds/recent/$','django.contrib.syndication.views.Feed',RecentBookmarks ),  
+
     url(r'^feeds/(?P<url>.*)/$','django.contrib.syndication.views.Feed',{'feed_dict':feeds}),
     url(r'i18n/',include('django.conf.urls.i18n')),
     # test
     url(r'^test/$',views.test),
+    url('^markdown/', include( 'django_markdown.urls')),
 #     # user session
 #     url(r'^accounts/password/reset/$', views.reset_password, name='password_reset'),
 #     url(r'^accounts/password/reset/done/$', 'django.contrib.auth.views.password_reset_done',name='password_reset_done'),

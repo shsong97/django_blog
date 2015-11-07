@@ -4,13 +4,14 @@ from django.db import models
 import datetime
 from django.utils import timezone
 from django.contrib.auth.models import User
+from django_markdown.models import MarkdownField
 
 # Create your models here.
 
 class Blog(models.Model):
     blog_title = models.CharField('Title',max_length=200)
-    contents = models.TextField()
-    pub_date = models.DateTimeField('Pub Date',default=timezone.now())
+    contents = MarkdownField() #models.TextField()
+    pub_date = models.DateTimeField('Pub Date',default=timezone.now)
     user=models.ForeignKey(User)
     like_count = models.IntegerField('Like',default =0)
     

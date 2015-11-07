@@ -7,9 +7,9 @@ from django.utils import timezone
 # Create your models here.
 class PollList(models.Model):
     title = models.CharField('제목',max_length=200)
-    pub_date = models.DateTimeField('등록일',default=timezone.now())
-    start_date = models.DateField('시작일',default=timezone.now())
-    end_date = models.DateField('종료일',default=timezone.now())
+    pub_date = models.DateTimeField('등록일',default=timezone.now)
+    start_date = models.DateField('시작일',default=timezone.now)
+    end_date = models.DateField('종료일',default=timezone.now)
     
     POLL_STATUS = ( 
         ('OP','Open'),

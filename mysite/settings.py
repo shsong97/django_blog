@@ -26,9 +26,10 @@ SECRET_KEY = 'ji#0%+-n582#)m0b@yc41fl=b!f)gcfo7bjv&b_)53%c+pg-8y'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-TEMPLATE_DEBUG = True
+TEMPLATE_DEBUG = DEBUG
 
-ALLOWED_HOSTS = []
+# Allow all host headers
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -40,13 +41,12 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.sites', # sites app added(bookmarks)
-    'django.contrib.comments', # comments app added(bookmarks)
     'django.contrib.staticfiles',
     'user_manager',
     'polls',
     'blog',
-    'timeline',
     'bookmarks',
+    'django_markdown',
 )
 
 #timeline service error csrf...
@@ -70,38 +70,49 @@ WSGI_APPLICATION = 'mysite.wsgi.application'
 # https://docs.djangoproject.com/en/1.6/ref/settings/#databases
 
 # if - heroku, else other
-if environ.has_key('DATABASE_URL'):
-    url=urlparse(environ['DATABASE_URL'])
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.postgresql_psycopg2',
-            'NAME': url.path[1:],
-            'USER': url.username,
-            'PASSWORD': url.password,
-            'HOST': url.hostname,
-            'PORT': url.port,
-        }  
-    }
-else:
-    DATABASES = {
+# if environ.has_key('DATABASE_URL'):
+#     url=urlparse(environ['DATABASE_URL'])
+#     DATABASES = {
 #         'default': {
 #             'ENGINE': 'django.db.backends.postgresql_psycopg2',
-#             'NAME': 'blog',
-#             'USER': 'postgres',
-#             'PASSWORD':'lgcns',    
-#         }
-        'default': {
-            'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-        }   
+#             'NAME': url.path[1:],
+#             'USER': url.username,
+#             'PASSWORD': url.password,
+#             'HOST': url.hostname,
+#             'PORT': url.port,
+#         }  
+#     }
+# else:
+#     DATABASES = {
+# #         'default': {
+# #             'ENGINE': 'django.db.backends.postgresql_psycopg2',
+# #             'NAME': 'blog',
+# #             'USER': 'postgres',
+# #             'PASSWORD':'lgcns',    
+# #         }
 #         'default': {
-#             'NAME': 'SITE',
-#             'ENGINE': 'sqlserver_ado',
-#             'HOST': '127.0.0.1',
-#             'USER': 'manager',
-#             'PASSWORD': 'manager1234',
-#         }    
+#             'ENGINE': 'django.db.backends.sqlite3',
+#             'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+#         }   
+# #         'default': {
+# #             'NAME': 'SITE',
+# #             'ENGINE': 'sqlserver_ado',
+# #             'HOST': '127.0.0.1',
+# #             'USER': 'manager',
+# #             'PASSWORD': 'manager1234',
+# #         }    
+#     }
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
+}
+
+# Parse database configuration from $DATABASE_URL
+# import dj_database_url
+# DATABASES['default'] =  dj_database_url.config()
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.6/topics/i18n/
@@ -122,7 +133,7 @@ SITE_ID = 1
 # https://docs.djangoproject.com/en/1.6/howto/static-files/
 
 STATIC_URL = '/static/'
-STATIC_ROOT = os.path.dirname(os.path.realpath(__file__))
+STATIC_ROOT = 'staticfiles' #os.path.dirname(os.path.realpath(__file__))
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'static'),
 )
@@ -133,6 +144,8 @@ STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
 )
+
+STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
 
 SITE_HOST=''
 DEFAULT_FROM_EMAIL='django-blog<shsong97@gmail.com>'

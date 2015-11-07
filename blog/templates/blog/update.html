@@ -1,5 +1,6 @@
 <!doctype html>
 {% load staticfiles %}
+{% load django_markdown %}
 <html>
 <head>
 <title>Update Blog</title>
@@ -20,7 +21,9 @@
 		</tr>
 		<tr>
 			<td>Contents</td>
-			<td><textarea name="contents" rows="10" cols="100" style="width:95%">{{ blog.contents }}</textarea></td>
+			<td><textarea name="contents" id="contents" rows="10" cols="100" style="width:95%">{{ blog.contents }}</textarea></td>
+			{% markdown_editor "#contents" %}
+			{% markdown_media %}
 		</tr>
 	</table>
 <button class="btn" type="submit">Update</button>

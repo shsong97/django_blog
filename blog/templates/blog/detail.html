@@ -1,5 +1,6 @@
 <!doctype html>
 {% load staticfiles %}
+{% load django_markdown %}
 <html>
 <head>
 <title>Blog article</title>
@@ -19,7 +20,7 @@
 {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
 
 {% csrf_token %}
-  <div><pre>{{ blog.contents }}</pre></div>
+  <div>{{ blog.contents|markdown }}</div>
 Like : {{ blog.like_count }}<br />
 <a class="btn" href="update/">Edit</a>
 <a class="btn" href="/blog/">List</a>
