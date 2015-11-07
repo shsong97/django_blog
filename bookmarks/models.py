@@ -33,7 +33,7 @@ class Tag(models.Model):
         return self.name
 
 class SharedBookmark(models.Model):
-    bookmark=models.ForeignKey(Bookmark, unique=True)
+    bookmark=models.OneToOneField(Bookmark)
     date=models.DateTimeField(auto_now_add=True)
     votes=models.IntegerField(default=1)
     users_voted=models.ManyToManyField(User)
