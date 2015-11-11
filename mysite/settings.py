@@ -45,7 +45,7 @@ INSTALLED_APPS = (
     'user_manager',
     'polls',
     'blog',
-    # 'bookmarks',
+    'bookmarks',
     'django_markdown',
 )
 
