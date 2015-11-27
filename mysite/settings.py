@@ -41,7 +41,7 @@ INSTALLED_APPS = (
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
-    # 'django.contrib.sites', # sites app added(bookmarks)
+    'django.contrib.sites', # sites app added(bookmarks)
     'django.contrib.staticfiles',
     'user_manager',
     'polls',

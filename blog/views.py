@@ -2,12 +2,13 @@
 
 from django.views import generic
 from django.utils import timezone
-from django.shortcuts import get_object_or_404
+from django.shortcuts import get_object_or_404, render_to_response
 from django.http import HttpResponseRedirect, HttpResponse
 from blog.models import Blog
 from django.core.urlresolvers import reverse
 from django.views.generic.edit import CreateView
 from django.contrib.auth.decorators import login_required
+from django.template import RequestContext
 
 # Create your views here.
 
@@ -46,9 +47,23 @@ class BlogUpdateView(generic.DetailView):
     model = Blog
     template_name = 'blog/update.html'
 
-class BlogCreate(CreateView):
-    model = Blog
-    template_name = 'blog/add.html'
+@login_required(login_url=login_url)
+def blog_addview(request):
+    title=''
+    contents=''
+    if request.POST:
+        if request['title']:
+            title=request['title']
+        
+        if request['contents']:
+            contents=request['contents']
+        
+    variables=RequestContext(request,
+        {'title':title,
+        'contents':contents
+        })
+    return render_to_response('blog/add.html',variables)
+
 
 @login_required(login_url=login_url)
 def blog_update(request, blog_id):

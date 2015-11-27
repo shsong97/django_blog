@@ -5,14 +5,7 @@
     <head>
         {% include "header.html" %}    
         <style>
-
-            .blue-box { color:blue; text-decoration:none;}
-            .contents { font-size:12px;}
-            .header-sub { font-size:12px; color:#9197a3;}
             .right { float : right; }
-            pre { background-color:#fff; 
-                border:0;
-            }
         </style>
         <title>Blog List</title>
     </head>
@@ -20,29 +13,7 @@
         {% include "menu.html" %}
         <div class="container-fluid">
             <div class="row-fluid">
-                <div class="span12">
-                    <div>
-                        <h4>Blog list</h4>
-                        <form action="{% url 'blog:add_submit' %}" method="post" class="form-inline">
-                            {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
-                            {% csrf_token %}
-                            <table class="table">
-                                <tr>
-                                    <td>Title</td>
-                                    <td><input type="text" name="blog_title" value="" /></td>
-                                </tr>
-                                <tr>
-                                    <td>Contents</td>
-                                    <td><textarea id="contents" name="contents" rows="10" cols="100" style="width:95%"></textarea></td>
-                                    {% markdown_editor "#contents" %}
-                                    {% markdown_media %}
-                                </tr>
-                            </table>
-                            <div class="btn-group">
-                                <button class="btn" type="submit">Write</button>
-                            </div>
-                        </form>
-                    </div>
+                <div class="span9">
 
                     {% if latest_blog_list %}
                     {% for blog in latest_blog_list %}
@@ -68,8 +39,21 @@
                     {% else %}
                     <p>No contents</p>
                     {% endif %}
-                </div> <!-- span8 -->
+                </div> <!-- left span -->
+                <div class="span3">
+                    <div class="white-box">
+                    최근글 목록
+                    <ul>
+                        <li>2015/11</li>
+                        <li>2015/10</li>
+                    </ul>
+                    </div>
+                    <div class="white-box">
+                    인기글 목록
+                    </div>
+                </div>
             </div> <!-- row end -->
+
         </div> <!-- container end -->
         {% include "footer.html" %}  
     </body>

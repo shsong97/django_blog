@@ -27,7 +27,7 @@ urlpatterns = patterns(
     url(r'i18n/',include('django.conf.urls.i18n')),
     # test
     url(r'^test/$',views.test),
-    url('^markdown/', include( 'django_markdown.urls')),
+    url('^markdown/', include('django_markdown.urls')),
 #     # user session
 #     url(r'^accounts/password/reset/$', views.reset_password, name='password_reset'),
 #     url(r'^accounts/password/reset/done/$', 'django.contrib.auth.views.password_reset_done',name='password_reset_done'),

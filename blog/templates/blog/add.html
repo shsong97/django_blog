@@ -1,5 +1,6 @@
 <!doctype html>
 {% load staticfiles %}
+{% load django_markdown %}
 <html>
 <head>
 <title>Write Blog</title>
@@ -9,22 +10,24 @@
 {% include "menu.html" %}    
 <h4>Write Blog</h4>
 
-{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
-
 <form action="{% url 'blog:add_submit' %}" method="post" class="form-inline">
-{% csrf_token %}
-	<table class="table">
-		<tr>
-			<td>Title</td>
-			<td><input type="text" name="blog_title" value="" /></td>
-		</tr>
-		<tr>
-			<td>Contents</td>
-			<td><textarea name="contents" rows="10" cols="100" style="width:95%"></textarea></td>
-		</tr>
-	</table>
-<button class="btn" type="submit">Send</button>
-<a class="btn" href="/blog/">List</a>
+    {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+    {% csrf_token %}
+    <table class="table">
+        <tr>
+            <td>Title</td>
+            <td><input type="text" name="blog_title" value="" /></td>
+        </tr>
+        <tr>
+            <td>Contents</td>
+            <td><textarea id="contents" name="contents" rows="10" cols="100" style="width:95%"></textarea></td>
+            {% markdown_editor "#contents" %}
+            {% markdown_media %}
+        </tr>
+    </table>
+    <div class="btn-group">
+        <button class="btn" type="submit">Write</button>
+    </div>
 </form>
 </body>
 </html>

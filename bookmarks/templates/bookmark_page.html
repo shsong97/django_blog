@@ -9,18 +9,9 @@ User added:
 <a href="/bookmarks/user/{{ shared_bookmark.bookmark.user.username }}/" class="username">
     {{ shared_bookmark.bookmark.user.username }}</a>|
 <span class="vote-count">Vote: {{ shared_bookmark.votes }}</span>
-<h2>Comments</h2>
-{% load comments %}
-{% get_comment_count for bookmarks.sharedbookmark shared_bookmark.id as comment_count %}
-{% get_comment_list for bookmarks.sharedbookmark shared_bookmark.id as comment_list %}
-{% for comment in comment_list %}
-<div class="comment">
-    <p><b>{{ comment.user.username }}</b>'s comments.</p>
-    Date : {{ comment.submit_date }}<br />
-    IP : {{ comment.ip_address }}<br />
-    Contents : {{ comment.comment|escape|urlizetrunc:40|linebreaks }}
-</div>
-{% endfor %}
-<p>Count:{{ comment_count }}</p>
-{% render_comment_form for bookmarks.sharedbookmark shared_bookmark.id %}
+<form>
+{{ comments.as_p }}
+<button type='submit'>Write</button>    
+</form>
+
 {% endblock %}
