@@ -24,7 +24,6 @@ def login_page(request):
     username = password = ''
 
     if request.GET:
-        print request.GET.get('next','/')
         next_page=request.GET.get('next','/')
         
     if request.POST:
@@ -36,7 +35,6 @@ def login_page(request):
             if user.is_active:
                 login(request, user)
                 next_page = request.POST.get('next', '/')
-                print next_page
                 return HttpResponseRedirect(next_page)
     return render_to_response('registration/login.html', context_instance=RequestContext(request))
 
@@ -88,8 +86,6 @@ def reset_password(request):
     if request.POST:
         form=PasswordResetForm(data=request.POST)
         if form.is_valid():
-#             form.save()
-#             print form.as_p()
             form.save(subject_template_name='registration/reset_subject.txt',
                       email_template_name='registration/reset_email.html',)
             return render(request,'registration/mail_send.html')

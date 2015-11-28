@@ -1,43 +1,24 @@
-<!DOCTYPE html>
-{% load staticfiles %}
-<html>
-  <head>
-    <title>Django blog</title>
-{% include "header.html" %}    
-  </head>
-
-  <body>
-
-{% include "menu.html" %}    
-
-    <div class="container">
-
-      <!-- Main hero unit for a primary marketing message or call to action -->
-      <div class="hero-unit">
-        <h1>Django Project</h1>
-        <p> python django project - blog, polls, bookmark application </p>
-      </div>
-
-      <!-- Example row of columns -->
-      <div class="row">
-        <div class="span4">
-          <h2>Blog</h2>
-          <p><iframe src="/blog/short" frameborder=0 style="border-width:0px; border-color:white; border-style:solid;"></iframe></p>
-          <p><a class="btn" href="/blog/">View Blog &raquo;</a></p>
-        </div>
-        <div class="span4">
-          <h2>Polls</h2>
-          <p><iframe src="/polls/short" frameborder=0 style="border-width:0px; border-color:white; border-style:solid;"></iframe></p>
-          <p><a class="btn" href="/polls/">View Polls &raquo;</a></p>
-       </div>
-        <div class="span4">
-          <h2>Bookmarks</h2>
-          <p><iframe src="/bookmarks/taglist/" frameborder=0 style="border-width:0px; border-color:white; border-style:solid;"></iframe></p>
-          <p><a class="btn" href="/bookmarks/">View Bookmark &raquo;</a></p>
-        </div>
-      </div>
-
-    </div> <!-- /container -->
-      {% include "footer.html" %}  
-  </body>
-</html>
+{% extends "base.html" %}
+{% block title %}Django blog{% endblock %}
+{% block body_area %}
+<!-- Main hero unit for a primary marketing message or call to action -->
+<div class="jumbotron">
+  <h1>Django Project</h1>
+  <p> python django project - blog, polls, bookmark application </p>
+</div>
+  <div class="col-md-4">
+    <h2>Blog</h2>
+    <p><iframe src="/blog/short" frameborder=0 style="border-width:0px; border-color:white; border-style:solid;"></iframe></p>
+    <p><a class="btn" href="/blog/">View Blog &raquo;</a></p>
+  </div>
+  <div class="col-md-4">
+    <h2>Polls</h2>
+    <p><iframe src="/polls/short" frameborder=0 style="border-width:0px; border-color:white; border-style:solid;"></iframe></p>
+    <p><a class="btn" href="/polls/">View Polls &raquo;</a></p>
+  </div>
+  <div class="col-md-4">
+    <h2>Bookmarks</h2>
+    <p><iframe src="/bookmarks/taglist/" frameborder=0 style="border-width:0px; border-color:white; border-style:solid;"></iframe></p>
+    <p><a class="btn" href="/bookmarks/">View Bookmark &raquo;</a></p>
+  </div>
+{% endblock %}

@@ -1,7 +1,9 @@
 {% extends "base.html" %}
 {% block title %}Tag cloud{% endblock %}
-{% block head %}Tag cloud{% endblock %}
-{% block content %}
+{% block external %}
+<link rel="stylesheet" href="/static/bookmarks/style.css">
+{% endblock %}
+{% block body_area %}
 <div id="tag-cloud">
     {% for tag in tags %}
     <a href="/bookmarks/tag/{{ tag.name|urlencode }}/" class="tag-cloud-{{ tag.weight }}">

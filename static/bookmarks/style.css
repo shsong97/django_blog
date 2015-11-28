@@ -1,16 +1,3 @@
-#nav {
-    float:right;
-}
-
-input {
-    display:block;
-}
-
-ul.tags, ul.tags li {
-    margin:0;
-    padding:0;
-}
-
 #tag-cloud {
     text-align:center;
 }
@@ -25,19 +12,3 @@ ul.tags, ul.tags li {
 .tag-cloud-3 { font-size:160% }
 .tag-cloud-4 { font-size:180% }
 .tag-cloud-5 { font-size:200% }
-
-.bookmarks .edit {
-    font-size:70%;
-}
-
-.comment {
-    margin:1em;
-    padding:5px;
-    border: 1px solid #000;
-}
-
-.messages {
-    border:1px dashed #000;
-    margin: 1em 4em;
-    padding: 1em;
-}

@@ -1,25 +1,28 @@
 <!doctype html>
 <html>
-    <head>
-        <title>{% block title %} {% endblock %}</title>
-        <link rel="stylesheet" href="/static/bookmarks/style.css" type="text/css" />
-        {% include "header.html" %}
-        {% block external %}{% endblock %}
-    </head>
-    <body>
-        {% include "menu.html" %}
-
-        <h1>{% block head %}{% endblock %}</h1>
-        {% if mesages %}
-        <ul class="messages">
-            {% for message in messages %}
-            <li>{{ message }}</li>
-            {% endfor %}
-        </ul>
-        {% endif %}
-        {% block content %}{% endblock %}
-        <div id="footer">
-            {% include "footer.html" %}  
-        </div>
-    </body>
+<head>
+    <title>{% block title %} {% endblock %}</title>
+    {% include "header.html" %}
+    {% block external %}{% endblock %}
+</head>
+<body>
+    <!-- menu -->
+    {% include "menu.html" %}
+    {% if mesages %}
+    <ul class="messages">
+        {% for message in messages %}
+        <li>{{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+    <!-- body container -->
+    <div class="container-fluid">
+    <div class="row">
+    {% block body_area %}{% endblock %}
+    </div><!-- container-fluid -->
+    </div><!-- row-fluid -->
+    <div id="footer">
+        {% include "footer.html" %}  
+    </div>
+</body>
 </html>

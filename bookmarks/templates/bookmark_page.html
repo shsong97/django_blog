@@ -1,17 +1,15 @@
 {% extends "base.html" %}
 {% block title %}Bookmark:{{ shared_bookmark.bookmark.title|escape }}{% endblock %}
-{% block head %}
-<a href="/bookmarks/bookmark/vote/?id={{ shared_bookmark.id }}" class="vote">[+]</a>
+{% block body_area %}
+<div class="col-md-12">
+<a href="/bookmarks/bookmark/vote/?id={{ shared_bookmark.id }}" class="vote">[투표]</a>
 <a href="{{ shared_bookmark.bookmark.link.url }}" class="title">{{ shared_bookmark.bookmark.title|escape }}</a>
-{% endblock %}
-{% block content %}
-User added:
+추가한 사용자:
 <a href="/bookmarks/user/{{ shared_bookmark.bookmark.user.username }}/" class="username">
     {{ shared_bookmark.bookmark.user.username }}</a>|
 <span class="vote-count">Vote: {{ shared_bookmark.votes }}</span>
+<h3>Comments</h3>
 <form>
-{{ comments.as_p }}
-<button type='submit'>Write</button>    
-</form>
-
+{% include "disqus.html" %}
+</div>
 {% endblock %}

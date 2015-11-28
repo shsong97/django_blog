@@ -1,18 +1,14 @@
-<!doctype html>
-{% load staticfiles %}
-<html>
-<head>
-<title>{{ polllist.title }}</title>
+{% extends "base.html" %}
+{% block title %}{{ polllist.title }}{% endblock %}
+{% block external %}
 <style>
 
 .header_title { background-color: #eeeeff}
 
 </style>
-{% include "header.html" %}
-</head>
-<body>
-{% include "menu.html" %}    
-
+{% endblock %}
+{% block body_area %}
+<div class="col-md-12">
 <h4>{{ polllist.title }}</h4>
 
 <table class="table table-bordered">
@@ -30,5 +26,5 @@
 
 <a class="btn" href="{% url 'polls:detail' polllist.id %}">Vote</a> 
 <a class="btn" href="/polls">List</a>
-</body>
-</html>
+</div>
+{% endblock %}

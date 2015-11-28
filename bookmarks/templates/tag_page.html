@@ -1,6 +1,8 @@
 {% extends "base.html" %}
 {% block title %}태그:{{ tag_name|escape }}{% endblock %}
 {% block head %}태그:{{ tag_name|escape }}의 북마크{% endblock %}
-{% block content %}
+{% block body_area %}
+<div class="col-md-12">
     {% include "bookmark_list.html" %}
+</div>    
 {% endblock %}

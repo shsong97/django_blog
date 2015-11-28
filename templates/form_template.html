@@ -1,11 +1,13 @@
 {% extends "base.html" %}
 {% block title %}{{ temp_param }}{% endblock %}
 {% block head %}{{ temp_param }}{% endblock %}
-{% block content %}
+{% block body_area %}
+<div class="col-md-12">
 <form method="post" action=".">
     {{ form.name_of_field.errors }} 
     {% csrf_token  %}
     {{ form.as_p }}
-    <input type="submit" class="btn" value="{{ temp_param }}" />
+    <input type="submit" class="btn btn-primary" value="저장" />
 </form>
+</div>
 {% endblock %}

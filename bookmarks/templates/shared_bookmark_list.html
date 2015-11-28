@@ -2,9 +2,11 @@
 <ul class="bookmarks">
     {% for shared_bookmark in shared_bookmarks %}
     <li>
-        <a href="/bookmarks/vote/?id={{ shared_bookmark.id }}" class="vote">[+]</a>
         <a href="{{ shared_bookmark.bookmark.link.url|escape }}" class="title">
             {{ shared_bookmark.bookmark.title|escape }}</a>
+        {% if request.user.username %}
+        <a href="/bookmarks/vote/?id={{ shared_bookmark.id }}" class="vote">[추천]</a>
+        {% endif %}
         <br />
         작성자:
         <a href="/bookmarks/user/{{ shared_bookmark.bookmark.user.username }}/" class="username">

@@ -20,9 +20,4 @@ class FriendInviteForm(forms.Form):
     name=forms.CharField(label=_("Friend's name"))
     email=forms.EmailField(label=_("Friend's email"))
 
-class CommentsForm(forms.Form):
-    url=forms.URLField(label='주소',widget=forms.TextInput(attrs={'size':64}))
-    title=forms.CharField(label='제목',widget=forms.TextInput(attrs={'size':64}))
-    comment=forms.CharField(label='내용',required=False,widget=forms.TextInput(attrs={'size':64}))
-
     

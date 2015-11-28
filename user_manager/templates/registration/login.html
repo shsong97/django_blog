@@ -17,17 +17,11 @@
     .input_box {
         width:95%;
         height:38px;
-        font-size:20px;
-        background-color:white;
+        font-size:16px;
     }
     .left { float: left;}
     .right { float: right;}
-    input:forcus {
-        border-color: rgba(82, 168, 236, 0.8);
-        outline: 0;
-        outline: thin dotted ;
-        box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(82, 168, 236, 0.6);
-    }
+
     .center-box {
         position:relative;
         float: left;
@@ -40,8 +34,8 @@
     }
 </style>
 {% endblock %}
-{% block content %}
-
+{% block body_area %}
+<div class="col-md-12">
 <div class="center-box">
     <div class="right-box">
         <div class="white-box">
@@ -59,30 +53,23 @@
                     {% if next %}
                     <input type="hidden" name="next" value="{{ next }}" />
                     {% endif %}
-                    <div>
-                        <div class="control-group">
-                            <div class="controls">
-                                <input class="input-xlarge input_box" type="text" id="username" name="username"  placeholder="Username">
-                            </div>
-                        </div>
-                        <div class="control-group">
-                            <div class="controls">
-                                <input class="input-xlarge input_box" type="password" name="password" id="password" placeholder="Password">
-                            </div>
-                        </div>
-                        <div class="control-group">
-                            <div class="controls">
-                                <button type="submit" class="btn btn-success">Login</button>
-                                <a href="/user/register" class="btn btn-danger">Register</a>
-                                <div class="right">
-                                    <a href="/user/resetpassword">forgot your password?</a>
-                                </div>
-                            </div>
+                    <div class="form-group">
+                    <input class="control-group" type="text" id="username" name="username"  placeholder="Username">
+                    </div>
+                    <div class="form-group">
+                    <input class="control-group" type="password" name="password" id="password" placeholder="Password">
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-success">Login</button>
+                        <a href="/user/register" class="btn btn-danger">Register</a>
+                        <div class="right">
+                            <a href="/user/resetpassword">패스워드찾기</a>
                         </div>
                     </div>
                 </form>
             </div>
         </div>
     </div>
+</div>
 </div>
 {% endblock %}

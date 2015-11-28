@@ -189,7 +189,7 @@ def tag_cloud_page(request):
     return tag_cloud(request,'tag_cloud_page.html')
 
 def tag_list(request):
-    return tag_cloud(request,'tag_list.html')
+    return tag_cloud(request,'taglist.html')
 
 def search_page(request):
     form=SearchForm()

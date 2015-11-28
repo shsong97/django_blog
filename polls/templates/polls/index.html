@@ -1,13 +1,7 @@
-<!doctype html>
-{% load staticfiles %}
-<html>
-<head>
-<title>Poll</title>
-{% include "header.html" %}
-</head>
-<body>
-{% include "menu.html" %}    
-
+{% extends "base.html" %}
+{% block title %}Poll{% endblock %}
+{% block body_area %}
+<div class="col-md-12">
 <h4>Poll List</h4>
 {% if latest_poll_list %}
     <table class="table table-bordered">
@@ -26,5 +20,5 @@
     <p>No list</p>
 {% endif %}
 <a href="/" class="btn">Home</a>
-</body>
-</html>
+</div>
+{% endblock %}

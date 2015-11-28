@@ -1,15 +1,7 @@
 from django.conf.urls import patterns, include, url
-
 from django.contrib import admin
-from bookmarks.feeds import RecentBookmarks,UserBookmarks
-from django.contrib.syndication.views import Feed
 from mysite import views
 
-
-feeds = {
-    'recent':RecentBookmarks,
-    'user':UserBookmarks
-}
 admin.autodiscover()
 
 urlpatterns = patterns(
@@ -22,12 +14,10 @@ urlpatterns = patterns(
     url(r'^bookmarks/', include('bookmarks.urls',namespace="bookmarks")),
     url(r'^user/', include('user_manager.urls',namespace="user_manager")),
     url(r'^contact/', 'user_manager.views.contact', name='contact'),
-
-    url(r'^feeds/(?P<url>.*)/$','django.contrib.syndication.views.Feed',{'feed_dict':feeds}),
     url(r'i18n/',include('django.conf.urls.i18n')),
+    url('^markdown/', include('django_markdown.urls')),
     # test
     url(r'^test/$',views.test),
-    url('^markdown/', include('django_markdown.urls')),
 #     # user session
 #     url(r'^accounts/password/reset/$', views.reset_password, name='password_reset'),
 #     url(r'^accounts/password/reset/done/$', 'django.contrib.auth.views.password_reset_done',name='password_reset_done'),
