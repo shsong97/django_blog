@@ -8,6 +8,7 @@ urlpatterns = patterns(
     url(r'^short/$', views.ShortIndexView.as_view(), name='short'),
     #url(r'^add/$', views.BlogCreate.as_view(), name='blog_add'), 
     url(r'^add/$', views.blog_addview, name='blog_add'),
+    url(r'^favorite/$', views.blog_favorite, name='blog_favorite'),
     url(r'^add/submit/$', views.blog_add, name='add_submit'),
     url(r'^(?P<pk>\d+)/$', views.DetailView.as_view(), name='detail'),
     url(r'^(?P<pk>\d+)/update/$', views.BlogUpdateView.as_view(), name='update'),

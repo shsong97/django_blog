@@ -25,6 +25,14 @@ class Blog(models.Model):
     was_published_recently.boolean = True
     was_published_recently.short_description = 'recently published?'
 
+    def serialize(self):
+        data={
+            'blog_id':self.id,
+            'blog_title':self.blog_title,
+            'pub_date':self.pub_date,
+            'like_count':self.like_count,
+            }
+        return data
 
 class Tag(models.Model):
     tag_title = models.CharField('Tag',max_length=100)

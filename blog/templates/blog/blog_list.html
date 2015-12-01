@@ -5,6 +5,7 @@
 <style>
     .right { float : right; }
 </style>
+<script type="text/javascript" src="/static/blog/blog.js"> </script>
 {% endblock %}
  
 {% block body_area %}
@@ -27,7 +28,7 @@
         <div class="contents">{{ blog.contents|markdown }}</div>
         <div class="text-right">
             <a class="btn" href="{{ blog.id }}/delete/"><i class="glyphicon glyphicon-trash"></i>Delete</a>
-            <a class="btn" href="{{ blog.id }}/like/" id="bloglike_click"><i class="glyphicon glyphicon-heart"></i><span id="blog_like" value="{{ blog.id }}">{{ blog.like_count }}</span></a>
+            <button class="btn" id="blog_like_click"><i class="glyphicon glyphicon-heart"></i><span id="blog_like" value="{{ blog.id }}">{{ blog.like_count }}</span></button>
         </div>
     </div> <!-- white-box -->
 
@@ -38,10 +39,9 @@
 </div> <!-- left span -->
 <div class="col-md-3">
     <div class="white-box">
-    최근글 목록
-    <ul>
-        <li>2015/11</li>
-        <li>2015/10</li>
+    <button id="favorite_list">최근글 목록</button>
+    <ul id="favorite_article">
+
     </ul>
     </div>
     <div class="white-box">
