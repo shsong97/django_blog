@@ -9,6 +9,8 @@ from django.core.urlresolvers import reverse
 from django.views.generic.edit import CreateView
 from django.contrib.auth.decorators import login_required
 from django.template import RequestContext
+from django.http import JsonResponse
+import json
 
 # Create your views here.
 
@@ -64,6 +66,9 @@ def blog_addview(request):
         })
     return render_to_response('blog/add.html',variables)
 
+def toJSON(objs, status=200):
+    j=json.dumps(objs,ensure_ascii=False)
+    return HttpResponse(j,status=status,content_type='application/json;charset=utf-8')
 
 @login_required(login_url=login_url)
 def blog_update(request, blog_id):
@@ -91,4 +96,6 @@ def blog_like(request, blog_id):
     blogs = get_object_or_404(Blog,id=blog_id)
     blogs.like_count = blogs.like_count+1
     blogs.save()
-    return HttpResponseRedirect(reverse('blog:index'))
+    data_dict={'result':blogs.like_count}
+    return JsonResponse(data_dict)
+

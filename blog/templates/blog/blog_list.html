@@ -27,7 +27,7 @@
         <div class="contents">{{ blog.contents|markdown }}</div>
         <div class="text-right">
             <a class="btn" href="{{ blog.id }}/delete/"><i class="glyphicon glyphicon-trash"></i>Delete</a>
-            <a class="btn" href="{{ blog.id }}/like/"><i class="glyphicon glyphicon-heart"></i> {{ blog.like_count }}</a>
+            <a class="btn" href="{{ blog.id }}/like/" id="bloglike_click"><i class="glyphicon glyphicon-heart"></i><span id="blog_like" value="{{ blog.id }}">{{ blog.like_count }}</span></a>
         </div>
     </div> <!-- white-box -->
 

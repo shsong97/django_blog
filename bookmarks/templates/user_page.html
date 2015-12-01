@@ -8,7 +8,7 @@
 {% block body_area %}
 <div class="col-md-12">
 {% ifequal user.username username %}
-<a href="/bookmarks/friends/{{ username }}/">{{ username }}님의 친구들</a>
+<a href="/bookmarks/friends/{{ username }}/">{{ username }}님의 북마크</a>
 {% else %}
     {% if is_friend %}
     <a href="/bookmarks/friends/{{ user.username }}/">

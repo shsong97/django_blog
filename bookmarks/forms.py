@@ -6,9 +6,9 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.utils.translation import gettext_lazy as _
 
 class BookmarkSaveForm(forms.Form):
-    url=forms.URLField(label='주소',widget=forms.TextInput(attrs={'size':64}))
-    title=forms.CharField(label='제목',widget=forms.TextInput(attrs={'size':64}))
-    tags=forms.CharField(label='태그',required=False,widget=forms.TextInput(attrs={'size':64}))
+    url=forms.URLField(label='주소',widget=forms.TextInput())
+    title=forms.CharField(label='제목',widget=forms.TextInput())
+    tags=forms.CharField(label='태그',required=False,widget=forms.TextInput())
     share=forms.BooleanField(label='첫페이지에서 공유합니다.',required=False)
     
 class SearchForm(forms.Form):
