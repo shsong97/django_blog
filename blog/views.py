@@ -91,11 +91,12 @@ def blog_delete(request, blog_id):
         blogs.delete()
     return HttpResponseRedirect('/blog/')
 
-@login_required(login_url=login_url)
+# @login_required(login_url=login_url)
 def blog_like(request, blog_id):
     blogs = get_object_or_404(Blog,id=blog_id)
     blogs.like_count = blogs.like_count+1
     blogs.save()
     data_dict={'result':blogs.like_count}
-    return JsonResponse(data_dict)
+    return toJSON(data_dict)
+    # return JsonResponse(data_dict)
 

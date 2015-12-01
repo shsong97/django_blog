@@ -19,7 +19,7 @@
 
 {% csrf_token %}
   <div>{{ blog.contents|markdown }}</div>
-<a class="btn" href="/blog/{{ blog.id }}/like/"><i class="glyphicon glyphicon-heart"></i><span id="blog_like" value="{{ blog.id }}">{{ blog.like_count }}</span></a>
+<button class="btn" id="blog_like_click"><i class="glyphicon glyphicon-heart"></i><span id="blog_like" value="{{ blog.id }}">{{ blog.like_count }}</span></button>
 <a class="btn" href="update/">Edit</a>
 <a class="btn" href="/blog/">List</a>
 

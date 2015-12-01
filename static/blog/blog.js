@@ -6,11 +6,15 @@ function blog_like() {
         url:"/blog/"+blog_id+"/like",
         dataType:'json',
         success:function(result){
+            alert(result);
             item.find("#blog_like").val(result);
+        },
+        error:function(data) {
+            alert("error"+data);
         }
     });
 }
 
 $(document).ready(function() {
-    $("#bloglike_click").click(blog_like);
+    $("#blog_like_click").click(blog_like);
 })
