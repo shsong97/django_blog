@@ -20,8 +20,8 @@ function blog_favorite() {
         url:"/blog/favorite",
         dataType:'json',
         success:function(result){
-            for(var r in result) {
-                var htmlmsg="<li><a href='/blog/"+r['blog_id']+">"+r['blog_title']+"</a></li>"
+            for(var i in result) {
+                var htmlmsg="<li><a href='/blog/"+result[i]['blog_id']+"'>"+result[i]['blog_title']+"</a></li>";
                 message+=htmlmsg;
             }
             $("#favorite_article").html(message);
@@ -32,6 +32,6 @@ function blog_favorite() {
     });
 }
 $(document).ready(function() {
+    blog_favorite();
     $(document).on("click","#blog_like_click",blog_like);
-    $(document).on("click","#favorite_list",blog_favorite);
 })
