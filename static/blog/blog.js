@@ -31,7 +31,27 @@ function blog_favorite() {
         }
     });
 }
+
+function blog_archive() {
+    var message="";
+    $.ajax({
+        url:"/blog/archive",
+        dataType:'json',
+        success:function(result){
+            for(var i in result) {
+                var htmlmsg="<li><a href='/blog/"+result[i]['year']+"'>"+result[i]['year']+"</a></li>";
+                message+=htmlmsg;
+            }
+            $("#recent_article").html(message);
+        },
+        error:function(e){
+            alert(e.responseText);
+        }
+    });
+}
+
 $(document).ready(function() {
     blog_favorite();
+    blog_archive();
     $(document).on("click","#blog_like_click",blog_like);
 })

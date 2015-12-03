@@ -13,7 +13,8 @@ class Blog(models.Model):
     contents = MarkdownField() #models.TextField()
     pub_date = models.DateTimeField('Pub Date',default=timezone.now)
     user=models.ForeignKey(User)
-    like_count = models.IntegerField('Like',default =0)
+    like_count = models.IntegerField('Like',default=0)
+    view_count = models.IntegerField('View',default=0)
     
     def __unicode__(self):
         return self.blog_title
@@ -31,6 +32,8 @@ class Blog(models.Model):
             'blog_title':self.blog_title,
             'pub_date':self.pub_date,
             'like_count':self.like_count,
+            'username':self.user.username,
+            'view_count':self.view_count,
             }
         return data
 
@@ -41,6 +44,6 @@ class Tag(models.Model):
     def __unicode__(self):
         return self.tag_title
 
-class BlogLike(models.Model):
-    blog = models.ManyToManyField(Blog)
-    like_count = models.IntegerField('Like',default =0)
+# class BlogLike(models.Model):
+#     blog = models.ManyToManyField(Blog)
+#     user = models.ManyToManyField(User)

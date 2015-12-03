@@ -1,5 +1,5 @@
 from django.contrib import admin
-from blog.models import Blog, Tag, BlogLike
+from blog.models import Blog, Tag
 # Register your models here.
 from django_markdown.admin import MarkdownModelAdmin
 
@@ -11,4 +11,4 @@ class AdminBlog(MarkdownModelAdmin):
     
 admin.site.register(Blog,AdminBlog)
 admin.site.register(Tag)
-admin.site.register(BlogLike)
+# admin.site.register(BlogLike)

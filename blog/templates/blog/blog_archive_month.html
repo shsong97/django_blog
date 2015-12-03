@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block body_area %}
+<div class="col-md-12">
+<ul>
+    {% for article in object_list %}
+        <li>{{ article.pub_date|date:"Y/m/j" }}: <a href="/blog/{{ article.id}}/">{{ article.blog_title }}</a></li>
+    {% endfor %}
+</ul>
+
+<p>
+    {% if previous_month %}
+        Previous Month: <a href='/blog/{{ previous_month|date:"Y/m" }}'>{{ previous_month|date:"Y/m" }}</a>
+    {% endif %}
+    {% if next_month %}
+        Next Month: <a href='/blog/{{ next_month|date:"Y/m" }}'>{{ next_month|date:"Y/m" }}</a>
+    {% endif %}
+</p>
+</div>
+{% endblock %}

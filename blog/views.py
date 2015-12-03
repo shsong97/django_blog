@@ -11,6 +11,7 @@ from django.contrib.auth.decorators import login_required
 from django.template import RequestContext
 from django.http import JsonResponse
 import json
+from django.views.generic.dates import YearArchiveView, MonthArchiveView
 
 # Create your views here.
 
@@ -41,6 +42,12 @@ class DetailView(generic.DetailView):
     template_name = 'blog/detail.html'
     def get_queryset(self):
         return Blog.objects.filter(pub_date__lte=timezone.now())
+
+def blog_detail(request, pk):
+    blog = get_object_or_404(Blog, id=pk)
+    blog.view_count += 1
+    blog.save()
+    return render_to_response('blog/detail.html',RequestContext(request,{'blog':blog}))
     
 class BlogUpdateView(generic.DetailView):
     model = Blog
@@ -79,14 +86,14 @@ def blog_update(request, blog_id):
 def blog_add(request):
     blogs = Blog(blog_title=request.POST['blog_title'],contents=request.POST['contents'],user=request.user,pub_date=timezone.now())
     blogs.save()
-    return HttpResponseRedirect('/blog/')
+    return HttpResponseRedirect(reverse('blog:index'))
 
 @login_required(login_url=login_url)
 def blog_delete(request, blog_id):
     blogs = get_object_or_404(Blog,id=blog_id)
     if request.user == blogs.user:
         blogs.delete()
-    return HttpResponseRedirect('/blog/')
+    return HttpResponseRedirect(reverse('blog:index'))
 
 def blog_like(request, blog_id):
     blogs = get_object_or_404(Blog,id=blog_id)
@@ -103,4 +110,28 @@ def serialize(objs):
      
 def blog_favorite(request):
     blog_list = Blog.objects.all().order_by('-like_count')[:10]
+    print serialize(blog_list)
     return JsonResponse(serialize(blog_list),safe=False)
+
+
+class ArticleMonthArchiveView(MonthArchiveView):
+    queryset = Blog.objects.all()
+    date_field = "pub_date"
+    allow_future = True
+
+class ArticleYearArchiveView(YearArchiveView):
+    queryset = Blog.objects.all()
+    date_field = "pub_date"
+    make_object_list = True
+    allow_future = True
+    
+def blog_archive(request):
+    blog_year = Blog.objects.all().datetimes('pub_date','month')
+    year_list=[]
+    for blog in blog_year:
+        year_month=str(blog.year)+'/'+str(blog.month)
+        year_list.append({'year':year_month})
+    print year_list
+    return JsonResponse(year_list,safe=False)
+    # context=RequestContext(request,{'blog_year':blog_year})
+    # return render_to_response("blog/archive_year.html",context)

@@ -12,7 +12,10 @@
     작성자 : {{ blog.user.username }} {% if blog.user.first_name %} ({{blog.user.last_name }}{{ blog.user.first_name}}) {% endif %}
     </span><br />
     <span class="badge">
-    작성일 : {{ blog.pub_date|date:"Y-m-j"}}
+    작성일 : {{ blog.pub_date|date:"Y-m-j" }}
+    </span>
+    <span class="badge">
+    조회수 : {{ blog.view_count }}
     </span>
 </p>
 {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
@@ -20,9 +23,9 @@
 {% csrf_token %}
   <div>{{ blog.contents|markdown }}</div>
 <button class="btn" id="blog_like_click"><i class="glyphicon glyphicon-heart"></i><span id="blog_like" value="{{ blog.id }}">{{ blog.like_count }}</span></button>
-<a class="btn" href="update/">Edit</a>
-<a class="btn" href="/blog/">List</a>
-
+<a class="btn" href="{% url 'blog:update' blog.id %}">Edit</a>
+<a class="btn" href="{% url 'blog:index' %}">List</a>
+<a class="btn" href="{% url 'blog:blog_add' %}">Add</a>
 {% include "disqus.html" %}
 </div>
 {% endblock %}
