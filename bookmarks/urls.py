@@ -2,7 +2,6 @@ from django.conf.urls import patterns, url, include
 from bookmarks import views
 import os.path
 from bookmarks.feeds import RecentBookmarks,UserBookmarks
-from django.contrib.syndication.views import Feed
 
 # from django.views.generic.simple import direct_to_templates # ver 1.2
 
@@ -27,7 +26,7 @@ urlpatterns = patterns(
     url(r'^friend/invite/$',views.friend_invite,name='friend_invite'),
     url(r'^friend/accept/(\w+)/$',views.friend_accept),
 
-    url(r'^feeds/recent/$',RecentBookmarks(),name='feed_recent'),
-    url(r'^feeds/user/(\w+)/$',UserBookmarks(),name='feed_user'),
+    url(r'^feed/recent/$',RecentBookmarks(),name='feed_recent'),
+    url(r'^feed/user/(\w+)/$',UserBookmarks(),name='feed_user'),
     
 ) 

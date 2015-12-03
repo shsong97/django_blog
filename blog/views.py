@@ -135,3 +135,6 @@ def blog_archive(request):
     return JsonResponse(year_list,safe=False)
     # context=RequestContext(request,{'blog_year':blog_year})
     # return render_to_response("blog/archive_year.html",context)
+
+def blog_feed(request):
+    return HttpResponse("hello.html")

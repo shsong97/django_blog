@@ -1,5 +1,6 @@
 from django.conf.urls import patterns, url
 from blog.views import *
+from blog.feeds import RecentBlog
 
 urlpatterns = patterns(
     '',
@@ -8,6 +9,7 @@ urlpatterns = patterns(
     #url(r'^add/$', views.BlogCreate.as_view(), name='blog_add'), 
     url(r'^add/$', blog_addview, name='blog_add'),
     url(r'^favorite/$', blog_favorite, name='blog_favorite'),
+    url(r'^feed/$', RecentBlog(), name='blog_feed'),
     url(r'^add/submit/$', blog_add, name='add_submit'),
     url(r'^(?P<pk>\d+)/$', blog_detail, name='detail'),
     url(r'^(?P<pk>\d+)/update/$', BlogUpdateView.as_view(), name='update'),

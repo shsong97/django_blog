@@ -22,7 +22,7 @@
 		</tr>
 	</table>
 <button class="btn" type="submit">Update</button>
-<a class="btn" href="/blog/{{ blog.id }}/delete">Delete</a>
-<a class="btn" href="/blog/">List</a>
+<a class="btn" href="{% url 'blog:delete' blog.id %}">Delete</a>
+<a class="btn" href="{% url 'blog:index' %}">List</a>
 </div>
 {% endblock %}

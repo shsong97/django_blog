@@ -5,7 +5,7 @@ import datetime
 from django.utils import timezone
 from django.contrib.auth.models import User
 from django_markdown.models import MarkdownField
-
+from django.core.urlresolvers import reverse
 # Create your models here.
 
 class Blog(models.Model):
@@ -25,6 +25,9 @@ class Blog(models.Model):
     was_published_recently.admin_order_field = 'Pub Date'
     was_published_recently.boolean = True
     was_published_recently.short_description = 'recently published?'
+
+    def get_absolute_url(self):
+        return reverse('blog:detail',args=(self.id,))
 
     def serialize(self):
         data={

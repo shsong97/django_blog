@@ -7,7 +7,7 @@ from django.utils.feedgenerator import Atom1Feed
 
 class RecentBookmarks(Feed):
     title=u'장고 북마크| 최신 북마크'
-    link='/feeds/recent/'
+    link='/bookmarks/feed/recent/'
     description=u'장고 북마크 서비스를 통해서 등록된 북마크'
     
     def items(self):
@@ -22,7 +22,7 @@ class UserBookmarks(Feed):
         return u'장고북마크|%s가 등록한 북마크' % user.username
     
     def link(self, user):
-        return '/feeds/user/%s/' % user.username
+        return '/bookmarks/feed/user/%s/' % user.username
     
     def description(self, user):
         return u'장고 북마크 서비스를 통해서 %s가 등록한 북마크' % user.username
