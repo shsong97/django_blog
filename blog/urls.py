@@ -1,6 +1,7 @@
 from django.conf.urls import patterns, url
 from blog.views import *
 from blog.feeds import RecentBlog
+from blog.google_calendar import *
 
 urlpatterns = patterns(
     '',
@@ -25,5 +26,6 @@ urlpatterns = patterns(
         name="archive_month_numeric"),
     url(r'^(?P<year>[0-9]{4})/(?P<month>[-\w]+)/$',
         ArticleMonthArchiveView.as_view(),
-        name="archive_month"),        
+        name="archive_month"),
+    url(r'^calendar/$', calendar_view, name='calendar_view'),        
 ) 
