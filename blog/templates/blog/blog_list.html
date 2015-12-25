@@ -12,7 +12,8 @@
 {% load django_markdown %}
 <div class="col-md-9">
 <a class="btn" href="{% url 'blog:blog_add' %}">Add</a>/
-<a class="btn" href="{% url 'blog:blog_feed' %}">Feed</a>
+<a class="btn" href="{% url 'blog:blog_feed' %}">Feed</a>/
+<a class="btn" href="{% url 'blog:calendar_view' %}">Calendar</a>
     {% if latest_blog_list %}
     {% for blog in latest_blog_list %}
     <div class="white-box">

@@ -1,7 +1,7 @@
 from django.conf.urls import patterns, url
 from blog.views import *
 from blog.feeds import RecentBlog
-from blog.google_calendar import *
+from blog.google_calendar import calendar_view
 
 urlpatterns = patterns(
     '',
