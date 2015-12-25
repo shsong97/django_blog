@@ -1,0 +1,8 @@
+{% extends "base.html" %}
+{% block body_area %} 
+{% for calendar in calendar_list %}
+<ul>
+<li>{{ calendar.summary }} - ({{ calendar.start.dateTime }} - {{ calendar.end.dateTime }})</li>
+</ul>
+{% endfor %}
+{% endblock %}
