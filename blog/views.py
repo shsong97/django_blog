@@ -125,11 +125,18 @@ class ArticleYearArchiveView(YearArchiveView):
 def blog_archive(request):
     blog_year = Blog.objects.all().datetimes('pub_date','month')
     year_list=[]
-    for current_month in blog_year:
-        year_month=str(current_month.year)+'/'+str(current_month.month)
-        next_month=datetime.datetime(current_month.year, current_month.month+1, 1)
-        count = Blog.objects.filter(pub_date__gte=current_month,
+    for current in blog_year:
+        _year=current.year
+        _month=current.month+1
+        year_month=str(current.year)+'/'+str(current.month)
+        
+        if current.month==12:
+            _year=current.year+1
+            _month=1
+        
+        next_month=datetime.datetime(_year, _month, 1)
+        count = Blog.objects.filter(pub_date__gte=current,
             pub_date__lt=next_month).aggregate(Count('pub_date'))
-        print count
+        
         year_list.append({'year':year_month,'count':count['pub_date__count']})
     return JsonResponse(year_list,safe=False)
