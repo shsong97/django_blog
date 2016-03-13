@@ -1,28 +1,18 @@
 # -*- coding:utf-8 -*-
 # Create your views here.
-from django.http import HttpResponse,Http404
-from django.template import Context, RequestContext
-from django.template.loader import get_template
 from django.contrib.auth.models import User
-from django.shortcuts import render_to_response
-from django.http import HttpResponseRedirect
-
-# look method
-# logout_then_login, password_change, 
-# password_change_done, password_reset, password_reset_done
-# redirect_to_login
-
 from django.contrib.auth.decorators import login_required, permission_required
-from django.shortcuts import get_object_or_404
-from bookmarks.models import Tag, Link, Bookmark, SharedBookmark, Friendship, Invitation
-from bookmarks.forms import *
 from django.core.exceptions import ObjectDoesNotExist
-from datetime import datetime, timedelta
-
-from django.db.models import Q
 from django.core.paginator import Paginator
-
+from django.db.models import Q
+from django.http import HttpResponse,Http404,HttpResponseRedirect
+from django.shortcuts import get_object_or_404, render
+from django.template.loader import get_template
 from django.utils.translation import gettext as _
+
+from bookmarks.models import *
+from bookmarks.forms import *
+from datetime import datetime, timedelta
 
 ITEMS_PER_PAGE=10
 login_url='/login'
@@ -30,8 +20,8 @@ login_url='/login'
 
 def main_page(request):
     shared_bookmarks=SharedBookmark.objects.order_by('-date')[:10]
-    variables=RequestContext(request,{'shared_bookmarks':shared_bookmarks})
-    return render_to_response('main_page.html',variables)
+    variables={'shared_bookmarks':shared_bookmarks}
+    return render(request,'main_page.html',variables)
 
 
 def user_page(request,username):
@@ -52,9 +42,7 @@ def user_page(request,username):
     except:
         raise Http404
         
-    #bookmarks=user.bookmark_set.order_by('-id')
-
-    variables=RequestContext(request,{
+    variables={
             'username':username,
             'bookmarks':bookmarks.object_list,
             'show_tags':True,
@@ -67,8 +55,8 @@ def user_page(request,username):
             'next_page':page+1, #bookmarks.next_page_number(),
             'prev_page':page-1, #bookmarks.previous_page_number(),
             'is_friend':is_friend
-        })
-    return render_to_response('user_page.html',variables)
+        }
+    return render(request,'user_page.html',variables)
 
 def _bookmark_save(request,form):
     link, dummy = Link.objects.get_or_create(url=form.cleaned_data['url'])
@@ -98,11 +86,6 @@ def _bookmark_save(request,form):
     bookmark.save()
     return bookmark
 
-
-# deco def : login_required : /accounts/login/
-#@login_required(login_url=login_url)
-
-# user permission
 @permission_required('bookmarks.add_bookmark',login_url=login_url)
 def bookmark_save_page(request):
     ajax=request.GET.has_key('ajax')
@@ -111,12 +94,12 @@ def bookmark_save_page(request):
         if form.is_valid():
             bookmark=_bookmark_save(request,form)
             if ajax:
-                variables=RequestContext(request,{
+                variables={
                         'bookmarks':[bookmark],
                         'show_edit':True,
                         'show_tags':True
-                    })
-                return render_to_response('bookmark_list.html',variables)
+                    }
+                return render(request,'bookmark_list.html',variables)
             else:
                 return HttpResponseRedirect('/bookmarks/user/%s/' % request.user.username)
         else:
@@ -146,22 +129,22 @@ def bookmark_save_page(request):
         
     else:
         form=BookmarkSaveForm()
-    variables=RequestContext(request,{'form':form})    
+    variables={'form':form}   
     if ajax:
-        return render_to_response('bookmark_save_form.html',variables)
+        return render(request,'bookmark_save_form.html',variables)
     else:            
-        return render_to_response('bookmark_save.html',variables)
+        return render(request,'bookmark_save.html',variables)
     
 def tag_page(request,tag_name):
     tag=get_object_or_404(Tag,name=tag_name)
     bookmarks=tag.bookmarks.order_by('-id')
-    variables=RequestContext(request,{
+    variables={
             'bookmarks':bookmarks,
             'tag_name':tag_name,
             'show_tags':True,
             'show_user':True
-        })
-    return render_to_response('tag_page.html',variables)
+        }
+    return render(request,'tag_page.html',variables)
 
 def tag_cloud(request,htmlpage):
     MAX_WEIGHT=5
@@ -181,8 +164,7 @@ def tag_cloud(request,htmlpage):
     for tag in tags:
         tag.weight=int(MAX_WEIGHT * (tag.count-min_count) / range )
 
-    variables=RequestContext(request,{'tags':tags})
-    return render_to_response(htmlpage,variables)
+    return render(request,htmlpage,{'tags':tags})
 
 
 def tag_cloud_page(request):
@@ -206,17 +188,16 @@ def search_page(request):
             form=SearchForm({'query':query})
             bookmarks=Bookmark.objects.filter(q)[:10]
             
-    variables=RequestContext(request,
-                            {'form':form,
-                             'bookmarks':bookmarks,
-                             'show_results':show_results,
-                             'show_tags':True,
-                             'show_user':True
-                            })
+    variables={'form':form,
+             'bookmarks':bookmarks,
+             'show_results':show_results,
+             'show_tags':True,
+             'show_user':True
+            }
     if request.is_ajax():
-        return render_to_response('bookmark_list.html',variables)
+        return render(request,'bookmark_list.html',variables)
     else:
-        return render_to_response('search.html',variables)
+        return render(request,'search.html',variables)
 
 @login_required(login_url=login_url)
 def bookmark_vote_page(request):
@@ -242,30 +223,30 @@ def popular_page(request):
     yesterday=today-timedelta(1)
     shared_bookmarks=SharedBookmark.objects.filter(date__gt=yesterday)
     shared_bookmarks=shared_bookmarks.order_by('-votes')[:10]
-    variables=RequestContext(request,{
+    variables={
             'shared_bookmarks':shared_bookmarks
-        })
-    return render_to_response('popular_page.html',variables)
+        }
+    return render(request,'popular_page.html',variables)
 
 def bookmark_page(request,bookmark_id):
     shared_bookmark=get_object_or_404(SharedBookmark,id=bookmark_id)
-    variables=RequestContext(request,{
+    variables={
             'shared_bookmark':shared_bookmark,
-        })
-    return render_to_response('bookmark_page.html',variables)
+        }
+    return render(request,'bookmark_page.html',variables)
 
 def friends_page(request, username):
     user=get_object_or_404(User, username=username)
     friends=[friendship.to_friend for friendship in user.friend_set.all()]
     friend_bookmarks=Bookmark.objects.filter(user__in=friends).order_by('-id')
-    variables=RequestContext(request,{
+    variables={
             'username':username,
             'friends':friends,
             'bookmarks':friend_bookmarks[:10],
             'show_tags':True,
             'show_user':True
-        })
-    return render_to_response('friends_page.html',variables)
+        }
+    return render(request,'friends_page.html',variables)
 
 @login_required
 def friend_add(request):
@@ -310,8 +291,8 @@ def friend_invite(request):
     else:
         form=FriendInviteForm()
             
-    variables=RequestContext(request,{'form':form})
-    return render_to_response('friend_invite.html',variables)
+    variables={'form':form}
+    return render('friend_invite.html',variables)
 
 def friend_accept(request, code):
     invitation=get_object_or_404(Invitation,code__exact=code)

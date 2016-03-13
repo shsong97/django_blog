@@ -46,7 +46,7 @@
             <p> Your username and password didn't match. Please try again.</p>
             {% endif %}
             <div class="page-body">
-                <form method="post" action=".">
+                <form method="post" action="{% url 'user_manager:login' %}">
                     {{ form.name_of_field.errors }} 
                     {% csrf_token %}
                     <!-- go to success page after login -->

@@ -1,13 +1,8 @@
-from django.conf.urls import patterns, url, include
+from django.conf.urls import url, include
 from bookmarks import views
-import os.path
 from bookmarks.feeds import RecentBookmarks,UserBookmarks
 
-# from django.views.generic.simple import direct_to_templates # ver 1.2
-
-
-urlpatterns = patterns(
-    '',
+urlpatterns = [
     # bookmark search
     url(r'^$', views.main_page),
     url(r'^popular/$',views.popular_page,name='popular'),                   
@@ -29,4 +24,4 @@ urlpatterns = patterns(
     url(r'^feed/recent/$',RecentBookmarks(),name='feed_recent'),
     url(r'^feed/user/(\w+)/$',UserBookmarks(),name='feed_user'),
     
-) 
+]

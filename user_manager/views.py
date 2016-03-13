@@ -21,10 +21,11 @@ def register_success(request):
 def login_page(request):
     logout(request)
     username = password = ''
+    next_page='/'
 
     if request.GET:
         next_page=request.GET.get('next','/')
-        
+
     if request.POST:
         username = request.POST['username']
         password = request.POST['password']
@@ -35,7 +36,7 @@ def login_page(request):
                 login(request, user)
                 next_page = request.POST.get('next', '/')
                 return HttpResponseRedirect(next_page)
-    return render(request, 'registration/login.html')
+    return render(request, 'registration/login.html',{'next':next_page})
 
 def logout_page(request):
     logout(request)
