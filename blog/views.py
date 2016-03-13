@@ -135,8 +135,10 @@ def blog_archive(request):
             _month=1
         
         next_month=datetime.datetime(_year, _month, 1)
-        count = Blog.objects.filter(pub_date__gte=current,
+        count = Blog.objects.filter(
+            pub_date__gte=current,
             pub_date__lt=next_month).aggregate(Count('pub_date'))
         
         year_list.append({'year':year_month,'count':count['pub_date__count']})
+
     return JsonResponse(year_list,safe=False)
