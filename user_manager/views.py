@@ -1,6 +1,5 @@
 # -.- coding: UTF-8 -.-
-from django.shortcuts import render,render_to_response, redirect
-from django.template import Context, RequestContext
+from django.shortcuts import render, redirect
 from django.http import HttpResponseRedirect,HttpResponse
 
 from django.contrib.auth import logout, login 
@@ -17,7 +16,7 @@ def contact(request):
     return render(request,"contact.html")
 
 def register_success(request):
-    return render_to_response('registration/register_success.html',RequestContext(request))
+    return render(request, 'registration/register_success.html')
 
 def login_page(request):
     logout(request)
@@ -36,7 +35,7 @@ def login_page(request):
                 login(request, user)
                 next_page = request.POST.get('next', '/')
                 return HttpResponseRedirect(next_page)
-    return render_to_response('registration/login.html', context_instance=RequestContext(request))
+    return render(request, 'registration/login.html')
 
 def logout_page(request):
     logout(request)
@@ -67,7 +66,7 @@ def register_page(request):
             
     temp_param='Register'
     user_param={'form':form,'temp_param':temp_param}
-    return render_to_response('form_template.html',RequestContext(request,user_param))
+    return render(request,'form_template.html',user_param)
 
 @login_required
 def change_password(request):
@@ -80,7 +79,7 @@ def change_password(request):
         form = PasswordChangeForm(None) 
     temp_param='Change Password'
     user_param={'form':form,'temp_param':temp_param}
-    return render_to_response('form_template.html',RequestContext(request,user_param))
+    return render(request,'form_template.html',user_param)
 
 def reset_password(request):
     if request.POST:
@@ -93,7 +92,7 @@ def reset_password(request):
         form=PasswordResetForm()
     temp_param='Reset Password'
     user_param={'form':form,'temp_param':temp_param}
-    return render(request,'form_template.html',RequestContext(request,user_param))
+    return render(request,'form_template.html',user_param)
 
 @login_required
 def user_profile_view(request):
@@ -107,4 +106,4 @@ def user_profile_view(request):
             form.save()
 
     user_param={'form':form,'temp_param':temp_param}
-    return render(request,'form_template.html',RequestContext(request,user_param))
+    return render(request,'form_template.html',user_param)

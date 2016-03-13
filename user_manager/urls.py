@@ -1,10 +1,9 @@
-from django.conf.urls import patterns, include, url
+from django.conf.urls import include, url
 from django.contrib.syndication.views import Feed
 from django.contrib.auth.views import password_reset_confirm, password_reset_complete
 from user_manager import views
 
-urlpatterns = patterns(
-    '',
+urlpatterns = [
     # user
     url(r'^login/$', views.login_page,name='login'), # 'django.contrib.auth.views.login'
     url(r'^logout/$',views.logout_page),
@@ -17,5 +16,5 @@ urlpatterns = patterns(
     url(r'^password/done/$', 'django.contrib.auth.views.password_reset_complete',{'template_name':'registration/reset_complete.html'},name='reset_complete'),
     url(r'^password/reset/done/$', 'django.contrib.auth.views.password_reset_done',name='reset_done'),
 
-)
+]
 

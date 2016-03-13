@@ -2,17 +2,16 @@
 
 from django.views import generic
 from django.utils import timezone
-from django.shortcuts import get_object_or_404, render_to_response
-from django.http import HttpResponseRedirect, HttpResponse
+from django.shortcuts import get_object_or_404, render
+from django.http import HttpResponseRedirect, HttpResponse, JsonResponse
 from blog.models import Blog
 from django.core.urlresolvers import reverse
 from django.views.generic.edit import CreateView
 from django.contrib.auth.decorators import login_required
-from django.template import RequestContext
-from django.http import JsonResponse
 import json
 from django.views.generic.dates import YearArchiveView, MonthArchiveView
-
+from django.db.models import Count
+import datetime
 # Create your views here.
 
 login_url='/user/login'
@@ -47,7 +46,7 @@ def blog_detail(request, pk):
     blog = get_object_or_404(Blog, id=pk)
     blog.view_count += 1
     blog.save()
-    return render_to_response('blog/detail.html',RequestContext(request,{'blog':blog}))
+    return render(request,'blog/detail.html',{'blog':blog})
     
 class BlogUpdateView(generic.DetailView):
     model = Blog
@@ -64,11 +63,10 @@ def blog_addview(request):
         if request['contents']:
             contents=request['contents']
         
-    variables=RequestContext(request,
-        {'title':title,
+    variables = {'title':title,
         'contents':contents
-        })
-    return render_to_response('blog/add.html',variables)
+        }
+    return render(request,'blog/add.html',variables)
 
 def toJSON(objs, status=200):
     j=json.dumps(objs,ensure_ascii=False)
@@ -110,7 +108,6 @@ def serialize(objs):
      
 def blog_favorite(request):
     blog_list = Blog.objects.all().order_by('-like_count')[:10]
-    print serialize(blog_list)
     return JsonResponse(serialize(blog_list),safe=False)
 
 
@@ -128,13 +125,11 @@ class ArticleYearArchiveView(YearArchiveView):
 def blog_archive(request):
     blog_year = Blog.objects.all().datetimes('pub_date','month')
     year_list=[]
-    for blog in blog_year:
-        year_month=str(blog.year)+'/'+str(blog.month)
-        year_list.append({'year':year_month})
-    print year_list
+    for current_month in blog_year:
+        year_month=str(current_month.year)+'/'+str(current_month.month)
+        next_month=datetime.datetime(current_month.year, current_month.month+1, 1)
+        count = Blog.objects.filter(pub_date__gte=current_month,
+            pub_date__lt=next_month).aggregate(Count('pub_date'))
+        print count
+        year_list.append({'year':year_month,'count':count['pub_date__count']})
     return JsonResponse(year_list,safe=False)
-    # context=RequestContext(request,{'blog_year':blog_year})
-    # return render_to_response("blog/archive_year.html",context)
-
-def blog_feed(request):
-    return HttpResponse("hello.html")

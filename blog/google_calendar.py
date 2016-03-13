@@ -9,7 +9,7 @@ from oauth2client import tools
 import datetime
 
 from django.template import RequestContext
-from django.shortcuts import render_to_response, redirect
+from django.shortcuts import render_to_response, redirect, render
 
 SCOPES = 'https://www.googleapis.com/auth/calendar.readonly'
 CLIENT_SECRET_FILE = 'client_secret.json'
@@ -45,4 +45,4 @@ def calendar_view(request):
         orderBy='startTime'
         ).execute()
     events = eventsResult.get('items', [])
-    return render_to_response('blog/calendar.html',RequestContext(request,{'calendar_list':events}))
+    return render(request, 'blog/calendar.html',{'calendar_list':events})

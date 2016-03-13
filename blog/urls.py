@@ -1,10 +1,9 @@
-from django.conf.urls import patterns, url
+from django.conf.urls import url
 from blog.views import *
 from blog.feeds import RecentBlog
 from blog.google_calendar import calendar_view
 
-urlpatterns = patterns(
-    '',
+urlpatterns = [
     url(r'^$', IndexView.as_view(), name='index'),
     url(r'^short/$', ShortIndexView.as_view(), name='short'),
     #url(r'^add/$', views.BlogCreate.as_view(), name='blog_add'), 
@@ -18,14 +17,14 @@ urlpatterns = patterns(
     url(r'^(?P<blog_id>\d+)/delete/$', blog_delete, name='delete'),
     url(r'^(?P<blog_id>\d+)/like/$', blog_like, name='blog_like'),
     url(r'^archive/$', blog_archive, name='blog_archive'),
-    url(r'^(?P<year>[0-9]{4})/$',
+    url(r'^list/(?P<year>[0-9]{4})/$',
         ArticleYearArchiveView.as_view(),
         name="article_year_archive"),
-    url(r'^(?P<year>[0-9]{4})/(?P<month>[0-9]+)/$',
+    url(r'^list/(?P<year>[0-9]{4})/(?P<month>[0-9]+)/$',
         ArticleMonthArchiveView.as_view(month_format='%m'),
         name="archive_month_numeric"),
-    url(r'^(?P<year>[0-9]{4})/(?P<month>[-\w]+)/$',
+    url(r'^list/(?P<year>[0-9]{4})/(?P<month>[-\w]+)/$',
         ArticleMonthArchiveView.as_view(),
         name="archive_month"),
     url(r'^calendar/$', calendar_view, name='calendar_view'),        
-) 
+]

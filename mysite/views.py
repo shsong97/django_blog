@@ -1,18 +1,17 @@
 # -.- coding: UTF-8 -.-
 from django.shortcuts import render
-from django.template import RequestContext
-from django.shortcuts import render_to_response
+from django.http import HttpResponseRedirect
 from django.contrib.auth.forms import *
 
 def home(request):
-    return render(request,"index.html")
+    return HttpResponseRedirect('/blog/')
 
 def test(request):
     form = PasswordResetForm()
     if form.is_valid():
         form.save()
     
-    return render_to_response("test.html",RequestContext(request,{'form':form}))
+    return render(request, "test.html",{'form':form})
  
 # def reset_password(request):
 #     if request.POST:

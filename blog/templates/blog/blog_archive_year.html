@@ -1,14 +1,13 @@
-<ul>
-    {% for date in date_list %}
-        <li>{{ date|date }}</li>
-    {% endfor %}
-</ul>
-
-<div>
-    <h1>All Articles for {{ year|date:"Y" }}</h1>
+{% extends "base.html" %}
+{% block body_area %}
+<div class="col-md-12">
+    <h2>블로그 - {{ year|date:"Y년" }}</h2>
+    <ol>
     {% for obj in object_list %}
-        <p>
-            {{ obj.blog_title }} - {{ obj.pub_date|date:"F j, Y" }}
-        </p>
+        <li>
+            {{ obj.pub_date|date:"Y/m/j" }} - <a href="/blog/{{ obj.id }}/">{{ obj.blog_title }}</a>
+        </li>
     {% endfor %}
+	</ol>
 </div>
+{% endblock %}

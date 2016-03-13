@@ -1,13 +1,11 @@
-from django.conf.urls import patterns, include, url
+from django.conf.urls import include, url
 from django.contrib import admin
 from mysite import views
 
 admin.autodiscover()
 
-urlpatterns = patterns(
-    '',
+urlpatterns = [
     url(r'^$', 'mysite.views.home', name='home'),
-    url(r'^grappelli/', include('grappelli.urls')), # grappelli URLS
     url(r'^admin/', include(admin.site.urls)),
     url(r'^blog/', include('blog.urls',namespace="blog")),
     url(r'^polls/', include('polls.urls',namespace="polls")),
@@ -23,5 +21,5 @@ urlpatterns = patterns(
 #     url(r'^accounts/password/reset/done/$', 'django.contrib.auth.views.password_reset_done',name='password_reset_done'),
 #     url(r'^accounts/password/reset/(?P<uidb64>[0-9A-Za-z]+)-(?P<token>.+)/$', 'django.contrib.auth.views.password_reset_confirm', name='password_reset_confirm'),
 #     url(r'^accounts/password/done/$', 'django.contrib.auth.views.password_reset_complete',name='password_reset_complete'),
-)
+]
 

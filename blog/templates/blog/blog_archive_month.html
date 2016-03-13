@@ -1,11 +1,12 @@
 {% extends "base.html" %}
 {% block body_area %}
 <div class="col-md-12">
-<ul>
+<h2>블로그 - {{ month|date:"Y년 m월" }}</h2>
+<ol>
     {% for article in object_list %}
         <li>{{ article.pub_date|date:"Y/m/j" }}: <a href="/blog/{{ article.id}}/">{{ article.blog_title }}</a></li>
     {% endfor %}
-</ul>
+</ol>
 
 <p>
     {% if previous_month %}
