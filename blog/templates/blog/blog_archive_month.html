@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% block body_area %}
 <div class="col-md-12">
-<h2>블로그 - {{ month|date:"Y년 m월" }}</h2>
+<h2>Blog - {{ month|date:"Y년 m월" }}</h2>
 <ol>
     {% for article in object_list %}
         <li>{{ article.pub_date|date:"Y/m/j" }}: <a href="/blog/{{ article.id}}/">{{ article.blog_title }}</a></li>
@@ -10,10 +10,10 @@
 
 <p>
     {% if previous_month %}
-        Previous Month: <a href='/blog/{{ previous_month|date:"Y/m" }}'>{{ previous_month|date:"Y/m" }}</a>
+        {% trans 'Previous Month' %}: <a href='/blog/{{ previous_month|date:"Y/m" }}'>{{ previous_month|date:"Y/m" }}</a>
     {% endif %}
     {% if next_month %}
-        Next Month: <a href='/blog/{{ next_month|date:"Y/m" }}'>{{ next_month|date:"Y/m" }}</a>
+        {% trans 'Next Month' %}: <a href='/blog/{{ next_month|date:"Y/m" }}'>{{ next_month|date:"Y/m" }}</a>
     {% endif %}
 </p>
 </div>

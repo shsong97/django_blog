@@ -10,5 +10,4 @@ class AdminBlog(MarkdownModelAdmin):
     search_fields=("blog_title",)
     
 admin.site.register(Blog,AdminBlog)
-admin.site.register(Tag)
-# admin.site.register(BlogLike)
+admin.site.register(Tag) 

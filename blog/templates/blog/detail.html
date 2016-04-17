@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load i18n %}
 {% block title %}{{ blog.blog_title }}{% endblock %}
 {% block external %}
 <script type="text/javascript" src="/static/blog/blog_each.js"> </script>
@@ -10,15 +11,15 @@
 <div class="row">
   <div class="col-md-6">
     <span class="badge">
-    작성자 : {{ blog.user.username }} {% if blog.user.first_name %} ({{blog.user.last_name }}{{ blog.user.first_name}}) {% endif %}
+    {% trans 'Writer' %}' : {{ blog.user.username }} {% if blog.user.first_name %} ({{blog.user.last_name }}{{ blog.user.first_name}}) {% endif %}
     </span>
   </div>
   <div class="col-md-6 text-right">
     <span class="badge">
-    작성일 : {{ blog.pub_date|date:"Y-m-j" }}
+    {% trans 'Pub date' %}' : {{ blog.pub_date|date:"Y-m-j" }}
     </span>
     <span class="badge">
-    조회수 : {{ blog.view_count }}
+    {% trans 'Count' %} : {{ blog.view_count }}
     </span>
   </div>
 </div>  
@@ -27,9 +28,9 @@
 {% csrf_token %}
   <div>{{ blog.contents|markdown }}</div>
 <button class="btn" id="blog_like_click"><i class="glyphicon glyphicon-heart"></i><span id="blog_like" value="{{ blog.id }}">{{ blog.like_count }}</span></button>
-<a class="btn" href="{% url 'blog:update' blog.id %}">Edit</a>
-<a class="btn" href="{% url 'blog:index' %}">List</a>
-<a class="btn" href="{% url 'blog:blog_add' %}">Add</a>
+<a class="btn" href="{% url 'blog:update' blog.id %}">{% trans 'Edit' %}</a>
+<a class="btn" href="{% url 'blog:index' %}">{% trans 'List' %}</a>
+<a class="btn" href="{% url 'blog:blog_add' %}">{% trans 'Add' %}</a>
 {% include "disqus.html" %}
 </div>
 {% endblock %}

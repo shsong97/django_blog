@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load i18n %}
 {% block title %}{{ polllist.title }}{% endblock %}
 <style>
 
@@ -31,9 +32,9 @@
 	</td></tr> 
 {% endfor %}
 </table>
-<button class="btn" type="submit">Vote</button>
-<a class="btn" href="/polls/{{ polllist.id }}/results">Result</a>
-<a class="btn" href="/polls/">List</a>
+<button class="btn btn-primary" type="submit">{% trans 'Vote' %}</button>
+<a class="btn btn-primary" href="{% url 'polls:results' polllist.id %}">{% trans 'Result' %}</a>
+<a class="btn btn-primary" href="{% url 'polls:index' %}">{% trans 'List' %}</a>
 </form>
 </div>
 {% endblock %}

@@ -46,7 +46,3 @@ class Tag(models.Model):
     
     def __unicode__(self):
         return self.tag_title
-
-# class BlogLike(models.Model):
-#     blog = models.ManyToManyField(Blog)
-#     user = models.ManyToManyField(User)

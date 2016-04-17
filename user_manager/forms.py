@@ -13,14 +13,14 @@ class ViewUserProfile(ModelForm):
         fields = ['first_name','last_name','email',]
         
 class RegistrationForm(forms.Form):
-    username=forms.CharField(label='Username',max_length=30)
-    email=forms.EmailField(label='Email')
+    username=forms.CharField(label=_('Username'),max_length=30)
+    email=forms.EmailField(label=_('Email'))
     password1=forms.CharField(
-        label='Password',
+        label=_('Password'),
         widget=forms.PasswordInput()    
     )
     password2=forms.CharField(
-        label='Password(confirm)',
+        label=_('Password(confirm)'),
         widget=forms.PasswordInput()
     )
     # clean_<field> : valid field
@@ -30,18 +30,18 @@ class RegistrationForm(forms.Form):
             password2=self.cleaned_data['password2']
             if password1==password2:
                 return password2
-        raise forms.ValidationError('password does not match')
+        raise forms.ValidationError(_('password does not match'))
 
     def clean_username(self):
         username=self.cleaned_data['username']
         if not re.search(r'\w+$',username):
-            raise forms.ValidationError('user name allows charactor, number, underscore')
+            raise forms.ValidationError(_('user name allows charactor, number, underscore'))
         
         try:
             User.objects.get(username=username)
         except ObjectDoesNotExist:
             return username
-        raise forms.ValidationError('already exists username')
+        raise forms.ValidationError(_('already exists username'))
 
     def clean_email(self):
         email=self.cleaned_data['email']        
@@ -49,5 +49,5 @@ class RegistrationForm(forms.Form):
             User.objects.get(email=email)
         except ObjectDoesNotExist:
             return email
-        raise forms.ValidationError('already exists email')
+        raise forms.ValidationError(_('already exists email'))
     

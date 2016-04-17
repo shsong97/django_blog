@@ -1,7 +1,7 @@
 {% extends "base.html" %}
-{% block title %}Success for register{% endblock %}
-{% block head %}Success for register.{% endblock %}
+{% block title %}{% trans 'Success for register' %}{% endblock %}
+{% block head %}{% trans 'Success for register.' %}{% endblock %}
 {% block body_area %}
-Thank you for register.<br />
-<a href="/user/login/">Please, Login</a>
+{% trans 'Thank you for register.' %}<br />
+<a href="/user/login/">{% trans 'Please, Login' %}</a>
 {% endblock %}

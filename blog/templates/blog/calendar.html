@@ -1,9 +1,0 @@
-{% extends "base.html" %}
-{% block body_area %} 
-<h4>Google Calendar List</h4>
-{% for calendar in calendar_list %}
-<ul>
-<li><a href="{{ calendar.htmlLink }}">{{ calendar.summary }}</a></li>
-</ul>
-{% endfor %}
-{% endblock %}

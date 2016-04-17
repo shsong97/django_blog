@@ -11,6 +11,7 @@ from django.utils.http import is_safe_url
 from user_manager.forms import *
 from django.core.urlresolvers import reverse
 from django.contrib.auth.views import password_reset, password_reset_confirm
+from django.utils.translation import gettext_lazy as _
 
 def contact(request):
     return render(request,"contact.html")
@@ -51,15 +52,6 @@ def register_page(request):
                 password=form.cleaned_data['password1'],
                 email=form.cleaned_data['email']
             )
-            if 'invitation' in request.session:
-                invitation=Invitation.objects.get(id=request.session['invitation'])
-                friendship=Friendship(from_friend=user,to_friend=invitation.sender)
-                friendship.save()
-                
-                friendship=Friendship(from_friend=inviation.sender,to_friend=user)
-                friendship.save()
-                invitation.delete()
-                del request.session['invitation']
                 
             return HttpResponseRedirect('/user/register/success/')
     else:
@@ -78,7 +70,7 @@ def change_password(request):
             return redirect('/')
     else:
         form = PasswordChangeForm(None) 
-    temp_param='Change Password'
+    temp_param=_('Change Password')
     user_param={'form':form,'temp_param':temp_param}
     return render(request,'form_template.html',user_param)
 
@@ -91,13 +83,13 @@ def reset_password(request):
             return render(request,'registration/mail_send.html')
     else:
         form=PasswordResetForm()
-    temp_param='Reset Password'
+    temp_param=_('Reset Password')
     user_param={'form':form,'temp_param':temp_param}
     return render(request,'form_template.html',user_param)
 
 @login_required
 def user_profile_view(request):
-    temp_param='View Profile'
+    temp_param=_('View Profile')
     if request.user:
         form=ViewUserProfile(instance=request.user)
         

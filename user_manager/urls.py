@@ -6,7 +6,7 @@ from user_manager import views
 urlpatterns = [
     # user
     url(r'^$', views.login_page,name='login'),
-    url(r'^login$', views.login_page,name='login'), # 'django.contrib.auth.views.login'
+    url(r'^login/$', views.login_page,name='login'), # 'django.contrib.auth.views.login'
     url(r'^logout/$',views.logout_page),
     url(r'^profile/$',views.user_profile_view),
     url(r'^register/$',views.register_page),       

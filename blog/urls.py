@@ -1,12 +1,9 @@
 from django.conf.urls import url
 from blog.views import *
 from blog.feeds import RecentBlog
-from blog.google_calendar import calendar_view
 
 urlpatterns = [
     url(r'^$', IndexView.as_view(), name='index'),
-    url(r'^short/$', ShortIndexView.as_view(), name='short'),
-    #url(r'^add/$', views.BlogCreate.as_view(), name='blog_add'), 
     url(r'^add/$', blog_addview, name='blog_add'),
     url(r'^favorite/$', blog_favorite, name='blog_favorite'),
     url(r'^feed/$', RecentBlog(), name='blog_feed'),
@@ -25,6 +22,5 @@ urlpatterns = [
         name="archive_month_numeric"),
     url(r'^list/(?P<year>[0-9]{4})/(?P<month>[-\w]+)/$',
         ArticleMonthArchiveView.as_view(),
-        name="archive_month"),
-    url(r'^calendar/$', calendar_view, name='calendar_view'),        
+        name="archive_month"),       
 ]

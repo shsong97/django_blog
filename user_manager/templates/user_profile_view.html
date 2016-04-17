@@ -1,9 +1,9 @@
 {% extends "base.html" %}
-{% block title %}View Profile{% endblock %}
+{% block title %}{% trans 'View Profile' %}{% endblock %}
 {% block body_area %}
 <form method="post" action=".">
     {% csrf_token  %}
     {{ form.as_p }}
-    <input type="submit" class="btn" value="Change Profile" />
+    <input type="submit" class="btn" value="{% trans 'Change Profile' %}" />
 </form>
 {% endblock %}

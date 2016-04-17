@@ -1,4 +1,4 @@
-
+{% load i18n %}
 <form action="{% url 'polls:vote' polllist.id %}" method="post" class="form-inline">
 {% csrf_token %}
 <table class="table table-bordered">
@@ -14,7 +14,7 @@
 	</td></tr> 
 {% endfor %}
 </table>
-<button class="btn" type="submit">Vote</button>
-<a class="btn" href="/polls/{{ polllist.id }}/results">Result</a>
-<a class="btn" href="/polls/">List</a>
+<button class="btn btn-primary" type="submit">{% trans 'Vote' %}</button>
+<a class="btn btn-primary" href="{% url 'polls:results' polllist.id %}">{% trans 'Result' %}</a>
+<a class="btn btn-primary" href="{% url 'polls:index' %}">{% trans 'List' %}</a>
 </form>
