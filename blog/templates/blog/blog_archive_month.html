@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load i18n %}
 {% block body_area %}
 <div class="col-md-12">
 <h2>Blog - {{ month|date:"Y년 m월" }}</h2>
@@ -10,10 +11,10 @@
 
 <p>
     {% if previous_month %}
-        {% trans 'Previous Month' %}: <a href='/blog/{{ previous_month|date:"Y/m" }}'>{{ previous_month|date:"Y/m" }}</a>
+        {% trans 'Previous Month' %}: <a href='/blog/list/{{ previous_month|date:"Y/m" }}'>{{ previous_month|date:"Y/m" }}</a>
     {% endif %}
     {% if next_month %}
-        {% trans 'Next Month' %}: <a href='/blog/{{ next_month|date:"Y/m" }}'>{{ next_month|date:"Y/m" }}</a>
+        {% trans 'Next Month' %}: <a href='/blog/list/{{ next_month|date:"Y/m" }}'>{{ next_month|date:"Y/m" }}</a>
     {% endif %}
 </p>
 </div>

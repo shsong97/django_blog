@@ -19,6 +19,9 @@ def contact(request):
 def register_success(request):
     return render(request, 'registration/register_success.html')
 
+def facebooklogin(request):
+    return render(request, 'social_login.html')
+    
 def login_page(request):
     logout(request)
     username = password = ''

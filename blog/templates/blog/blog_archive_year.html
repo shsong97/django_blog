@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load i18n %}
 {% block body_area %}
 <div class="col-md-12">
     <h2>Blog - {{ year|date:"Y" }}</h2>
@@ -9,5 +10,13 @@
         </li>
     {% endfor %}
 	</ol>
+	<p>
+    {% if previous_year %}
+        {% trans 'Previous year' %}: <a href='/blog/list/{{ previous_year|date:"Y" }}'>{{ previous_year|date:"Y" }}</a>
+    {% endif %}
+    {% if next_year %}
+        {% trans 'Next year' %}: <a href='/blog/list/{{ next_year|date:"Y" }}'>{{ next_year|date:"Y" }}</a>
+    {% endif %}
+	</p>
 </div>
 {% endblock %}

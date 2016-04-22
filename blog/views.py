@@ -107,7 +107,7 @@ def serialize(objs):
     return serialized
      
 def blog_favorite(request):
-    blog_list = Blog.objects.all().order_by('-like_count')[:10]
+    blog_list = Blog.objects.filter(user=request.user).order_by('-like_count')[:10]
     return JsonResponse(serialize(blog_list),safe=False)
 
 
@@ -115,6 +115,9 @@ class ArticleMonthArchiveView(MonthArchiveView):
     queryset = Blog.objects.all()
     date_field = "pub_date"
     allow_future = True
+    # article.get_dated_queryset(**{'user__username':'shsong97'})
+    # def get_dated_queryset(self, **lookup):
+    #     return (super).get_dated_queryset(self, **lookup)
 
 class ArticleYearArchiveView(YearArchiveView):
     queryset = Blog.objects.all()
@@ -123,7 +126,7 @@ class ArticleYearArchiveView(YearArchiveView):
     allow_future = True
     
 def blog_archive(request):
-    blog_year = Blog.objects.all().datetimes('pub_date','month')
+    blog_year = Blog.objects.filter(user=request.user).datetimes('pub_date','month').order_by('-pub_date')
     year_list=[]
     for current in blog_year:
         _year=current.year
@@ -136,9 +139,10 @@ def blog_archive(request):
         
         next_month=datetime.datetime(_year, _month, 1)
         count = Blog.objects.filter(
+            user=request.user,
             pub_date__gte=current,
             pub_date__lt=next_month).aggregate(Count('pub_date'))
         
         year_list.append({'year':year_month,'count':count['pub_date__count']})
 
-    return JsonResponse(year_list,safe=False)
+    return JsonResponse(year_list[:10],safe=False)

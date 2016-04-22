@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-04-17 17:43+0900\n"
+"POT-Creation-Date: 2016-04-17 19:56+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -42,13 +42,21 @@ msgstr "내용"
 msgid "Write"
 msgstr "작성"
 
-#: .\blog\templates\blog\blog_archive_month.html:13
+#: .\blog\templates\blog\blog_archive_month.html:14
 msgid "Previous Month"
 msgstr "이전달"
 
-#: .\blog\templates\blog\blog_archive_month.html:16
+#: .\blog\templates\blog\blog_archive_month.html:17
 msgid "Next Month"
 msgstr "다음달"
+
+#: .\blog\templates\blog\blog_archive_year.html:15
+msgid "Previous year"
+msgstr "이전해"
+
+#: .\blog\templates\blog\blog_archive_year.html:18
+msgid "Next year"
+msgstr "다음해"
 
 #: .\blog\templates\blog\blog_list.html:3
 msgid "Blog List"
@@ -125,8 +133,6 @@ msgid "Result"
 msgstr "결과보기"
 
 #: .\polls\templates\polls\index.html:3
-#, fuzzy
-#| msgid "Polls"
 msgid "Poll"
 msgstr "투표"
 

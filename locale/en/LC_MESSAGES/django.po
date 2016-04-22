@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-04-17 17:43+0900\n"
+"POT-Creation-Date: 2016-04-17 19:56+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -41,12 +41,20 @@ msgstr ""
 msgid "Write"
 msgstr ""
 
-#: .\blog\templates\blog\blog_archive_month.html:13
+#: .\blog\templates\blog\blog_archive_month.html:14
 msgid "Previous Month"
 msgstr ""
 
-#: .\blog\templates\blog\blog_archive_month.html:16
+#: .\blog\templates\blog\blog_archive_month.html:17
 msgid "Next Month"
+msgstr ""
+
+#: .\blog\templates\blog\blog_archive_year.html:15
+msgid "Previous year"
+msgstr ""
+
+#: .\blog\templates\blog\blog_archive_year.html:18
+msgid "Next year"
 msgstr ""
 
 #: .\blog\templates\blog\blog_list.html:3
