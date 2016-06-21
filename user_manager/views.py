@@ -26,7 +26,7 @@ def login_page(request):
     logout(request)
     username = password = ''
     next_page='/'
-
+    error_message=[]
     if request.GET:
         next_page=request.GET.get('next','/')
 
@@ -40,7 +40,11 @@ def login_page(request):
                 login(request, user)
                 next_page = request.POST.get('next', '/')
                 return HttpResponseRedirect(next_page)
-    return render(request, 'registration/login.html',{'next':next_page})
+            else:
+                error_message.append(_('User is not acitve'))
+        else:
+            error_message.append(_('Id or password is wrong. Retry.'))
+    return render(request, 'registration/login.html',{'next':next_page,'error_message':error_message})
 
 def logout_page(request):
     logout(request)

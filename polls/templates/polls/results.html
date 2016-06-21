@@ -3,9 +3,7 @@
 {% block title %}{{ polllist.title }}{% endblock %}
 {% block external %}
 <style>
-
-.header_title { background-color: #eeeeff}
-
+th { background-color: #cccccc}
 </style>
 {% endblock %}
 {% block body_area %}
@@ -14,9 +12,9 @@
 
 <table class="table table-bordered">
 {% for poll in polllist.poll_set.all %}
-<tr><td class="header_title">
+<tr><th>
 <label>{{ poll.question }} ({% trans 'Total' %}:{{ poll.total_count }})</label>
-</td></tr>
+</th></tr>
 <tr><td>
 {% for choice in poll.choice_set.all %}
   <label>{{ choice.choice_text }} : {{ choice.votes }} </label>

@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block body_area %}
+{% load i18n %}
+<div class="white-box">
+<form action="" method="post">{% csrf_token %}
+    <p>{% trans 'Are you sure you want to delete' %} {{ object }}?</p>
+    <input type="submit" value="Confirm" />
+</form>
+</div>
+{% endblock %}

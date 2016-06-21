@@ -10,3 +10,4 @@ virtualenv==1.11.6
 whitenoise==2.0.4
 django-markdown==0.8.4
 django-allauth==0.25.2
+django-debug-toolbar==1.4

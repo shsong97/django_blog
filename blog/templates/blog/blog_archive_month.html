@@ -8,7 +8,6 @@
         <li>{{ article.pub_date|date:"Y/m/j" }}: <a href="/blog/{{ article.id}}/">{{ article.blog_title }}</a></li>
     {% endfor %}
 </ol>
-
 <p>
     {% if previous_month %}
         {% trans 'Previous Month' %}: <a href='/blog/list/{{ previous_month|date:"Y/m" }}'>{{ previous_month|date:"Y/m" }}</a>

@@ -3,7 +3,7 @@
 {% block title %}{{ polllist.title }}{% endblock %}
 <style>
 
-.header_title { background-color: #eeeeff}
+th { background-color: #cccccc}
 
 </style>
 {% include "header.html" %}
@@ -12,6 +12,9 @@
 {% include "menu.html" %}   
 
 {% block body_area %}
+<style>
+th { background-color: #cccccc; }
+</style>
 <div class="col-md-12">
 <h4>{{ polllist.title }}</h4>
 
@@ -21,9 +24,9 @@
 {% csrf_token %}
 <table class="table table-bordered">
 {% for poll in polllist.poll_set.all %}
-	<tr><td class="header_title">
+	<tr><th>
 	<label>{{ poll.question }}</label>
-	</td></tr>
+	</th></tr>
 	<tr><td>
 	{% for choice in poll.choice_set.all %}
 	    <input type="radio" name="{{ poll.id }}" id="{{ poll.id }}" value="{{ choice.id }}" />

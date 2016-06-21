@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-04-17 19:56+0900\n"
+"POT-Creation-Date: 2016-04-23 10:35+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -26,19 +26,43 @@ msgstr "최신 블로그"
 msgid "list recent blog"
 msgstr "최신 블로그 목록"
 
-#: .\blog\templates\blog\add.html:3 .\blog\templates\blog\add.html.py:8
-msgid "Write Blog"
-msgstr "블로그 작성"
-
-#: .\blog\templates\blog\add.html:15 .\blog\templates\blog\update.html.py:15
+#: .\blog\models.py:13 .\blog\templates\blog\add.html.py:15
+#: .\blog\templates\blog\update.html:15
 msgid "Title"
 msgstr "제목"
+
+#: .\blog\models.py:15 .\blog\models.py:26
+#, fuzzy
+#| msgid "Pub date"
+msgid "Pub Date"
+msgstr "발행일"
+
+#: .\blog\models.py:17
+msgid "Like"
+msgstr "좋아요"
+
+#: .\blog\models.py:18
+msgid "View"
+msgstr "조회"
+
+#: .\blog\models.py:28
+msgid "recently published?"
+msgstr "최신 발행일?"
+
+#: .\blog\models.py:45
+msgid "Tag"
+msgstr "태그"
+
+#: .\blog\templates\blog\add.html:3 .\blog\templates\blog\add.html.py:8
+#: .\blog\templates\blog\blog_form.html:3
+msgid "Write Blog"
+msgstr "블로그 작성"
 
 #: .\blog\templates\blog\add.html:19 .\blog\templates\blog\update.html.py:19
 msgid "Contents"
 msgstr "내용"
 
-#: .\blog\templates\blog\add.html:26
+#: .\blog\templates\blog\add.html:26 .\blog\templates\blog\blog_form.html:13
 msgid "Write"
 msgstr "작성"
 
@@ -113,11 +137,11 @@ msgstr "목록"
 msgid "Update"
 msgstr "수정"
 
-#: .\mysite\settings.py:76
+#: .\mysite\settings.py:120
 msgid "Korean"
 msgstr "한글"
 
-#: .\mysite\settings.py:77
+#: .\mysite\settings.py:121
 msgid "English"
 msgstr "영어"
 
@@ -173,7 +197,7 @@ msgid "Polls"
 msgstr "투표"
 
 #: .\templates\menu.html:25 .\user_manager\templates\user_profile_view.html:2
-#: .\user_manager\views.py:92
+#: .\user_manager\views.py:95
 msgid "View Profile"
 msgstr "프로필보기"
 
@@ -304,10 +328,10 @@ msgstr "패스워드 링크가 잘못되었습니다. 다시 요청해주세요.
 msgid "Change Profile"
 msgstr "프로필 변경"
 
-#: .\user_manager\views.py:73
+#: .\user_manager\views.py:76
 msgid "Change Password"
 msgstr "패스워드 변경"
 
-#: .\user_manager\views.py:86
+#: .\user_manager\views.py:89
 msgid "Reset Password"
 msgstr "패스워드 초기화"

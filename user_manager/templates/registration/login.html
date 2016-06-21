@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load i18n %}
 {% block title %}User Login{% endblock %}
 {% block external %}
 <style>
@@ -32,41 +33,105 @@
         float: right;
         left:-50%;
     }
+    .socialaccount_providers a.facebook.socialaccount_provider {
+        background-color: #3b5998;
+        //background-image: url(../../images/social/facebook_icon_normal.png);
+    }
+    .socialaccount_providers a.twitter.socialaccount_provider {
+        background-color: #00acee;
+        //background-image: url(../../images/social/twitter_icon_normal.png);
+    }
+    .socialaccount_providers a.google.socialaccount_provider {
+        background-color: #dd4b39;
+        //background-image: url(../../images/social/google_icon_normal.png);
+    }
+
+    .socialaccount_providers li {
+        list-style-type: none;
+    }
+
+    .socialaccount_providers a.socialaccount_provider {
+        text-align: center;
+        display: inline-block;
+        border-radius: 6px;
+        margin: 5px 0;
+        width: 250px;
+        height: 48px;
+        line-height: 32px;
+        font-size: 16px;
+        color: #fff;
+        padding: 8px 8px 8px 40px;
+        background-repeat: no-repeat;
+        background-position: 8px 8px;
+        text-decoration: none;
+        -webkit-transition: all 0.25s ease-in-out;
+        -moz-transition: all 0.25s ease-in-out;
+        -ms-transition: all 0.25s ease-in-out;
+        -o-transition: all 0.25s ease-in-out;
+        transition: all 0.25s ease-in-out;
+    }
 </style>
 {% endblock %}
 {% block body_area %}
+
+
 <div class="col-md-12">
 <div class="center-box">
     <div class="right-box">
-        <div class="white-box">
+
+
+        <div class="white-box" style="float:right">
             <div class="page-header">
                 <h4>Login</h4>
             </div>
-            {% if form.has_errors %}
-            <p> Your username and password didn't match. Please try again.</p>
-            {% endif %}
             <div class="page-body">
-                <form method="post" action="{% url 'user_manager:login' %}">
-                    {{ form.name_of_field.errors }} 
-                    {% csrf_token %}
-                    <!-- go to success page after login -->
-                    {% if next %}
-                    <input type="hidden" name="next" value="{{ next }}" />
-                    {% endif %}
-                    <div class="form-group">
-                    <input class="control-group" type="text" id="username" name="username"  placeholder="Username">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <ul class="socialaccount_providers">
+                            <li>
+                            <a title="Facebook" class="socialaccount_provider facebook" href="/accounts/facebook/login/?next=%2Faccount%2Fsignup%2F%3Fnext%3D%2F">Log in with Facebook</a>
+                            </li>
+                            <li>
+                            <a title="Twitter" class="socialaccount_provider twitter" href="/accounts/twitter/login/?next=%2Faccount%2Fsignup%2F%3Fnext%3D%2F">Log in with Twitter</a>
+                            </li>
+                            <li>
+                            <a title="Google" class="socialaccount_provider google" href="/accounts/google/login/?next=%2Faccount%2Fsignup%2F%3Fnext%3D%2F">Log in with Google</a>
+                            </li>
+                        </ul>
                     </div>
-                    <div class="form-group">
-                    <input class="control-group" type="password" name="password" id="password" placeholder="Password">
+                    <div class="col-sm-1"></div>
+                    <div class="col-sm-5">
+                        {% if error_message %}
+                        <ul>
+                        {% for error in error_message %}
+                        <li>{{error}}</li>
+                        {% endfor %}
+                        </ul>
+                        {% endif %}
+                    
+                        <form method="post" action="{% url 'user_manager:login' %}">
+                            {% csrf_token %}
+                            <!-- go to success page after login -->
+                            {% if next %}
+                            <input type="hidden" name="next" value="{{ next }}" />
+                            {% endif %}
+                            <div class="form-group">
+                            <input class="control-group" type="text" id="username" name="username"  placeholder="Username">
+                            </div>
+                            <div class="form-group">
+                            <input class="control-group" type="password" name="password" id="password" placeholder="Password">
+                            </div>
+
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-success">{% trans 'Login' %}</button>
+                                <a href="/user/register" class="btn btn-danger">{% trans 'Register' %}</a>
+                                <div class="right">
+                                    <a href="/user/resetpassword">{% trans 'forgot password' %}</a>
+                                </div>
+                            </div>
+                        </form>
                     </div>
-                    <div class="form-group">
-                        <button type="submit" class="btn btn-success">Login</button>
-                        <a href="/user/register" class="btn btn-danger">Register</a>
-                        <div class="right">
-                            <a href="/user/resetpassword">패스워드찾기</a>
-                        </div>
-                    </div>
-                </form>
+                </div>
             </div>
         </div>
     </div>

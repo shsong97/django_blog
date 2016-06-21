@@ -27,10 +27,12 @@
 
 {% csrf_token %}
   <div>{{ blog.contents|markdown }}</div>
-<button class="btn" id="blog_like_click"><i class="glyphicon glyphicon-heart"></i><span id="blog_like" value="{{ blog.id }}">{{ blog.like_count }}</span></button>
-<a class="btn" href="{% url 'blog:update' blog.id %}">{% trans 'Edit' %}</a>
-<a class="btn" href="{% url 'blog:index' %}">{% trans 'List' %}</a>
-<a class="btn" href="{% url 'blog:blog_add' %}">{% trans 'Add' %}</a>
+<button class="btn btn-warning" id="blog_like_click"><i class="glyphicon glyphicon-heart"></i><span id="blog_like" value="{{ blog.id }}"> {{ blog.like_count }}</span></button>
+<a class="btn btn-primary" href="{% url 'blog:update' blog.id %}">{% trans 'Edit' %}</a>
+<a class="btn btn-primary" href="{% url 'blog:delete' blog.id %}">{% trans 'Delete' %}</a>
+
+<a class="btn btn-primary" href="{% url 'blog:blog_add' %}">{% trans 'Add' %}</a>
+<a class="btn btn-success" href="{% url 'blog:index' %}">{% trans 'List' %}</a>
 {% include "disqus.html" %}
 </div>
 {% endblock %}

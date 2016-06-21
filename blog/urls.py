@@ -3,17 +3,17 @@ from blog.views import *
 from blog.feeds import RecentBlog
 
 urlpatterns = [
-    url(r'^$', IndexView.as_view(), name='index'),
-    url(r'^add/$', blog_addview, name='blog_add'),
+    url(r'^$', BlogListView.as_view(), name='index'),
+    url(r'^add/$', BlogCreateView.as_view(), name='blog_add'),
+    url(r'^(?P<pk>\d+)/$', BlogDetailView.as_view(), name='detail'),
+    url(r'^(?P<pk>\d+)/update/$', BlogUpdateView.as_view(), name='update'),
+    url(r'^(?P<pk>\d+)/delete/$', BlogDeleteView.as_view(), name='delete'),
+
+    url(r'^(?P<blog_id>\d+)/like/$', blog_like, name='blog_like'),
     url(r'^favorite/$', blog_favorite, name='blog_favorite'),
     url(r'^feed/$', RecentBlog(), name='blog_feed'),
-    url(r'^add/submit/$', blog_add, name='add_submit'),
-    url(r'^(?P<pk>\d+)/$', blog_detail, name='detail'),
-    url(r'^(?P<pk>\d+)/update/$', BlogUpdateView.as_view(), name='update'),
-    url(r'^(?P<blog_id>\d+)/update/submit/$', blog_update, name='update_submit'),
-    url(r'^(?P<blog_id>\d+)/delete/$', blog_delete, name='delete'),
-    url(r'^(?P<blog_id>\d+)/like/$', blog_like, name='blog_like'),
     url(r'^archive/$', blog_archive, name='blog_archive'),
+
     url(r'^list/(?P<year>[0-9]{4})/$',
         ArticleYearArchiveView.as_view(),
         name="article_year_archive"),

@@ -1,11 +1,14 @@
 {% load i18n %}
+<style>
+th { background-color: #111111; }
+</style>
 <form action="{% url 'polls:vote' polllist.id %}" method="post" class="form-inline">
 {% csrf_token %}
 <table class="table table-bordered">
 {% for poll in polllist.poll_set.all %}
-	<tr><td class="header_title">
+	<tr><th>
 	<label>{{ poll.question }}</label>
-	</td></tr>
+	</th></tr>
 	<tr><td>
 	{% for choice in poll.choice_set.all %}
 	    <input type="radio" name="{{ poll.id }}" id="{{ poll.id }}" value="{{ choice.id }}" />

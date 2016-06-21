@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-04-17 19:56+0900\n"
+"POT-Creation-Date: 2016-04-23 10:35+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -25,19 +25,41 @@ msgstr ""
 msgid "list recent blog"
 msgstr ""
 
-#: .\blog\templates\blog\add.html:3 .\blog\templates\blog\add.html.py:8
-msgid "Write Blog"
+#: .\blog\models.py:13 .\blog\templates\blog\add.html.py:15
+#: .\blog\templates\blog\update.html:15
+msgid "Title"
 msgstr ""
 
-#: .\blog\templates\blog\add.html:15 .\blog\templates\blog\update.html.py:15
-msgid "Title"
+#: .\blog\models.py:15 .\blog\models.py:26
+msgid "Pub Date"
+msgstr ""
+
+#: .\blog\models.py:17
+msgid "Like"
+msgstr ""
+
+#: .\blog\models.py:18
+msgid "View"
+msgstr ""
+
+#: .\blog\models.py:28
+msgid "recently published?"
+msgstr ""
+
+#: .\blog\models.py:45
+msgid "Tag"
+msgstr ""
+
+#: .\blog\templates\blog\add.html:3 .\blog\templates\blog\add.html.py:8
+#: .\blog\templates\blog\blog_form.html:3
+msgid "Write Blog"
 msgstr ""
 
 #: .\blog\templates\blog\add.html:19 .\blog\templates\blog\update.html.py:19
 msgid "Contents"
 msgstr ""
 
-#: .\blog\templates\blog\add.html:26
+#: .\blog\templates\blog\add.html:26 .\blog\templates\blog\blog_form.html:13
 msgid "Write"
 msgstr ""
 
@@ -112,11 +134,11 @@ msgstr ""
 msgid "Update"
 msgstr ""
 
-#: .\mysite\settings.py:76
+#: .\mysite\settings.py:120
 msgid "Korean"
 msgstr ""
 
-#: .\mysite\settings.py:77
+#: .\mysite\settings.py:121
 msgid "English"
 msgstr ""
 
@@ -172,7 +194,7 @@ msgid "Polls"
 msgstr ""
 
 #: .\templates\menu.html:25 .\user_manager\templates\user_profile_view.html:2
-#: .\user_manager\views.py:92
+#: .\user_manager\views.py:95
 msgid "View Profile"
 msgstr ""
 
@@ -303,10 +325,10 @@ msgstr ""
 msgid "Change Profile"
 msgstr ""
 
-#: .\user_manager\views.py:73
+#: .\user_manager\views.py:76
 msgid "Change Password"
 msgstr ""
 
-#: .\user_manager\views.py:86
+#: .\user_manager\views.py:89
 msgid "Reset Password"
 msgstr ""

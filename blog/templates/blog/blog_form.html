@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block title %}{% trans 'Write Blog' %}{% endblock %}
+{% block body_area %}
+{% load django_markdown %}
+<div class="col-md-12">
+<form action="" method="post" class="form-inline">
+    {% csrf_token %}
+    {{ form.as_p }}
+    {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+    {% markdown_editor "#contents" %}
+    {% markdown_media %}
+    <button class="btn btn-primary" type="submit">{% trans 'Write' %}</button>
+</form>
+</div>
+{% endblock %}
+

@@ -25,9 +25,9 @@
             </div>
         </div>
         <div class="contents">{{ blog.contents|markdown }}</div>
-        <div class="text-right">
-            <a class="btn" href="{% url 'blog:delete' blog.id %}"><i class="glyphicon glyphicon-trash"></i>{% trans 'Delete' %}</a>
-            <button class="btn" id="blog_like_click"><i class="glyphicon glyphicon-heart"></i><span id="blog_like" value="{{ blog.id }}">{{ blog.like_count }}</span></button>
+        <div class="text-left">
+            <a class="btn btn-danger" href="{% url 'blog:delete' blog.id %}"><i class="glyphicon glyphicon-trash"></i>{% trans 'Delete' %}</a>
+            <button class="btn btn-success" id="blog_like_click"><i class="glyphicon glyphicon-heart"></i><span id="blog_like" value="{{ blog.id }}"> {{ blog.like_count }}</span></button>
         </div>
     </div> <!-- white-box -->
 

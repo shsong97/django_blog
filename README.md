@@ -20,15 +20,15 @@ URL : http://www.stickpeople.com/projects/python/win-psycopg/
 URL : http://www.postgresql.org/download/
 
 3) Edit setting.py of your project
-<pre>
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'blog',
-        'USER': 'postgres',
-        'PASSWORD':'1234',
-}
-</pre>
+
+	DATABASES = {
+	    'default': {
+	        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+	        'NAME': 'blog',
+	        'USER': 'postgres',
+	        'PASSWORD':'1234',
+	}
+
 
 Set up for Apache Server
 ============
@@ -50,25 +50,25 @@ Directory : C:\Program Files\Apache Software Foundation\Apache2.2\modules<br />
 4) Edit "httpd.conf" file<br />
 Directory : C:\Program Files\Apache Software Foundation\Apache2.2\conf\httpd.conf <br />
 Add below:
-<pre><code>
-LoadModule wsgi_module modules/mod_wsgi.so
-WSGIScriptAlias / d:/django_blog/apache/django.wsgi
-&lt;Directory "d:/django_blog/apache">
-Order deny,allow
-Allow from all
-&lt;/Directory>
-Alias /static d:/django_blog/apache/static
-&lt;Directory "d:/django_blog/apache/static">
-Order deny,allow
-Allow from all
-&lt;/Directory>
-</code></pre>
+
+	LoadModule wsgi_module modules/mod_wsgi.so
+	WSGIScriptAlias / d:/django_blog/apache/django.wsgi
+	&lt;Directory "d:/django_blog/apache">
+	Order deny,allow
+	Allow from all
+	&lt;/Directory>
+	Alias /static d:/django_blog/apache/static
+	&lt;Directory "d:/django_blog/apache/static">
+	Order deny,allow
+	Allow from all
+	&lt;/Directory>
+
 5) Edit "django.wsgi" file
-<pre><code>
-import os
-import sys
-sys.path.append('d:/django_blog')
-os.environ['DJANGO_SETTINGS_MODULE']='mysite.settings'
-import django.core.handlers.wsgi
-application=django.core.handlers.wsgi.WSGIHandler()
-</code></pre>
+
+	import os
+	import sys
+	sys.path.append('d:/django_blog')
+	os.environ['DJANGO_SETTINGS_MODULE']='mysite.settings'
+	import django.core.handlers.wsgi
+	application=django.core.handlers.wsgi.WSGIHandler()
+

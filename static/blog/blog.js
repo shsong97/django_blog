@@ -24,7 +24,7 @@ $(document).ready(function() {
             dataType:'json',
             success:function(result){
                 for(var i in result) {
-                    var htmlmsg="<li><a href='/blog/list/"+result[i]['year']+"'>"+result[i]['year']+" ("+result[i]['count']+")</a></li>";
+                    var htmlmsg="<li><a href='/blog/list/"+result[i]['year']+"/"+result[i]['month']+"/'>"+result[i]['year']+"/"+result[i]['month']+" ("+result[i]['cnt']+")</a></li>";
                     message+=htmlmsg;
                 }
                 $("#recent_article").html(message);
