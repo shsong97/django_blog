@@ -5,9 +5,11 @@ from urlparse import urlparse
 from django.utils.translation import ugettext_lazy as _
 
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
-# TEMPLATE_DIRS = [os.path.join(BASE_DIR, 'templates')]
-SECRET_KEY = 'ji#0%+-n582#)m0b@yc41fl=b!f)gcfo7bjv&b_)53%c+pg-8y'
-DEBUG = True
+DEFAULT_SECRET_KEY = 'ji#0%+-n582#)m0b@yc41fl=b!f)gcfo7bjv&b_)53%c+pg-8y'
+SECRET_KEY = os.environ.get('SECRET_KEY', DEFAULT_SECRET_KEY)
+DEBUG = bool(os.environ.get('DEBUG_MODE', 'True'))
+
+
 ALLOWED_HOSTS = ['*']
 
 INSTALLED_APPS = (
@@ -97,7 +99,7 @@ DATABASES = {
         'NAME': 'blog',
         'USER': 'postgres',
         'PASSWORD': 'postgres',
-        'HOST': '127.0.0.1',
+        'HOST': 'localhost',
         'PORT': '5432',
     }
 }
@@ -183,3 +185,16 @@ DEBUG_TOOLBAR_PANELS = [
     'debug_toolbar.panels.logging.LoggingPanel',
     'debug_toolbar.panels.redirects.RedirectsPanel',
 ]
+
+# gmail setting
+SITE_ID = 1
+import json
+with open(os.path.join(BASE_DIR, 'credentials.json'),'r') as f:
+    data=json.loads(f.read())
+
+EMAIL_HOST=data['EMAIL_HOST']
+EMAIL_PORT=data['EMAIL_PORT']
+EMAIL_HOST_USER=data['EMAIL_HOST_USER']
+EMAIL_HOST_PASSWORD=data['EMAIL_HOST_PASSWORD']
+EMAIL_USE_TLS = True
+DEFAULT_FROM_EMAIL = data['DEFAULT_FROM_EMAIL']

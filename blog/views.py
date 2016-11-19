@@ -28,6 +28,12 @@ class BlogListView(ListView):
 
 class BlogDetailView(DetailView):
     model = Blog
+    def get_object(self,queryset=None):
+        blog = super(BlogDetailView, self).get_object()
+        blog.view_count += 1
+        blog.save()
+        return blog
+
     def get_queryset(self):
         return Blog.objects.filter(pub_date__lte=timezone.now())
 
@@ -87,28 +93,9 @@ def blog_archive(request):
     cursor=connection.cursor()
     cursor.execute("select date_part('year',pub_date) as year, date_part('month',pub_date) as month, count(*) as cnt from blog_blog group by date_part('year',pub_date),date_part('month',pub_date);")
     year_list = dictfetchall(cursor)
-    print year_list
-    return JsonResponse(year_list,safe=False)
-def blog_archive2(request):
-    blog_year = Blog.objects.all().datetimes('pub_date','month').order_by('-pub_date')
-    year_list=[]
-    for current in blog_year:
-        _year=current.year
-        _month=current.month+1
-        year_month=str(current.year)+'/'+str(current.month)
-        
-        if current.month==12:
-            _year=current.year+1
-            _month=1
-        
-        next_month=datetime.datetime(_year, _month, 1)
-        count = Blog.objects.filter(
-            pub_date__gte=current,
-            pub_date__lt=next_month).aggregate(Count('pub_date'))
-        year_list.append({'year':year_month,'count':count['pub_date__count']})
-    # ArticleYearArchiveView.date_list
-    return JsonResponse(year_list,safe=False)
 
+    return JsonResponse(year_list,safe=False)
+ 
 def dictfetchall(cursor):
     "Return all rows from a cursor as a dict"
     columns = [col[0] for col in cursor.description]
@@ -116,8 +103,3 @@ def dictfetchall(cursor):
         dict(zip(columns, row))
         for row in cursor.fetchall()
     ]
-
-def test_sql(request):
-    cursor = connection.cursor()
-    row = dictfetchall(cursor)
-    print row

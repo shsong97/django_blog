@@ -18,7 +18,7 @@
             <li>
                 <ul class="nav" style="padding:7px;">
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                    <li class="dropdown"><img class="img-rounded" src="https://scontent.xx.fbcdn.net/v/t1.0-1/p160x160/12321506_1040323669346933_175623667513715525_n.jpg?oh=a312f74c71262cff91e67f36e82ee0c3&oe=57B946BA" width="32px" height="32px" alt="{{ user.username }}"></li>
+                    <li class="dropdown"><img class="img-rounded" src="http://placehold.it/32x32" width="32px" height="32px" alt="{{ user.username }}"></li>
                     </a>
                     <ul class="dropdown-menu" role="menu">
                         {% if user.is_authenticated %}
@@ -26,6 +26,10 @@
                         <li role="presentation"><a href="/user/changepassword/" role="menuitem">{% trans 'Change password' %}</a></li>
                         <li role="presentation"><a href="/user/resetpassword/" role="menuitem">{% trans 'Reset password' %}</a></li>
                         <li role="presentation"><a role="menuitem" href="/user/logout/">{% trans 'Logout' %}</a></li>
+                        {% if user.is_staff %}
+                        <li role="presentation"><a role="menuitem" href="/admin">{% trans 'Admin' %}</a></li>
+                        {% endif %}
+
                         {% else %}
                         <li role="presentation"><a role="menuitem" href="/user/login/">{% trans 'Login' %}</a></li>
                         <li role="presentation"><a role="menuitem" href="/user/resetpassword/">{% trans 'Reset password' %}</a></li>

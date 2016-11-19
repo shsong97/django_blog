@@ -12,16 +12,31 @@
 {% block body_area %}
 {% load django_markdown %}
 <div class="col-md-9">
-<a class="btn btn-success" href="{% url 'blog:blog_add' %}">{% trans 'Add' %}</a> 
-<a class="btn btn-success" href="{% url 'blog:blog_feed' %}">{% trans 'Feed' %}</a>
+    <div class="white-box">
+    <a class="btn btn-success" href="{% url 'blog:blog_add' %}">{% trans 'Add' %}</a> 
+    <a class="btn btn-success" href="{% url 'blog:blog_feed' %}">{% trans 'Feed' %}</a>
+    </div>
     {% if latest_blog_list %}
     {% for blog in latest_blog_list %}
     <div class="white-box">
-        <div class="row-fluid">
-            <div class="span12">
+        <div class="row" >
+            <div class="col-md-12" >
                 <h4><a href="{% url 'blog:detail' blog.id %}">{{ blog.blog_title }}</a></h4>
-                {{ blog.user.username }} 
-                {{ blog.pub_date|date:"Y-m-j" }}
+
+                <div class="row">
+                    <div class="col-md-6 col-sm-6" >
+                    조회 {{ blog.view_count }} 회
+                    </div>
+                    <div class="col-md-6 col-sm-6">
+                        <div class="right">
+                            <table style="width:150px">
+                            <tr><td class="text-left"><font style="font-size:10px;">{% trans 'Pub date' %} : {{ blog.pub_date|date:"Y-m-j" }}</font></td></tr>
+                            <tr><td class="text-left"><font style="font-size:10px;">{% trans 'Writer' %} : {{ blog.user.username }} {% if blog.user.first_name %} ({{blog.user.last_name }}{{ blog.user.first_name}}) {% endif %}
+                            </font></td>
+                            </tr></table>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="contents">{{ blog.contents|markdown }}</div>
