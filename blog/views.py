@@ -91,7 +91,9 @@ class ArticleYearArchiveView(YearArchiveView):
 
 def blog_archive(request):
     cursor=connection.cursor()
-    cursor.execute("select date_part('year',pub_date) as year, date_part('month',pub_date) as month, count(*) as cnt from blog_blog group by date_part('year',pub_date),date_part('month',pub_date);")
+    query_str="""select date_part('year',pub_date) as year, date_part('month',pub_date) as month, count(*) as cnt 
+        from blog_blog group by date_part('year',pub_date),date_part('month',pub_date) order by 1 desc, 2 desc;"""
+    cursor.execute(query_str)
     year_list = dictfetchall(cursor)
 
     return JsonResponse(year_list,safe=False)
