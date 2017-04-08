@@ -2,7 +2,7 @@ from django.conf.urls import include, url
 from django.contrib import admin
 from mysite import views
 import user_manager
-
+ 
 admin.autodiscover()
 
 urlpatterns = [
@@ -15,5 +15,6 @@ urlpatterns = [
     url(r'i18n/',include('django.conf.urls.i18n')),
     url('^markdown/', include('django_markdown.urls')),
     url(r'^accounts/', include('allauth.urls')),
+    url(r'^accounts/profile/', user_manager.views.login_page),
 ]
 

@@ -1,5 +1,7 @@
 {% extends "base.html" %}
+
 {% load i18n %}
+{% load socialaccount %}
 {% block title %}User Login{% endblock %}
 {% block external %}
 <style>
@@ -89,7 +91,7 @@
                     <div class="col-sm-6">
                         <ul class="socialaccount_providers">
                             <li>
-                            <a title="Facebook" class="socialaccount_provider facebook" href="/accounts/facebook/login/?next=%2Faccount%2Fsignup%2F%3Fnext%3D%2F">Log in with Facebook</a>
+                            <a title="Facebook" class="socialaccount_provider facebook" href="{% provider_login_url "facebook" method="oauth2" %}">Log in with Facebook</a>
                             </li>
                             <li>
                             <a title="Twitter" class="socialaccount_provider twitter" href="/accounts/twitter/login/?next=%2Faccount%2Fsignup%2F%3Fnext%3D%2F">Log in with Twitter</a>
@@ -137,4 +139,8 @@
     </div>
 </div>
 </div>
+
+
+
+
 {% endblock %}

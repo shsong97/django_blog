@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from django.conf.urls import url
 from blog.views import *
 from blog.feeds import RecentBlog

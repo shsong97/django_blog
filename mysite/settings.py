@@ -187,7 +187,7 @@ DEBUG_TOOLBAR_PANELS = [
 ]
 
 # gmail setting
-SITE_ID = 1
+SITE_ID = 2
 import json
 with open(os.path.join(BASE_DIR, 'credentials.json'),'r') as f:
     data=json.loads(f.read())
