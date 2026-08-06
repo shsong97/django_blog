@@ -1,9 +1,16 @@
 {% extends "base.html" %}
-{% block title %}{% trans 'View Profile' %}{% endblock %}
+{% load i18n %}
+{% block title %}{% trans 'View Profile' %} · Song's Lab{% endblock %}
 {% block body_area %}
-<form method="post" action=".">
-    {% csrf_token  %}
-    {{ form.as_p }}
-    <input type="submit" class="btn" value="{% trans 'Change Profile' %}" />
-</form>
+<div class="ig-auth">
+    <div class="ig-form-card">
+        <h1 class="ig-auth__brand">Song's Lab</h1>
+        <h2 style="margin:0 0 14px;text-align:center;font-size:1rem;">{% trans 'View Profile' %}</h2>
+        <form method="post" action=".">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="ig-btn ig-btn--block">{% trans 'Change Profile' %}</button>
+        </form>
+    </div>
+</div>
 {% endblock %}

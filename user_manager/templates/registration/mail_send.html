@@ -1,8 +1,12 @@
-{% extends 'base.html' %}
+{% extends "base.html" %}
 {% load i18n %}
-{% block title %}{% trans 'Mail sent for register' %}{% endblock %}
-{% block head %}{% trans 'Mail sent for register' %}{% endblock %}
+{% block title %}{% trans 'Mail sent for register' %} · Song's Lab{% endblock %}
 {% block body_area %}
-{% trans 'Mail Sent.' %}<br />
-<a href="/user/login/">{% trans 'Please, Login' %}</a>
+<div class="ig-auth">
+    <div class="ig-form-card" style="text-align:center;">
+        <h1 class="ig-auth__brand">Song's Lab</h1>
+        <p>{% trans 'Mail Sent.' %}</p>
+        <a class="ig-btn" href="/user/login/">{% trans 'Please, Login' %}</a>
+    </div>
+</div>
 {% endblock %}

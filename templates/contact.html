@@ -1,15 +1,22 @@
 {% extends "base.html" %}
-{% block title %}Contact{% endblock %}
+{% block title %}Contact · Song's Lab{% endblock %}
 {% block body_area %}
-<div class="span12">
-    <div class="white-box">
-    <h1>Contact us</h1>
-    <br />
-    <p>Homepage (<a href="http://shsong97.blogspot.com">http://shsong97.blogspot.com)</a>
-        <a href="https://twitter.com/share" class="twitter-share-button" data-url="https://shsong97.blogspot.com" data-via="shsong97" data-lang="en">Tweet</a>
-        <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="https://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script></p>
-    <p>Song Seung-hun (<a href="mailto:shsong97@gmail.com">shsong97@gmail.com)</a></p>
-    <p>Git hub (<a href="http://github.com/shsong97">http://github.com/shsong97)</a></p>
+<div class="ig-auth">
+    <div class="ig-form-card" style="width:min(100%,480px);">
+        <h1 class="ig-auth__brand">Song's Lab</h1>
+        <h2 style="margin:0 0 12px;text-align:center;font-size:1.05rem;">Contact</h2>
+        <p style="color:var(--ig-muted);line-height:1.6;margin:0 0 10px;">
+            Homepage:
+            <a href="https://shsong97.blogspot.com">shsong97.blogspot.com</a>
+        </p>
+        <p style="color:var(--ig-muted);line-height:1.6;margin:0 0 10px;">
+            Email:
+            <a href="mailto:shsong97@gmail.com">shsong97@gmail.com</a>
+        </p>
+        <p style="color:var(--ig-muted);line-height:1.6;margin:0;">
+            GitHub:
+            <a href="https://github.com/shsong97">github.com/shsong97</a>
+        </p>
     </div>
 </div>
 {% endblock %}

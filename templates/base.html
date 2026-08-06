@@ -1,21 +1,20 @@
+{% load static %}
 <!doctype html>
-<html>
+<html lang="ko">
 <head>
-    <title>{% block title %} {% endblock %}</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <title>{% block title %}Song's Lab{% endblock %}</title>
     {% include "header.html" %}
     {% block external %}{% endblock %}
 </head>
-<body>
-    <!-- menu -->
+<body class="{% block body_class %}{% endblock %}">
     {% include "menu.html" %}
-    <!-- body container -->
-    <div class="container-fluid">
-    <div class="row">
-    {% block body_area %}{% endblock %}
-    </div><!-- container-fluid -->
-    </div><!-- row-fluid -->
-    <div id="footer">
-        {% include "footer.html" %}  
-    </div>
+    <main class="ig-shell">
+        {% block body_area %}{% endblock %}
+    </main>
+    {% include "footer.html" %}
+    <script src="{% static 'main/app.js' %}"></script>
+    {% block scripts %}{% endblock %}
 </body>
 </html>

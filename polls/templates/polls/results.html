@@ -1,29 +1,31 @@
 {% extends "base.html" %}
 {% load i18n %}
-{% block title %}{{ polllist.title }}{% endblock %}
-{% block external %}
-<style>
-th { background-color: #cccccc}
-</style>
-{% endblock %}
+{% block title %}{{ polllist.title }} · Song's Lab{% endblock %}
 {% block body_area %}
-<div class="col-md-12">
-<h4>{{ polllist.title }}</h4>
-
-<table class="table table-bordered">
-{% for poll in polllist.poll_set.all %}
-<tr><th>
-<label>{{ poll.question }} ({% trans 'Total' %}:{{ poll.total_count }})</label>
-</th></tr>
-<tr><td>
-{% for choice in poll.choice_set.all %}
-  <label>{{ choice.choice_text }} : {{ choice.votes }} </label>
-{% endfor %}
-</td></tr>
-{% endfor %}
-</table>
-
-<a class="btn btn-primary" href="{% url 'polls:detail' polllist.id %}">{% trans 'Vote' %}</a> 
-<a class="btn btn-primary" href="{% url 'polls:index' %}">{% trans 'List' %}</a>
+<div class="ig-poll-form">
+    <h1 class="ig-page-title">{{ polllist.title }}</h1>
+    {% for poll in polllist.poll_set.all %}
+        <section class="ig-poll-question">
+            <h2 style="margin:0 0 10px;font-size:1rem;">{{ poll.question }} ({% trans 'Total' %}: {{ poll.total_count }})</h2>
+            {% for choice in poll.choice_set.all %}
+                <div class="ig-result-bar">
+                    <div style="display:flex;justify-content:space-between;font-size:0.9rem;margin-bottom:4px;">
+                        <span>{{ choice.choice_text }}</span>
+                        <strong>{{ choice.votes }}</strong>
+                    </div>
+                    <div class="ig-result-bar__track">
+                        <div
+                            class="ig-result-bar__fill"
+                            style="--bar: {% if poll.total_count %}{% widthratio choice.votes poll.total_count 100 %}{% else %}0{% endif %}%;"
+                        ></div>
+                    </div>
+                </div>
+            {% endfor %}
+        </section>
+    {% endfor %}
+    <div class="ig-toolbar">
+        <a class="ig-btn" href="{% url 'polls:detail' polllist.id %}">{% trans 'Vote' %}</a>
+        <a class="ig-chip" href="{% url 'polls:index' %}">{% trans 'List' %}</a>
+    </div>
 </div>
 {% endblock %}

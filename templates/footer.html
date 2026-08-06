@@ -1,23 +1,26 @@
 {% load i18n %}
-<br />
-<div class="container-fluid">
-    <div class="row page-title">
-        <div class="col-md-12">
-        COPYRIGHT 2015 Song,Seunghun ALL RIGHTS RESERVED. <a href="/contact">Contact Us</a>
-        <form action="{% url 'set_language' %}" method="post">{% csrf_token %}
-		    <input name="next" type="hidden" value="{{ redirect_to }}" />
-		    <select name="language">
-		        {% get_current_language as LANGUAGE_CODE %}
-		        {% get_available_languages as LANGUAGES %}
-		        {% get_language_info_list for LANGUAGES as languages %}
-		        {% for language in languages %}
-		            <option value="{{ language.code }}"{% if language.code == LANGUAGE_CODE %} selected="selected"{% endif %}>
-		                {{ language.name_local }} ({{ language.code }})
-		            </option>
-		        {% endfor %}
-		    </select>
-		    <input type="submit" value="Go" />
-		</form>
-		</div>
+<footer class="ig-footer">
+    <div class="ig-footer__inner">
+        <nav class="ig-footer__links" aria-label="Footer">
+            <a href="/contact">Contact</a>
+            <a href="{% url 'blog:blog_feed' %}">{% trans 'Feed' %}</a>
+            <a href="{% url 'polls:index' %}">{% trans 'Polls' %}</a>
+        </nav>
+        <form class="ig-lang" action="{% url 'set_language' %}" method="post">
+            {% csrf_token %}
+            <input name="next" type="hidden" value="{{ request.path }}">
+            <label class="sr-only" for="language">Language</label>
+            <select id="language" name="language" onchange="this.form.submit()">
+                {% get_current_language as LANGUAGE_CODE %}
+                {% get_available_languages as LANGUAGES %}
+                {% get_language_info_list for LANGUAGES as languages %}
+                {% for language in languages %}
+                    <option value="{{ language.code }}"{% if language.code == LANGUAGE_CODE %} selected{% endif %}>
+                        {{ language.name_local }}
+                    </option>
+                {% endfor %}
+            </select>
+        </form>
+        <p class="ig-footer__copy">© {% now "Y" %} Song's Lab</p>
     </div>
-</div>
+</footer>

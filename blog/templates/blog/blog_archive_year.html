@@ -1,22 +1,24 @@
 {% extends "base.html" %}
 {% load i18n %}
+{% block title %}{{ year }} · Song's Lab{% endblock %}
 {% block body_area %}
-<div class="col-md-12">
-    <h2>Blog - {{ year|date:"Y" }}</h2>
-    <ol>
-    {% for obj in object_list %}
-        <li>
-            {{ obj.pub_date|date:"Y/m/j" }} - <a href="/blog/{{ obj.id }}/">{{ obj.blog_title }}</a>
-        </li>
+<div class="ig-poll-list">
+    <h1 class="ig-page-title">{{ year }}</h1>
+    {% for blog in object_list %}
+        <a class="ig-poll-card" href="{% url 'blog:detail' blog.id %}">
+            <strong>{{ blog.blog_title }}</strong>
+            <span>{{ blog.pub_date|date:"Y.m.d" }} · {{ blog.user.username }}</span>
+        </a>
+    {% empty %}
+        <div class="ig-empty"><p>{% trans 'No contents' %}</p></div>
     {% endfor %}
-	</ol>
-	<p>
-    {% if previous_year %}
-        {% trans 'Previous year' %}: <a href='/blog/list/{{ previous_year|date:"Y" }}'>{{ previous_year|date:"Y" }}</a>
-    {% endif %}
-    {% if next_year %}
-        {% trans 'Next year' %}: <a href='/blog/list/{{ next_year|date:"Y" }}'>{{ next_year|date:"Y" }}</a>
-    {% endif %}
-	</p>
+    <div class="ig-toolbar">
+        {% if previous_year %}
+            <a class="ig-chip" href="/blog/list/{{ previous_year|date:'Y' }}">{% trans 'Previous year' %}</a>
+        {% endif %}
+        {% if next_year %}
+            <a class="ig-chip" href="/blog/list/{{ next_year|date:'Y' }}">{% trans 'Next year' %}</a>
+        {% endif %}
+    </div>
 </div>
 {% endblock %}

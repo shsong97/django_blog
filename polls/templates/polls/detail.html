@@ -1,43 +1,28 @@
 {% extends "base.html" %}
 {% load i18n %}
-{% block title %}{{ polllist.title }}{% endblock %}
-<style>
-
-th { background-color: #cccccc}
-
-</style>
-{% include "header.html" %}
-</head>
-<body>
-{% include "menu.html" %}   
-
+{% block title %}{{ polllist.title }} · Song's Lab{% endblock %}
 {% block body_area %}
-<style>
-th { background-color: #cccccc; }
-</style>
-<div class="col-md-12">
-<h4>{{ polllist.title }}</h4>
-
-{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
-
-<form action="{% url 'polls:vote' polllist.id %}" method="post" class="form-inline">
-{% csrf_token %}
-<table class="table table-bordered">
-{% for poll in polllist.poll_set.all %}
-	<tr><th>
-	<label>{{ poll.question }}</label>
-	</th></tr>
-	<tr><td>
-	{% for choice in poll.choice_set.all %}
-	    <input type="radio" name="{{ poll.id }}" id="{{ poll.id }}" value="{{ choice.id }}" />
-	    <label>{{ choice.choice_text }}</label><br />
-	{% endfor %}
-	</td></tr> 
-{% endfor %}
-</table>
-<button class="btn btn-primary" type="submit">{% trans 'Vote' %}</button>
-<a class="btn btn-primary" href="{% url 'polls:results' polllist.id %}">{% trans 'Result' %}</a>
-<a class="btn btn-primary" href="{% url 'polls:index' %}">{% trans 'List' %}</a>
-</form>
+<div class="ig-poll-form">
+    <h1 class="ig-page-title">{{ polllist.title }}</h1>
+    {% if error_message %}<p class="ig-error-list">{{ error_message }}</p>{% endif %}
+    <form action="{% url 'polls:vote' polllist.id %}" method="post">
+        {% csrf_token %}
+        {% for poll in polllist.poll_set.all %}
+            <fieldset class="ig-poll-question">
+                <legend>{{ poll.question }}</legend>
+                {% for choice in poll.choice_set.all %}
+                    <label class="ig-choice">
+                        <input type="radio" name="{{ poll.id }}" value="{{ choice.id }}" required>
+                        <span>{{ choice.choice_text }}</span>
+                    </label>
+                {% endfor %}
+            </fieldset>
+        {% endfor %}
+        <div class="ig-toolbar">
+            <button class="ig-btn" type="submit">{% trans 'Vote' %}</button>
+            <a class="ig-chip" href="{% url 'polls:results' polllist.id %}">{% trans 'Result' %}</a>
+            <a class="ig-chip" href="{% url 'polls:index' %}">{% trans 'List' %}</a>
+        </div>
+    </form>
 </div>
 {% endblock %}
