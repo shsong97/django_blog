@@ -73,7 +73,7 @@
                 </div>
                 <footer class="ig-post__footer">
                     <span>{{ blog.view_count }} {% trans 'views' %}</span>
-                    <a href="{% url 'blog:detail' blog.id %}">{% trans 'List' %} →</a>
+                    <a href="{% url 'blog:delete' blog.id %}">{% trans 'Delete' %}</a>
                 </footer>
             </article>
             {% endfor %}
