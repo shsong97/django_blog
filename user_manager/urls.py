@@ -1,22 +1,38 @@
-from django.conf.urls import include, url
-from django.contrib.syndication.views import Feed
-from django.contrib.auth.views import password_reset_done, password_reset_confirm, password_reset_complete
+from django.contrib.auth import views as auth_views
+from django.urls import path, reverse_lazy
+
 from user_manager import views
 
+app_name = 'user_manager'
+
 urlpatterns = [
-    # user
-    url(r'^$', views.login_page,name='login'),
-    url(r'^facebooklogin/$', views.facebooklogin,name='facebooklogin'),
-    url(r'^login/$', views.login_page,name='login'), # 'django.contrib.auth.views.login'
-    url(r'^logout/$',views.logout_page),
-    url(r'^profile/$',views.user_profile_view),
-    url(r'^register/$',views.register_page),       
-    url(r'register/success/$',views.register_success),
-    url(r'^changepassword/$',views.change_password),
-    url(r'^resetpassword/$', views.reset_password, name='reset'),
-    url(r'^password/reset/(?P<uidb64>[0-9A-Za-z]+)-(?P<token>.+)/$', password_reset_confirm,{'post_reset_redirect':'user_manager:reset_complete','template_name':'registration/reset_confirm.html'},name='reset_confirm'), 
-    url(r'^password/done/$', password_reset_complete,{'template_name':'registration/reset_complete.html'},name='reset_complete'),
-    url(r'^password/reset/done/$', password_reset_done,name='reset_done'),
-
+    path('', views.login_page, name='login'),
+    path('facebooklogin/', views.facebooklogin, name='facebooklogin'),
+    path('login/', views.login_page, name='login_page'),
+    path('logout/', views.logout_page, name='logout'),
+    path('profile/', views.user_profile_view, name='profile'),
+    path('register/', views.register_page, name='register'),
+    path('register/success/', views.register_success, name='register_success'),
+    path('changepassword/', views.change_password, name='change_password'),
+    path('resetpassword/', views.reset_password, name='reset'),
+    path(
+        'password/reset/<uidb64>/<token>/',
+        auth_views.PasswordResetConfirmView.as_view(
+            template_name='registration/reset_confirm.html',
+            success_url=reverse_lazy('user_manager:reset_complete'),
+        ),
+        name='reset_confirm',
+    ),
+    path(
+        'password/done/',
+        auth_views.PasswordResetCompleteView.as_view(
+            template_name='registration/reset_complete.html',
+        ),
+        name='reset_complete',
+    ),
+    path(
+        'password/reset/done/',
+        auth_views.PasswordResetDoneView.as_view(),
+        name='reset_done',
+    ),
 ]
-

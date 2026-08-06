@@ -1,13 +1,12 @@
-# -*- coding: utf-8 -*-
-from __future__ import unicode_literals
-
-from django.db import migrations, models
-import django.utils.timezone
 from django.conf import settings
-import django_markdown.models
+from django.db import migrations, models
+import django.db.models.deletion
+import django.utils.timezone
 
 
 class Migration(migrations.Migration):
+
+    initial = True
 
     dependencies = [
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
@@ -17,20 +16,20 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Blog',
             fields=[
-                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
-                ('blog_title', models.CharField(max_length=200, verbose_name=b'Title')),
-                ('contents', django_markdown.models.MarkdownField()),
-                ('pub_date', models.DateTimeField(default=django.utils.timezone.now, verbose_name=b'Pub Date')),
-                ('like_count', models.IntegerField(default=0, verbose_name=b'Like')),
-                ('view_count', models.IntegerField(default=0, verbose_name=b'View')),
-                ('user', models.ForeignKey(to=settings.AUTH_USER_MODEL)),
+                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('blog_title', models.CharField(max_length=200, verbose_name='Title')),
+                ('contents', models.TextField()),
+                ('pub_date', models.DateTimeField(default=django.utils.timezone.now, verbose_name='Pub Date')),
+                ('like_count', models.IntegerField(default=0, verbose_name='Like')),
+                ('view_count', models.IntegerField(default=0, verbose_name='View')),
+                ('user', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
             ],
         ),
         migrations.CreateModel(
             name='Tag',
             fields=[
-                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
-                ('tag_title', models.CharField(max_length=100, verbose_name=b'Tag')),
+                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('tag_title', models.CharField(max_length=100, verbose_name='Tag')),
                 ('blog', models.ManyToManyField(to='blog.Blog')),
             ],
         ),
