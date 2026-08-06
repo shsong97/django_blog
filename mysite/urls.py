@@ -1,20 +1,27 @@
-from django.conf.urls import include, url
+from django.conf import settings
 from django.contrib import admin
-from mysite import views
+from django.urls import include, path
 import user_manager
- 
-admin.autodiscover()
+from mysite import views
 
 urlpatterns = [
-    url(r'^$', views.home, name='home'),
-    url(r'^admin/', include(admin.site.urls)),
-    url(r'^blog/', include('blog.urls',namespace="blog")),
-    url(r'^polls/', include('polls.urls',namespace="polls")),
-    url(r'^user/', include('user_manager.urls',namespace="user_manager")),
-    url(r'^contact/', user_manager.views.contact, name='contact'),
-    url(r'i18n/',include('django.conf.urls.i18n')),
-    url('^markdown/', include('django_markdown.urls')),
-    url(r'^accounts/', include('allauth.urls')),
-    url(r'^accounts/profile/', user_manager.views.login_page),
+    path('', views.home, name='home'),
+    path('admin/', admin.site.urls),
+    path('blog/', include(('blog.urls', 'blog'), namespace='blog')),
+    path('polls/', include(('polls.urls', 'polls'), namespace='polls')),
+    path('user/', include(('user_manager.urls', 'user_manager'), namespace='user_manager')),
+    path('contact/', user_manager.views.contact, name='contact'),
+    path('i18n/', include('django.conf.urls.i18n')),
+    path('accounts/', include('allauth.urls')),
+    path('accounts/profile/', user_manager.views.login_page),
 ]
 
+if settings.DEBUG:
+    try:
+        import debug_toolbar
+    except ImportError:
+        debug_toolbar = None
+    else:
+        urlpatterns = [
+            path('__debug__/', include(debug_toolbar.urls)),
+        ] + urlpatterns

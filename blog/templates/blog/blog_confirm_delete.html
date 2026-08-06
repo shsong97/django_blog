@@ -1,10 +1,18 @@
 {% extends "base.html" %}
-{% block body_area %}
 {% load i18n %}
-<div class="white-box">
-<form action="" method="post">{% csrf_token %}
-    <p>{% trans 'Are you sure you want to delete' %} {{ object }}?</p>
-    <input type="submit" value="Confirm" />
-</form>
+{% block title %}{% trans 'Delete' %} · Song's Lab{% endblock %}
+{% block body_area %}
+<div class="ig-auth">
+    <div class="ig-form-card">
+        <h1 class="ig-auth__brand">Song's Lab</h1>
+        <form action="" method="post">
+            {% csrf_token %}
+            <p style="text-align:center;line-height:1.5;">
+                {% trans 'Are you sure you want to delete' %} <strong>{{ object }}</strong>?
+            </p>
+            <button class="ig-btn ig-btn--danger ig-btn--block" type="submit">{% trans 'Delete' %}</button>
+            <p class="ig-auth__links"><a href="{% url 'blog:index' %}">{% trans 'List' %}</a></p>
+        </form>
+    </div>
 </div>
 {% endblock %}
