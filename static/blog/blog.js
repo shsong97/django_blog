@@ -1,53 +1,40 @@
-$(document).ready(function() {
-    $(function() {
-        var message="";
-        $.ajax({
-            url:"/blog/favorite",
-            dataType:'json',
-            success:function(result){
-                for(var i in result) {
-                    var htmlmsg="<li><a href='/blog/"+result[i]['blog_id']+"'>"+result[i]['blog_title']+"</a></li>";
-                    message+=htmlmsg;
-                }
-                $("#favorite_article").html(message);
-            },
-            error:function(e){
-                alert("Error:favorite-"+e.responseText);
-            }
-        });
+$(document).ready(function () {
+  function fillList(selector, url, builder) {
+    $.ajax({
+      url: url,
+      dataType: 'json',
+      success: function (result) {
+        var message = '';
+        for (var i in result) {
+          message += builder(result[i]);
+        }
+        $(selector).html(message || '<li style="color:var(--ig-muted);font-size:0.88rem;">—</li>');
+      },
+      error: function () {
+        $(selector).html('<li style="color:var(--ig-muted);font-size:0.88rem;">—</li>');
+      }
     });
+  }
 
-    $(function() {
-        var message="";
-        $.ajax({
-            url:"/blog/archive",
-            dataType:'json',
-            success:function(result){
-                for(var i in result) {
-                    var htmlmsg="<li><a href='/blog/list/"+result[i]['year']+"/"+result[i]['month']+"/'>"+result[i]['year']+"/"+result[i]['month']+" ("+result[i]['cnt']+")</a></li>";
-                    message+=htmlmsg;
-                }
-                $("#recent_article").html(message);
-            },
-            error:function(e){
-                alert("Error:blog_archive-"+e.responseText);
-            }
-        });
+  fillList('#favorite_article', '/blog/favorite/', function (item) {
+    return "<li><a href='/blog/" + item.blog_id + "/'><span>" + item.blog_title + "</span><strong>" + item.like_count + "</strong></a></li>";
+  });
+
+  fillList('#recent_article', '/blog/archive/', function (item) {
+    return "<li><a href='/blog/list/" + item.year + "/" + item.month + "/'><span>" + item.year + "/" + item.month + "</span><strong>" + item.cnt + "</strong></a></li>";
+  });
+
+  $(document).on('click', '.blog-like-btn', function () {
+    var button = $(this);
+    var blogId = button.data('blog-id');
+    var post = button.closest('.ig-post');
+    $.ajax({
+      url: '/blog/' + blogId + '/like/',
+      dataType: 'json',
+      success: function (result) {
+        button.addClass('is-liked');
+        post.find('.blog-like-count').text(result.result);
+      }
     });
-
-    $(document).on("click","#blog_like_click",
-        function() {
-            var item=$(this);
-            var blog_id=item.find("#blog_like").attr('value');
-            $.ajax({
-                url:"/blog/"+blog_id+"/like",
-                dataType:'json',
-                success:function(result){
-                    item.find("#blog_like").text(result['result']);
-                },
-                error:function(e) {
-                    alert("Error:blog_like-"+e.responseText);
-                }
-            }); // ajax
-        });
-}) // ready
+  });
+});

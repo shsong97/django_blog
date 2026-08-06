@@ -1,71 +1,105 @@
 {% extends "base.html" %}
-{% load i18n %}
-{% block title %}{% trans 'Blog List' %}{% endblock %}
- 
-{% block external %}    
-<style>
-    .right { float : right; }
-</style>
-<script type="text/javascript" src="/static/blog/blog.js"> </script>
+{% load i18n static %}
+{% block title %}{% trans 'Blog List' %} · Song's Lab{% endblock %}
+{% block external %}
+<script src="{% static 'blog/blog.js' %}"></script>
 {% endblock %}
 {% block body_area %}
 {% load markdown_extras %}
-<div class="col-md-9">
-    <div class="white-box">
-            <div class="input-group">
-                <input type="text" class="form-control" placeholder="Search for...">
-                <span class="input-group-btn">
-                <button class="btn btn-default" type="button">{% trans 'Search' %}</button>
-                </span>
-            </div><!-- /input-group -->
-                <a class="btn btn-success" href="{% url 'blog:blog_add' %}">{% trans 'Add' %}</a> 
-                <a class="btn btn-success" href="{% url 'blog:blog_feed' %}">{% trans 'Feed' %}</a>
-    </div>
-    {% if latest_blog_list %}
-    {% for blog in latest_blog_list %}
-    <div class="white-box">
-        <div class="row page-title" >
-            <div class="col-md-12" >
-                <h4><a href="{% url 'blog:detail' blog.id %}">{{ blog.blog_title }}</a></h4>
+<div class="ig-layout">
+    <section class="ig-feed">
+        <div class="ig-stories" aria-label="Highlights">
+            <a class="ig-story" href="{% url 'blog:blog_add' %}">
+                <div class="ig-story__ring"><span>+</span></div>
+                <span class="ig-story__label">{% trans 'Add' %}</span>
+            </a>
+            <a class="ig-story" href="{% url 'blog:blog_feed' %}">
+                <div class="ig-story__ring"><span>RSS</span></div>
+                <span class="ig-story__label">{% trans 'Feed' %}</span>
+            </a>
+            <a class="ig-story" href="{% url 'polls:index' %}">
+                <div class="ig-story__ring"><span>POLL</span></div>
+                <span class="ig-story__label">{% trans 'Polls' %}</span>
+            </a>
+            {% if latest_blog_list %}
+                {% for blog in latest_blog_list %}
+                    {% if forloop.counter <= 5 %}
+                    <a class="ig-story" href="{% url 'blog:detail' blog.id %}">
+                        <div class="ig-story__ring">
+                            <span>{{ blog.user.username|make_list|first|upper }}</span>
+                        </div>
+                        <span class="ig-story__label">{{ blog.user.username }}</span>
+                    </a>
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
+        </div>
 
-                <div class="row">
-                    <div class="col-md-12 text-right" >
-                    {{ blog.user.username }} 
-                    {% if blog.user.first_name %} ({{blog.user.last_name }}{{ blog.user.first_name}}) {% endif %}
-                          <span class="badge">{{ blog.view_count }} {% trans 'views' %} </span>
+        {% if latest_blog_list %}
+            {% for blog in latest_blog_list %}
+            <article class="ig-post">
+                <header class="ig-post__header">
+                    <span class="ig-avatar ig-avatar--lg ig-avatar--initial">{{ blog.user.username|make_list|first|upper }}</span>
+                    <div class="ig-post__user">
+                        <strong>{{ blog.user.username }}</strong>
+                        <span>{{ blog.pub_date|date:"Y.m.d H:i" }}</span>
                     </div>
+                    <a class="ig-more" href="{% url 'blog:detail' blog.id %}" aria-label="More">···</a>
+                </header>
+                <div class="ig-post__media">
+                    <h3 style="margin:0 0 10px;font-size:1.05rem;">
+                        <a href="{% url 'blog:detail' blog.id %}">{{ blog.blog_title }}</a>
+                    </h3>
+                    <div class="contents">{{ blog.contents|markdown }}</div>
                 </div>
+                <div class="ig-post__actions">
+                    <button
+                        type="button"
+                        class="ig-action blog-like-btn"
+                        data-blog-id="{{ blog.id }}"
+                        aria-label="{% trans 'Like' %}"
+                    >
+                        <svg viewBox="0 0 24 24"><path d="M12 21s-7.2-4.4-9.4-8.2C.8 9.8 2.3 6 5.8 6c2 0 3.2 1.2 4 2.2.8-1 2-2.2 4-2.2 3.5 0 5 3.8 3.2 6.8C19.2 16.6 12 21 12 21z"/></svg>
+                        <span class="blog-like-count">{{ blog.like_count }}</span>
+                    </button>
+                    <a class="ig-action" href="{% url 'blog:detail' blog.id %}" aria-label="{% trans 'Count' %}">
+                        <svg viewBox="0 0 24 24"><path d="M4 5h16v11H8l-4 3z"/></svg>
+                        <span>{{ blog.view_count }}</span>
+                    </a>
+                </div>
+                <div class="ig-post__meta"><span class="blog-like-count">{{ blog.like_count }}</span> likes</div>
+                <div class="ig-post__caption">
+                    <strong>{{ blog.user.username }}</strong>{{ blog.blog_title }}
+                </div>
+                <footer class="ig-post__footer">
+                    <span>{{ blog.view_count }} {% trans 'views' %}</span>
+                    <a href="{% url 'blog:detail' blog.id %}">{% trans 'List' %} →</a>
+                </footer>
+            </article>
+            {% endfor %}
+        {% else %}
+            <div class="ig-empty">
+                <p>{% trans 'No contents' %}</p>
+                <a class="ig-btn" href="{% url 'blog:blog_add' %}">{% trans 'Add' %}</a>
             </div>
+        {% endif %}
+    </section>
+
+    <aside class="ig-sidebar">
+        <div class="ig-panel">
+            <h4>{% if user.is_authenticated %}{{ user.username }}{% else %}Song's Lab{% endif %}</h4>
+            <p style="margin:0;color:var(--ig-muted);font-size:0.88rem;">
+                {% trans 'Recent articles' %} · {% trans 'Favorite articles' %}
+            </p>
         </div>
-        <div class="contents">{{ blog.contents|markdown }}</div>
-        <div class="text-left" style="height:30px;">
-            <div style="float:left">
-            <button class="btn btn-success" id="blog_like_click"><i class="glyphicon glyphicon-heart"></i><span id="blog_like" value="{{ blog.id }}"> {{ blog.like_count }}</span></button>
-            </div>
-            <div style="float:right">
-            <a class="btn btn-danger" href="{% url 'blog:delete' blog.id %}"><i class="glyphicon glyphicon-trash"></i>{% trans 'Delete' %}</a>
-            </div>
+        <div class="ig-panel">
+            <h4>{% trans 'Recent articles' %}</h4>
+            <ul id="recent_article"></ul>
         </div>
-    </div> <!-- white-box -->
-
-    {% endfor %}
-    {% else %}
-    <p>{% trans 'No contents' %}</p>
-    {% endif %}
-</div> <!-- left span -->
-<div class="col-md-3">
-    <div class="white-box">
-    <h4>{% trans 'Recent articles' %}</h4>
-    <ul id="recent_article">
-
-    </ul>
-    </div>
-    <div class="white-box">
-    <h4>{% trans 'Favorite articles' %}</h4>
-    <ul id="favorite_article">
-
-    </ul>
-    </div>
+        <div class="ig-panel">
+            <h4>{% trans 'Favorite articles' %}</h4>
+            <ul id="favorite_article"></ul>
+        </div>
+    </aside>
 </div>
-
 {% endblock %}

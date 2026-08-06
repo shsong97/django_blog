@@ -1,13 +1,18 @@
 {% extends "base.html" %}
 {% load i18n %}
-{% block title %}{% trans 'Write Blog' %}{% endblock %}
+{% block title %}{% trans 'Write Blog' %} · Song's Lab{% endblock %}
+{% block body_class %}ig-auth-page{% endblock %}
 {% block body_area %}
-<div class="col-md-12">
-<form action="" method="post" class="form-inline">
-    {% csrf_token %}
-    {{ form.as_p }}
-    {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
-    <button class="btn btn-primary" type="submit">{% trans 'Write' %}</button>
-</form>
+<div class="ig-auth">
+    <div class="ig-form-card" style="width:min(100%,520px);">
+        <h1 class="ig-auth__brand">Song's Lab</h1>
+        <h2 style="margin:0 0 16px;text-align:center;font-size:1rem;">{% trans 'Write Blog' %}</h2>
+        <form action="" method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            {% if error_message %}<p class="ig-error-list">{{ error_message }}</p>{% endif %}
+            <button class="ig-btn ig-btn--block" type="submit">{% trans 'Write' %}</button>
+        </form>
+    </div>
 </div>
 {% endblock %}

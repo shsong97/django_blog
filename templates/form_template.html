@@ -1,14 +1,16 @@
 {% extends "base.html" %}
 {% load i18n %}
-{% block title %}{{ temp_param }}{% endblock %}
-{% block head %}{{ temp_param }}{% endblock %}
+{% block title %}{{ temp_param }} · Song's Lab{% endblock %}
 {% block body_area %}
-<div class="col-md-12">
-<form method="post" action=".">
-    {{ form.name_of_field.errors }} 
-    {% csrf_token  %}
-    {{ form.as_p }}
-    <input type="submit" class="btn btn-primary" value="{% trans 'Save' %}" />
-</form>
+<div class="ig-auth">
+    <div class="ig-form-card">
+        <h1 class="ig-auth__brand">Song's Lab</h1>
+        <h2 style="margin:0 0 14px;text-align:center;font-size:1rem;">{{ temp_param }}</h2>
+        <form method="post" action=".">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="ig-btn ig-btn--block">{% trans 'Save' %}</button>
+        </form>
+    </div>
 </div>
 {% endblock %}

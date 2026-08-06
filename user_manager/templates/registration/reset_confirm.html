@@ -1,30 +1,32 @@
 {% extends "base.html" %}
 {% load i18n %}
-
-{% block title %}{% trans 'Password reset' %}{% endblock %}
-
+{% block title %}{% trans 'Password reset' %} · Song's Lab{% endblock %}
 {% block body_area %}
-
-{% if validlink %}
-
-<h1>{% trans 'Enter new password' %}</h1>
-
-<p>{% trans "Please enter your new password twice so we can verify you typed it in correctly." %}</p>
-
-<form action="" method="post">{% csrf_token %}
-{{ form.new_password1.errors }}
-<p class="aligned wide"><label for="id_new_password1">{% trans 'New password:' %}</label>{{ form.new_password1 }}</p>
-{{ form.new_password2.errors }}
-<p class="aligned wide"><label for="id_new_password2">{% trans 'Confirm password:' %}</label>{{ form.new_password2 }}</p>
-<p><input type="submit" value="{% trans 'Change my password' %}" /></p>
-</form>
-
-{% else %}
-
-<h1>{% trans 'Password reset unsuccessful' %}</h1>
-
-<p>{% trans "The password reset link was invalid, possibly because it has already been used.  Please request a new password reset." %}</p>
-
-{% endif %}
-
+<div class="ig-auth">
+    <div class="ig-form-card">
+        {% if validlink %}
+            <h1 class="ig-auth__brand">Song's Lab</h1>
+            <h2 style="margin:0 0 10px;text-align:center;font-size:1rem;">{% trans 'Enter new password' %}</h2>
+            <p style="color:var(--ig-muted);font-size:0.88rem;text-align:center;">
+                {% trans "Please enter your new password twice so we can verify you typed it in correctly." %}
+            </p>
+            <form action="" method="post">
+                {% csrf_token %}
+                {{ form.new_password1.errors }}
+                <label for="id_new_password1">{% trans 'New password:' %}</label>
+                {{ form.new_password1 }}
+                {{ form.new_password2.errors }}
+                <label for="id_new_password2">{% trans 'Confirm password:' %}</label>
+                {{ form.new_password2 }}
+                <button type="submit" class="ig-btn ig-btn--block">{% trans 'Change my password' %}</button>
+            </form>
+        {% else %}
+            <h1 class="ig-auth__brand">Song's Lab</h1>
+            <h2 style="margin:0 0 10px;text-align:center;font-size:1rem;">{% trans 'Password reset unsuccessful' %}</h2>
+            <p style="color:var(--ig-muted);text-align:center;">
+                {% trans "The password reset link was invalid, possibly because it has already been used.  Please request a new password reset." %}
+            </p>
+        {% endif %}
+    </div>
+</div>
 {% endblock %}
