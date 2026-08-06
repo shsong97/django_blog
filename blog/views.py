@@ -1,107 +1,124 @@
-# -*- coding: utf-8 -*-
-
-from django.views.generic import *
-from django.views.generic.edit import *
-from django.views.generic.dates import *
-from django.utils import timezone
-from django.shortcuts import *
-from django.http import *
-from blog.models import Blog
-from django.core.urlresolvers import *
 from django.contrib.auth.decorators import login_required
-import json
-from django.db.models import Count
-import datetime 
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db import connection
-# Create your views here.
+from django.http import HttpResponse, JsonResponse
+from django.shortcuts import get_object_or_404, redirect
+from django.urls import reverse_lazy
+from django.utils import timezone
+from django.views.generic import CreateView, DeleteView, DetailView, ListView, UpdateView
+from django.views.generic.dates import MonthArchiveView, YearArchiveView
 
-login_url='/user/login/'
+from blog.models import Blog
+
+login_url = '/user/login/'
+
 
 class BlogListView(ListView):
     template_name = 'blog/blog_list.html'
     context_object_name = 'latest_blog_list'
+
     def get_queryset(self):
         return Blog.objects.filter(
             pub_date__lte=timezone.now(),
         ).order_by('-pub_date')[:5]
 
+
 class BlogDetailView(DetailView):
     model = Blog
-    def get_object(self,queryset=None):
-        blog = super(BlogDetailView, self).get_object()
+
+    def get_object(self, queryset=None):
+        blog = super().get_object(queryset)
         blog.view_count += 1
-        blog.save()
+        blog.save(update_fields=['view_count'])
         return blog
 
     def get_queryset(self):
         return Blog.objects.filter(pub_date__lte=timezone.now())
 
+
 class BlogDeleteView(LoginRequiredMixin, DeleteView):
     model = Blog
     success_url = reverse_lazy('blog:index')
-    login_url=login_url
+    login_url = login_url
+
 
 class BlogCreateView(LoginRequiredMixin, CreateView):
     model = Blog
-    fields=['user','blog_title','contents']
+    fields = ['blog_title', 'contents']
     success_url = reverse_lazy('blog:index')
-    login_url=login_url
+    login_url = login_url
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        return super().form_valid(form)
+
 
 class BlogUpdateView(LoginRequiredMixin, UpdateView):
     model = Blog
-    fields=['user','blog_title','contents']
-    login_url=login_url
-    def form_valid(self, form):
-        if not self.request.user.username:
-            return redirect(login_url)
-        return super(UpdateView, self).form_valid(form)
+    fields = ['blog_title', 'contents']
+    login_url = login_url
 
-def toJSON(objs, status=200):
-    j=json.dumps(objs,ensure_ascii=False)
-    return HttpResponse(j,status=status,content_type='application/json;charset=utf-8')
+    def form_valid(self, form):
+        if not self.request.user.is_authenticated:
+            return redirect(login_url)
+        return super().form_valid(form)
+
 
 def blog_like(request, blog_id):
-    blogs = get_object_or_404(Blog,id=blog_id)
-    blogs.like_count = blogs.like_count+1
-    blogs.save()
-    data_dict={'result':blogs.like_count}
-    return JsonResponse(data_dict)
+    blogs = get_object_or_404(Blog, id=blog_id)
+    blogs.like_count = blogs.like_count + 1
+    blogs.save(update_fields=['like_count'])
+    return JsonResponse({'result': blogs.like_count})
+
 
 def serialize(objs):
-    serialized=[]
-    for obj in objs:
-        serialized.append(obj.serialize())
-    return serialized
-     
+    return [obj.serialize() for obj in objs]
+
+
 def blog_favorite(request):
-    blog_list = Blog.objects.all().order_by('-like_count')[:10]    
-    return JsonResponse(serialize(blog_list),safe=False)
+    blog_list = Blog.objects.all().order_by('-like_count')[:10]
+    return JsonResponse(serialize(blog_list), safe=False)
+
 
 class ArticleMonthArchiveView(MonthArchiveView):
     queryset = Blog.objects.all()
-    date_field = "pub_date"
+    date_field = 'pub_date'
     allow_future = True
+
 
 class ArticleYearArchiveView(YearArchiveView):
     queryset = Blog.objects.all()
-    date_field = "pub_date"
+    date_field = 'pub_date'
     make_object_list = True
     allow_future = True
 
-def blog_archive(request):
-    cursor=connection.cursor()
-    query_str="""select date_part('year',pub_date) as year, date_part('month',pub_date) as month, count(*) as cnt 
-        from blog_blog group by date_part('year',pub_date),date_part('month',pub_date) order by 1 desc, 2 desc;"""
-    cursor.execute(query_str)
-    year_list = dictfetchall(cursor)
 
-    return JsonResponse(year_list,safe=False)
- 
 def dictfetchall(cursor):
-    "Return all rows from a cursor as a dict"
     columns = [col[0] for col in cursor.description]
-    return [
-        dict(zip(columns, row))
-        for row in cursor.fetchall()
-    ]
+    return [dict(zip(columns, row)) for row in cursor.fetchall()]
+
+
+def blog_archive(request):
+    vendor = connection.vendor
+    if vendor == 'postgresql':
+        query_str = """
+            select date_part('year', pub_date) as year,
+                   date_part('month', pub_date) as month,
+                   count(*) as cnt
+            from blog_blog
+            group by date_part('year', pub_date), date_part('month', pub_date)
+            order by 1 desc, 2 desc;
+        """
+    else:
+        query_str = """
+            select cast(strftime('%Y', pub_date) as integer) as year,
+                   cast(strftime('%m', pub_date) as integer) as month,
+                   count(*) as cnt
+            from blog_blog
+            group by year, month
+            order by 1 desc, 2 desc;
+        """
+    with connection.cursor() as cursor:
+        cursor.execute(query_str)
+        year_list = dictfetchall(cursor)
+    return JsonResponse(year_list, safe=False)
