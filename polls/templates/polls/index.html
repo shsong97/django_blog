@@ -1,28 +1,22 @@
 {% extends "base.html" %}
 {% load i18n %}
-{% block title %}{% trans 'Poll' %}{% endblock %}
+{% block title %}{% trans 'Poll' %} · Song's Lab{% endblock %}
 {% block body_area %}
-<style>
-    th { background-color: #cccccc; }
-</style>
-<div class="col-md-12">
-<h4>{% trans 'Poll List' %}</h4>
-{% if latest_poll_list %}
-    <table class="table table-bordered">
-        <tr>
-        <th>{% trans 'Poll ID' %}</th>
-        <th>{% trans 'Polling date' %}</th>
-        </tr>
-    {% for poll in latest_poll_list %}
-        <tr>
-        <td><a href="{% url 'polls:detail' poll.id %}">{{ poll.title }}</a></td>
-        <td>{{ poll.start_date|date:"m/j" }} ~ {{ poll.end_date|date:"m/j" }}</td>
-        </tr>
-    {% endfor %}
-    </table>
-{% else %}
-    <p>{% trans 'No list' %}</p>
-{% endif %}
-<a href="{% url 'polls:index' %}" class="btn btn-primary">{% trans 'Home' %}</a>
+<div class="ig-poll-list">
+    <h1 class="ig-page-title">{% trans 'Poll List' %}</h1>
+    {% if latest_poll_list %}
+        {% for poll in latest_poll_list %}
+            <a class="ig-poll-card" href="{% url 'polls:detail' poll.id %}">
+                <strong>{{ poll.title }}</strong>
+                <span>{% trans 'Polling date' %}: {{ poll.start_date|date:"m/d" }} ~ {{ poll.end_date|date:"m/d" }}</span>
+            </a>
+        {% endfor %}
+    {% else %}
+        <div class="ig-empty"><p>{% trans 'No list' %}</p></div>
+    {% endif %}
+    <div class="ig-toolbar">
+        <a class="ig-chip ig-chip--primary" href="{% url 'polls:index' %}">{% trans 'Home' %}</a>
+        <a class="ig-chip" href="{% url 'blog:index' %}">{% trans 'Blog' %}</a>
+    </div>
 </div>
 {% endblock %}

@@ -1,7 +1,12 @@
 {% extends "base.html" %}
-{% block title %}{% trans 'Success for register' %}{% endblock %}
-{% block head %}{% trans 'Success for register.' %}{% endblock %}
+{% load i18n %}
+{% block title %}{% trans 'Success for register' %} · Song's Lab{% endblock %}
 {% block body_area %}
-{% trans 'Thank you for register.' %}<br />
-<a href="/user/login/">{% trans 'Please, Login' %}</a>
+<div class="ig-auth">
+    <div class="ig-form-card" style="text-align:center;">
+        <h1 class="ig-auth__brand">Song's Lab</h1>
+        <p>{% trans 'Thank you for register.' %}</p>
+        <a class="ig-btn" href="/user/login/">{% trans 'Please, Login' %}</a>
+    </div>
+</div>
 {% endblock %}

@@ -1,19 +1,15 @@
-
-function blog_like() {
-    var item=$(this);
-    var blog_id=item.find("#blog_like").attr('value');
+$(document).ready(function () {
+  $(document).on('click', '.blog-like-btn', function () {
+    var button = $(this);
+    var blogId = button.data('blog-id');
+    var post = button.closest('.ig-post');
     $.ajax({
-        url:"/blog/"+blog_id+"/like",
-        dataType:'json',
-        success:function(result){
-            item.find("#blog_like").text(result['result']);
-        },
-        error:function(e) {
-            alert(e.responseText);
-        }
+      url: '/blog/' + blogId + '/like/',
+      dataType: 'json',
+      success: function (result) {
+        button.addClass('is-liked');
+        post.find('.blog-like-count').text(result.result);
+      }
     });
-}
- 
-$(document).ready(function() {
-    $(document).on("click","#blog_like_click",blog_like);
-})
+  });
+});
